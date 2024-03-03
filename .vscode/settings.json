@@ -1,0 +1,11 @@
+{
+    "python.analysis.extraPaths": [
+        "./Testing",
+        "./Environment/Environments",
+        "./Environment",
+        "./Learning",
+        "./Testing/Metrics",
+        "./Learning/Models",
+        "./Learning/Policy Grabbers"
+    ]
+}
