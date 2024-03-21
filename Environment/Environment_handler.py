@@ -1,5 +1,6 @@
-from mountain_car import mountaincar
-from Configuration import env_metrics 
+from Testing.Configuration import env_metrics
+
+from Environment.Environments.mountain_car import mountaincar
 #from noisy_road import 
 
 
@@ -7,17 +8,17 @@ class Environments:
     #List of all possible environments to call upon 
     def __init__(self):
         'Environment Choice'
-        self.env = env_metrics.environment
+        self.env = env_metrics().environment
         
         'Environments'
         self.mountaincar = mountaincar()
-        self.noisyroad2d = noisyroad2d()
-        self.noisyroad = noisyroad()
-        self.obstacle = obstacle()
-        self.obstacle2 = obstacle2()
-        self.pendulum = pendulum()
-        self.road2d = road2d()
-        self.road = road()
+        self.noisyroad2d = 0 #noisyroad2d()
+        self.noisyroad = 0 #noisyroad()
+        self.obstacle = 0 #obstacle()
+        self.obstacle2 = 0 #obstacle2()
+        self.pendulum = 0 #pendulum()
+        self.road2d = 0 #road2d()
+        self.road = 0 #road()
     
     
     def environmental_choice(self):
@@ -35,4 +36,4 @@ class Environments:
         
         #If improper input, default to mountain car environment
         return env_dict.get(self.env, self.mountaincar)
-        
+    
