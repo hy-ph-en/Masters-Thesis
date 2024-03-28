@@ -21,10 +21,9 @@ class learning_handler:
         
         
         #Models
-        self.simple_reinforcement_learning = simple_reinforcemeant_learning(self.env)       #might need to make it a reference to the function rather then the output of the function
-        self.simple_neurosymbolic = simple_neurosymbolic(self.env)                          #Just add the models into their own functions and then have the policy handler call on those
-        self.ppo_model = ppo_model(self.env)
-        
+        '1 - simple_reinforcemeant_learning'
+        '2 - simple_neurosymbolic'
+        '3 - ppo_model'
         
         #Policy Grabbers
         self.symbolicregression = symbolic_regression()
@@ -35,13 +34,13 @@ class learning_handler:
 
         #List of environments
         model_dict = {
-            1 : self.simple_reinforcement_learning,
-            2 : self.simple_neurosymbolic,
-            3 : self.ppo_model
+            1 : simple_reinforcemeant_learning,
+            2 : simple_neurosymbolic,
+            3 : ppo_model
         }
         
         #Default is the simple reinforcement learning model
-        return model_dict.get(model, self.simple_reinforcement_learning)
+        return (model_dict.get(model, simple_reinforcemeant_learning))(self.env)
     
     
     def policy_hanlder(self):

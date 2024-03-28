@@ -4,9 +4,10 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 25000                       #Number of training periods 
+        self.epochs = 250000                    #Number of training periods 
         self.render = False                     #Whether the rendering of the training is shown
         self.learning_rate = 0.9                #The rate at which learning takes place
+        self.learning_steps = 250000
         
         
         #Q Learning Specific
@@ -21,14 +22,16 @@ class test_metrics():
         
         #PPO Specific
         
+        
         #Learning Polies'
         'MlpPolicy - Multi-Layer Perceptron (MLP) Policy                 '
         'CnnPolicy - Convolutional Neural Network                        '
         'MultiInputPolicy - Multi-actor Policy                           '
         
         self.learning_policy = "MlpPolicy"                                          #PPO passed Learning Policy 
+
         'verbose 0-3  : increasing amounts of explaination for the output'          #Likely become legacy as the project processes
-        self.verbose = 1
+        self.verbose = 3
         
         
         #Neurosymbolic Specific 
