@@ -7,8 +7,6 @@ from Learning.Models.PPO.ppo_model import ppo_model
 from Testing.Configuration import env_metrics, test_metrics
 
 
-#Have to add an SYS 
-#Look at the OS libary
 
 class learning_handler:
     def __init__(self):
@@ -16,8 +14,7 @@ class learning_handler:
         #Configured
         self.env = Environments().environmental_choice()
         
-        test_metric = test_metrics()
-        self.policy = test_metric.policy
+        self.policy = test_metrics().policy
         
         
         #Models

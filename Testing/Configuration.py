@@ -4,16 +4,15 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 250000                    #Number of training periods 
-        self.render = False                     #Whether the rendering of the training is shown
-        self.learning_rate = 0.9                #The rate at which learning takes place
-        self.learning_steps = 250000
+        self.epochs = 10                        #Number of training periods 
+        self.render = False                     #Whether the rendering of the training is shown      
+        self.gamma = 0.99
         
         
-        #Q Learning Specific
-        self.gamma = 0.99                       
+        #Q Learning Specific                     
         self.epsilon = 0.1
         self.bins = (10,10)                     #Number of states - From continous to discrete 
+        self.q_learning_rate = 0.9              #The rate at which learning takes place
         
         
         #Neural Specific 
@@ -21,6 +20,9 @@ class test_metrics():
         
         
         #PPO Specific
+        self.ppo_learning_rate = 3e-4           #The rate at which learning takes place
+        self.batch_size = 64                    #Mini size batch
+        
         
         
         #Learning Polies'
@@ -69,11 +71,13 @@ class env_metrics():
         'pendulum - 6       '
         'road_2d - 7        '
         'road - 8           '
-        #Default
-        'mountain_car - 1'
-        self.environment = 1
+        'CartPole-v1 - 9    '
         
-        self.number_of_steps = 1000              #The number of steps the agent can take per training period
+        #Default
+        'Simpliest Environemnt - "CartPole-v1"'
+        self.environment = 9
+        
+        self.number_of_steps = 250000              #The number of steps the agent can take per training period
         
         
 
