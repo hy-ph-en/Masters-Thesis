@@ -24,7 +24,7 @@ from Learning.Models.PPO_Neurosymbolic.common.evaluation import evaluate_policy
 from Learning.Models.PPO_Neurosymbolic.common.vec_env import DummyVecEnv, VecEnv, sync_envs_normalization
 
 if TYPE_CHECKING:
-    from PPO_Neurosymbolic.common import base_class
+    from PPO.common import base_class
 
 
 class BaseCallback(ABC):
@@ -254,7 +254,7 @@ class CheckpointCallback(BaseCallback):
 
     :param save_freq: Save checkpoints every ``save_freq`` call of the callback.
     :param save_path: Path to the folder where the model will be saved.
-    :param name_prefix: PPO_Neurosymbolic.common prefix to the saved models
+    :param name_prefix: PPO.common prefix to the saved models
     :param save_replay_buffer: Save the model replay buffer
     :param save_vecnormalize: Save the ``VecNormalize`` statistics
     :param verbose: Verbosity level: 0 for no output, 2 for indicating when saving model checkpoint

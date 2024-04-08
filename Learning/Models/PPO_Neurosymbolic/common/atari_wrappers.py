@@ -1,4 +1,4 @@
-from typing import Dict, SuPPO_NeurosymbolicrtsFloat
+from typing import Dict, SupportsFloat
 
 import gymnasium as gym
 import numpy as np
@@ -201,7 +201,7 @@ class ClipRewardEnv(gym.RewardWrapper):
     def __init__(self, env: gym.Env) -> None:
         super().__init__(env)
 
-    def reward(self, reward: SuPPO_NeurosymbolicrtsFloat) -> float:
+    def reward(self, reward: SupportsFloat) -> float:
         """
         Bin reward to {+1, 0, -1} by its sign.
 

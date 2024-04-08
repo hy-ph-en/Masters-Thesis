@@ -3,6 +3,7 @@ from Learning.Models.Simple_Neurosymbolic import simple_neurosymbolic
 from Learning.Policy_Grabbers.Symbolic_Regression import symbolic_regression
 from Environment.Environment_handler import Environments
 from Learning.Models.PPO.ppo_model import ppo_model
+from Learning.Models.PPO_Neurosymbolic.ppo_neurosymbolic_model import ppo_neurosymbolic_model
 
 from Testing.Configuration import env_metrics, test_metrics
 
@@ -18,9 +19,10 @@ class learning_handler:
         
         
         #Models
-        '1 - simple_reinforcemeant_learning'
-        '2 - simple_neurosymbolic'
-        '3 - ppo_model'
+        '1 - simple_reinforcemeant_learning '
+        '2 - simple_neurosymbolic           '
+        '3 - ppo_model                      '
+        '4 - ppo_neurosymbolic              '
         
         #Policy Grabbers
         self.symbolicregression = symbolic_regression()
@@ -33,7 +35,8 @@ class learning_handler:
         model_dict = {
             1 : simple_reinforcemeant_learning,
             2 : simple_neurosymbolic,
-            3 : ppo_model
+            3 : ppo_model,
+            4 : ppo_neurosymbolic_model
         }
         
         #Default is the simple reinforcement learning model

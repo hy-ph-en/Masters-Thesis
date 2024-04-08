@@ -36,7 +36,7 @@ def _check_non_zero_start(space: spaces.Space, space_type: str = "observation", 
         maybe_key = f"(key='{key}')" if key else ""
         warnings.warn(
             f"{type(space).__name__} {space_type} space {maybe_key} with a non-zero start (start={space.start}) "
-            "is not suPPO_Neurosymbolicrted by Stable-Baselines3. "
+            "is not supported by Stable-Baselines3. "
             f"You can use a wrapper or update your {space_type} space."
         )
 
@@ -79,8 +79,8 @@ def _check_image_input(observation_space: spaces.Box, key: str = "") -> None:
         )
 
 
-def _check_unsuPPO_Neurosymbolicrted_spaces(env: gym.Env, observation_space: spaces.Space, action_space: spaces.Space) -> None:
-    """Emit warnings when the observation space or action space used is not suPPO_Neurosymbolicrted by Stable-Baselines."""
+def _check_unsupported_spaces(env: gym.Env, observation_space: spaces.Space, action_space: spaces.Space) -> None:
+    """Emit warnings when the observation space or action space used is not supported by Stable-Baselines."""
 
     if isinstance(observation_space, spaces.Dict):
         nested_dict = False
@@ -91,27 +91,27 @@ def _check_unsuPPO_Neurosymbolicrted_spaces(env: gym.Env, observation_space: spa
 
         if nested_dict:
             warnings.warn(
-                "Nested observation spaces are not suPPO_Neurosymbolicrted by Stable Baselines3 "
+                "Nested observation spaces are not supported by Stable Baselines3 "
                 "(Dict spaces inside Dict space). "
                 "You should flatten it to have only one level of keys."
                 "For example, `dict(space1=dict(space2=Box(), space3=Box()), spaces4=Discrete())` "
-                "is not suPPO_Neurosymbolicrted but `dict(space2=Box(), spaces3=Box(), spaces4=Discrete())` is."
+                "is not supported but `dict(space2=Box(), spaces3=Box(), spaces4=Discrete())` is."
             )
 
     if isinstance(observation_space, spaces.Tuple):
         warnings.warn(
             "The observation space is a Tuple, "
-            "this is currently not suPPO_Neurosymbolicrted by Stable Baselines3. "
+            "this is currently not supported by Stable Baselines3. "
             "However, you can convert it to a Dict observation space "
             "(cf. https://gymnasium.farama.org/api/spaces/composite/#dict). "
-            "which is suPPO_Neurosymbolicrted by SB3."
+            "which is supported by SB3."
         )
 
     _check_non_zero_start(observation_space, "observation")
 
     if isinstance(observation_space, spaces.Sequence):
         warnings.warn(
-            "Sequence observation space is not suPPO_Neurosymbolicrted by Stable-Baselines3. "
+            "Sequence observation space is not supported by Stable-Baselines3. "
             "You can pad your observation to have a fixed size instead.\n"
             "Note: The checks for returned values are skipped."
         )
@@ -121,7 +121,7 @@ def _check_unsuPPO_Neurosymbolicrted_spaces(env: gym.Env, observation_space: spa
     if not _is_numpy_array_space(action_space):
         warnings.warn(
             "The action space is not based off a numpy array. Typically this means it's either a Dict or Tuple space. "
-            "This type of action space is currently not suPPO_Neurosymbolicrted by Stable Baselines 3. You should try to flatten the "
+            "This type of action space is currently not supported by Stable Baselines 3. You should try to flatten the "
             "action using a wrapper."
         )
 
@@ -437,7 +437,7 @@ def check_env(env: gym.Env, warn: bool = True, skip_render_check: bool = True) -
     # Warn the user if needed.
     # A warning means that the environment may run but not work properly with Stable Baselines algorithms
     if warn:
-        _check_unsuPPO_Neurosymbolicrted_spaces(env, observation_space, action_space)
+        _check_unsupported_spaces(env, observation_space, action_space)
 
         obs_spaces = observation_space.spaces if isinstance(observation_space, spaces.Dict) else {"": observation_space}
         for key, space in obs_spaces.items():
@@ -478,7 +478,7 @@ def check_env(env: gym.Env, warn: bool = True, skip_render_check: bool = True) -
 
     try:
         check_for_nested_spaces(env.observation_space)
-        # The check doesn't suPPO_Neurosymbolicrt nested observations/dict actions
+        # The check doesn't support nested observations/dict actions
         # A warning about it has already been emitted
         _check_nan(env)
     except NotImplementedError:

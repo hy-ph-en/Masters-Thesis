@@ -1,7 +1,7 @@
-# This file is here just to define MlPPO_Neurosymboliclicy/CnnPolicy
-# that work for PPO_Neurosymbolic
+# This file is here just to define MlpPolicy/CnnPolicy
+# that work for PPO
 from Learning.Models.PPO_Neurosymbolic.common.policies import ActorCriticCnnPolicy, ActorCriticPolicy, MultiInputActorCriticPolicy
 
-MlPPO_Neurosymboliclicy = ActorCriticPolicy
+MlpPolicy = ActorCriticPolicy
 CnnPolicy = ActorCriticCnnPolicy
 MultiInputPolicy = MultiInputActorCriticPolicy

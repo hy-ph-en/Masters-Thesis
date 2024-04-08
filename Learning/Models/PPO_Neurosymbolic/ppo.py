@@ -12,21 +12,21 @@ from Learning.Models.PPO_Neurosymbolic.common.policies import ActorCriticCnnPoli
 from Learning.Models.PPO_Neurosymbolic.common.type_aliases import GymEnv, MaybeCallback, Schedule
 from Learning.Models.PPO_Neurosymbolic.common.utils import explained_variance, get_schedule_fn
 
-SelfPPO_Neurosymbolic = TypeVar("SelfPPO_Neurosymbolic", bound="PPO_Neurosymbolic")
+SelfPPO = TypeVar("SelfPPO", bound="PPO")
 
 
-class PPO_Neurosymbolic(OnPolicyAlgorithm):
+class PPO(OnPolicyAlgorithm):
     """
-    Proximal Policy Optimization algorithm (PPO_Neurosymbolic) (clip version)
+    Proximal Policy Optimization algorithm (PPO) (clip version)
 
     Paper: https://arxiv.org/abs/1707.06347
     Code: This implementation borrows code from OpenAI Spinning Up (https://github.com/openai/spinningup/)
-    https://github.com/ikostrikov/pytorch-a2c-PPO_Neurosymbolic-acktr-gail and
-    Stable Baselines (PPO_Neurosymbolic2 from https://github.com/hill-a/stable-baselines)
+    https://github.com/ikostrikov/pytorch-a2c-ppo-acktr-gail and
+    Stable Baselines (PPO2 from https://github.com/hill-a/stable-baselines)
 
-    Introduction to PPO_Neurosymbolic: https://spinningup.openai.com/en/latest/algorithms/PPO_Neurosymbolic.html
+    Introduction to PPO: https://spinningup.openai.com/en/latest/algorithms/ppo.html
 
-    :param policy: The policy model to use (MlPPO_Neurosymboliclicy, CnnPolicy, ...)
+    :param policy: The policy model to use (MlpPolicy, CnnPolicy, ...)
     :param env: The environment to learn from (if registered in Gym, can be str)
     :param learning_rate: The learning rate, it can be a function
         of the current progress remaining (from 1 to 0)
@@ -72,7 +72,7 @@ class PPO_Neurosymbolic(OnPolicyAlgorithm):
     """
 
     policy_aliases: ClassVar[Dict[str, Type[BasePolicy]]] = {
-        "MlPPO_Neurosymboliclicy": ActorCriticPolicy,         #have a look
+        "MlpPolicy": ActorCriticPolicy,         #have a look
         "CnnPolicy": ActorCriticCnnPolicy,
         "MultiInputPolicy": MultiInputActorCriticPolicy,
     }
@@ -127,7 +127,7 @@ class PPO_Neurosymbolic(OnPolicyAlgorithm):
             device=device,
             seed=seed,
             _init_setup_model=False,
-            suPPO_Neurosymbolicrted_action_spaces=(
+            supported_action_spaces=(
                 spaces.Box,
                 spaces.Discrete,
                 spaces.MultiDiscrete,
@@ -312,14 +312,14 @@ class PPO_Neurosymbolic(OnPolicyAlgorithm):
             self.logger.record("train/clip_range_vf", clip_range_vf)
 
     def learn(
-        self: SelfPPO_Neurosymbolic,
+        self: SelfPPO,
         total_timesteps: int,
         callback: MaybeCallback = None,
         log_interval: int = 1,
-        tb_log_name: str = "PPO_Neurosymbolic",
+        tb_log_name: str = "PPO",
         reset_num_timesteps: bool = True,
         progress_bar: bool = False,
-    ) -> SelfPPO_Neurosymbolic:
+    ) -> SelfPPO:
         return super().learn(
             total_timesteps=total_timesteps,
             callback=callback,

@@ -5,7 +5,7 @@ import json
 import os
 import time
 from glob import glob
-from typing import Any, Dict, List, Optional, SuPPO_NeurosymbolicrtsFloat, Tuple, Union
+from typing import Any, Dict, List, Optional, SupportsFloat, Tuple, Union
 
 import gymnasium as gym
 import pandas
@@ -82,7 +82,7 @@ class Monitor(gym.Wrapper[ObsType, ActType, ObsType, ActType]):
             self.current_reset_info[key] = value
         return self.env.reset(**kwargs)
 
-    def step(self, action: ActType) -> Tuple[ObsType, SuPPO_NeurosymbolicrtsFloat, bool, bool, Dict[str, Any]]:
+    def step(self, action: ActType) -> Tuple[ObsType, SupportsFloat, bool, bool, Dict[str, Any]]:
         """
         Step the environment with the given action
 

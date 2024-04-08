@@ -92,7 +92,7 @@ class RMSpropTFLike(Optimizer):
                     continue
                 grad = p.grad
                 if grad.is_sparse:
-                    raise RuntimeError("RMSpropTF does not suPPO_Neurosymbolicrt sparse gradients")
+                    raise RuntimeError("RMSpropTF does not support sparse gradients")
                 state = self.state[p]
 
                 # State initialization

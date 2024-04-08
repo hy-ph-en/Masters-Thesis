@@ -88,23 +88,23 @@ class HParam:
         self.metric_dict = metric_dict
 
 
-class FormatUnsuPPO_NeurosymbolicrtedError(NotImplementedError):
+class FormatUnsupportedError(NotImplementedError):
     """
     Custom error to display informative message when
-    a value is not suPPO_Neurosymbolicrted by some formats.
+    a value is not supported by some formats.
 
-    :param unsuPPO_Neurosymbolicrted_formats: A sequence of unsuPPO_Neurosymbolicrted formats,
+    :param unsupported_formats: A sequence of unsupported formats,
         for instance ``["stdout"]``.
     :param value_description: Description of the value that cannot be logged by this format.
     """
 
-    def __init__(self, unsuPPO_Neurosymbolicrted_formats: Sequence[str], value_description: str):
-        if len(unsuPPO_Neurosymbolicrted_formats) > 1:
-            format_str = f"formats {', '.join(unsuPPO_Neurosymbolicrted_formats)} are"
+    def __init__(self, unsupported_formats: Sequence[str], value_description: str):
+        if len(unsupported_formats) > 1:
+            format_str = f"formats {', '.join(unsupported_formats)} are"
         else:
-            format_str = f"format {unsuPPO_Neurosymbolicrted_formats[0]} is"
+            format_str = f"format {unsupported_formats[0]} is"
         super().__init__(
-            f"The {format_str} not suPPO_Neurosymbolicrted for the {value_description} value logged.\n"
+            f"The {format_str} not supported for the {value_description} value logged.\n"
             f"You can exclude formats via the `exclude` parameter of the logger's `record` function."
         )
 
@@ -181,16 +181,16 @@ class HumanOutputFormat(KVWriter, SeqWriter):
                 continue
 
             elif isinstance(value, Video):
-                raise FormatUnsuPPO_NeurosymbolicrtedError(["stdout", "log"], "video")
+                raise FormatUnsupportedError(["stdout", "log"], "video")
 
             elif isinstance(value, Figure):
-                raise FormatUnsuPPO_NeurosymbolicrtedError(["stdout", "log"], "figure")
+                raise FormatUnsupportedError(["stdout", "log"], "figure")
 
             elif isinstance(value, Image):
-                raise FormatUnsuPPO_NeurosymbolicrtedError(["stdout", "log"], "image")
+                raise FormatUnsupportedError(["stdout", "log"], "image")
 
             elif isinstance(value, HParam):
-                raise FormatUnsuPPO_NeurosymbolicrtedError(["stdout", "log"], "hparam")
+                raise FormatUnsupportedError(["stdout", "log"], "hparam")
 
             elif isinstance(value, float):
                 # Align left
@@ -289,13 +289,13 @@ class JSONOutputFormat(KVWriter):
     def write(self, key_values: Dict[str, Any], key_excluded: Dict[str, Tuple[str, ...]], step: int = 0) -> None:
         def cast_to_json_serializable(value: Any):
             if isinstance(value, Video):
-                raise FormatUnsuPPO_NeurosymbolicrtedError(["json"], "video")
+                raise FormatUnsupportedError(["json"], "video")
             if isinstance(value, Figure):
-                raise FormatUnsuPPO_NeurosymbolicrtedError(["json"], "figure")
+                raise FormatUnsupportedError(["json"], "figure")
             if isinstance(value, Image):
-                raise FormatUnsuPPO_NeurosymbolicrtedError(["json"], "image")
+                raise FormatUnsupportedError(["json"], "image")
             if isinstance(value, HParam):
-                raise FormatUnsuPPO_NeurosymbolicrtedError(["json"], "hparam")
+                raise FormatUnsupportedError(["json"], "hparam")
             if hasattr(value, "dtype"):
                 if value.shape == () or len(value) == 1:
                     # if value is a dimensionless numpy array or of length 1, serialize as a float
@@ -357,16 +357,16 @@ class CSVOutputFormat(KVWriter):
             value = key_values.get(key)
 
             if isinstance(value, Video):
-                raise FormatUnsuPPO_NeurosymbolicrtedError(["csv"], "video")
+                raise FormatUnsupportedError(["csv"], "video")
 
             elif isinstance(value, Figure):
-                raise FormatUnsuPPO_NeurosymbolicrtedError(["csv"], "figure")
+                raise FormatUnsupportedError(["csv"], "figure")
 
             elif isinstance(value, Image):
-                raise FormatUnsuPPO_NeurosymbolicrtedError(["csv"], "image")
+                raise FormatUnsupportedError(["csv"], "image")
 
             elif isinstance(value, HParam):
-                raise FormatUnsuPPO_NeurosymbolicrtedError(["csv"], "hparam")
+                raise FormatUnsupportedError(["csv"], "hparam")
 
             elif isinstance(value, str):
                 # escape quotechars by prepending them with another quotechar

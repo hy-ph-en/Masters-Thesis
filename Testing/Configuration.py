@@ -6,7 +6,7 @@ class test_metrics():
         #Normal Model Configurations
         self.epochs = 10                        #Number of training periods 
         self.render = False                     #Whether the rendering of the training is shown      
-        self.gamma = 0.99
+        self.gamma = 0.99                       #Higher values priorities furture benefit in the training cycle
         
         
         #Q Learning Specific                     
@@ -37,6 +37,8 @@ class test_metrics():
         
         
         #Neurosymbolic Specific 
+        'Complexity 1-10'
+        self.complexity = 5
         
         
         #Model Choice
@@ -44,7 +46,7 @@ class test_metrics():
         'Simple Neurosymbolic Learning Model - 2   '
         'PPO Model - 3                             '
         'PPO Neurosymbolic Model - 4               '
-        self.model = 3
+        self.model = 4
 
 
         #Policy Choice

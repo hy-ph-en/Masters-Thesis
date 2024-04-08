@@ -349,7 +349,7 @@ def save_to_pkl(path: Union[str, pathlib.Path, io.BufferedIOBase], obj: Any, ver
     :param verbose: Verbosity level: 0 for no output, 1 for info messages, 2 for debug messages
     """
     file = open_path(path, "w", verbose=verbose, suffix="pkl")
-    # Use protocol>=4 to suPPO_Neurosymbolicrt saving replay buffers >= 4Gb
+    # Use protocol>=4 to support saving replay buffers >= 4Gb
     # See https://docs.python.org/3/library/pickle.html
     pickle.dump(obj, file, protocol=pickle.HIGHEST_PROTOCOL)
     if isinstance(path, (str, pathlib.Path)):

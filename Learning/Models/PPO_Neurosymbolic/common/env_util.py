@@ -96,7 +96,7 @@ def make_vec_env(
                     env = gym.make(env_id, **env_kwargs)
             else:
                 env = env_id(**env_kwargs)
-                # Patch to suPPO_Neurosymbolicrt gym 0.21/0.26 and gymnasium
+                # Patch to support gym 0.21/0.26 and gymnasium
                 env = _patch_env(env)
 
             if seed is not None:
@@ -142,7 +142,7 @@ def make_atari_env(
 ) -> VecEnv:
     """
     Create a wrapped, monitored VecEnv for Atari.
-    It is a wrapper around ``make_vec_env`` that includes PPO_Neurosymbolic.common preprocessing for Atari games.
+    It is a wrapper around ``make_vec_env`` that includes PPO.common preprocessing for Atari games.
 
     :param env_id: either the env ID, the env class or a callable returning an env
     :param n_envs: the number of environments you wish to have in parallel

@@ -77,10 +77,10 @@ class NatureCNN(BaseFeaturesExtractor):
         assert is_image_space(observation_space, check_channels=False, normalized_image=normalized_image), (
             "You should use NatureCNN "
             f"only with images not with {observation_space}\n"
-            "(you are probably using `CnnPolicy` instead of `MlPPO_Neurosymboliclicy` or `MultiInputPolicy`)\n"
+            "(you are probably using `CnnPolicy` instead of `MlpPolicy` or `MultiInputPolicy`)\n"
             "If you are using a custom environment,\n"
             "please check it using our env checker:\n"
-            "https://stable-baselines3.readthedocs.io/en/master/PPO_Neurosymbolic.common/env_checker.html.\n"
+            "https://stable-baselines3.readthedocs.io/en/master/PPO.common/env_checker.html.\n"
             "If you are using `VecNormalize` or already normalized channel-first images "
             "you should pass `normalize_images=False`: \n"
             "https://stable-baselines3.readthedocs.io/en/master/guide/custom_env.html"

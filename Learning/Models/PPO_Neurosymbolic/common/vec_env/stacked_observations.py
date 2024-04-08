@@ -60,7 +60,7 @@ class StackedObservations(Generic[TObs]):
             self.stacked_obs = np.zeros((num_envs, *self.stacked_shape), dtype=observation_space.dtype)
         else:
             raise TypeError(
-                f"StackedObservations only suPPO_Neurosymbolicrts Box and Dict as observation spaces. {observation_space} was provided."
+                f"StackedObservations only supports Box and Dict as observation spaces. {observation_space} was provided."
             )
 
     @staticmethod

@@ -19,9 +19,9 @@ SelfOnPolicyAlgorithm = TypeVar("SelfOnPolicyAlgorithm", bound="OnPolicyAlgorith
 
 class OnPolicyAlgorithm(BaseAlgorithm):
     """
-    The base for On-Policy algorithms (ex: A2C/PPO_Neurosymbolic).
+    The base for On-Policy algorithms (ex: A2C/PPO).
 
-    :param policy: The policy model to use (MlPPO_Neurosymboliclicy, CnnPolicy, ...)
+    :param policy: The policy model to use (MlpPolicy, CnnPolicy, ...)
     :param env: The environment to learn from (if registered in Gym, can be str)
     :param learning_rate: The learning rate, it can be a function
         of the current progress remaining (from 1 to 0)
@@ -51,7 +51,7 @@ class OnPolicyAlgorithm(BaseAlgorithm):
     :param device: Device (cpu, cuda, ...) on which the code should be run.
         Setting it to auto, the code will be run on the GPU if possible.
     :param _init_setup_model: Whether or not to build the network at the creation of the instance
-    :param suPPO_Neurosymbolicrted_action_spaces: The action spaces suPPO_Neurosymbolicrted by the algorithm.
+    :param supported_action_spaces: The action spaces supported by the algorithm.
     """
 
     rollout_buffer: RolloutBuffer
@@ -80,7 +80,7 @@ class OnPolicyAlgorithm(BaseAlgorithm):
         seed: Optional[int] = None,
         device: Union[th.device, str] = "auto",
         _init_setup_model: bool = True,
-        suPPO_Neurosymbolicrted_action_spaces: Optional[Tuple[Type[spaces.Space], ...]] = None,
+        supported_action_spaces: Optional[Tuple[Type[spaces.Space], ...]] = None,
     ):
         super().__init__(
             policy=policy,
@@ -91,11 +91,11 @@ class OnPolicyAlgorithm(BaseAlgorithm):
             device=device,
             use_sde=use_sde,
             sde_sample_freq=sde_sample_freq,
-            suPPO_Neurosymbolicrt_multi_env=True,
+            support_multi_env=True,
             seed=seed,
             stats_window_size=stats_window_size,
             tensorboard_log=tensorboard_log,
-            suPPO_Neurosymbolicrted_action_spaces=suPPO_Neurosymbolicrted_action_spaces,
+            supported_action_spaces=supported_action_spaces,
         )
 
         self.n_steps = n_steps

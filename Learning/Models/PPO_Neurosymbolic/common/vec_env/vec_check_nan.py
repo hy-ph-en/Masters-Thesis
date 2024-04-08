@@ -29,7 +29,7 @@ class VecCheckNan(VecEnvWrapper):
         self._actions: np.ndarray
         self._observations: VecEnvObs
         if isinstance(venv.action_space, spaces.Dict):
-            raise NotImplementedError("VecCheckNan doesn't suPPO_Neurosymbolicrt dict action spaces")
+            raise NotImplementedError("VecCheckNan doesn't support dict action spaces")
 
     def step_async(self, actions: np.ndarray) -> None:
         self._check_val(event="step_async", actions=actions)
@@ -81,7 +81,7 @@ class VecCheckNan(VecEnvWrapper):
                 for idx, inner_val in enumerate(value):
                     found += self.check_array_value(f"{name}.{idx}", inner_val)
             else:
-                raise TypeError(f"UnsuPPO_Neurosymbolicrted observation type {type(value)}.")
+                raise TypeError(f"Unsupported observation type {type(value)}.")
 
         if found:
             self._user_warned = True

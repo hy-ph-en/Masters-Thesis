@@ -9,7 +9,7 @@ from Environment.Environment_handler import Environments
 
 
 def simple_reinforcemeant_learning(environment_object):
-    return 1
+
     metrics = test_metrics()
     
     #Variables

@@ -1,7 +1,7 @@
-"""PPO_Neurosymbolic.common aliases for type hints"""
+"""PPO.common aliases for type hints"""
 
 from enum import Enum
-from typing import TYPE_CHECKING, Any, Callable, Dict, List, NamedTuple, Optional, Protocol, SuPPO_NeurosymbolicrtsFloat, Tuple, Union
+from typing import TYPE_CHECKING, Any, Callable, Dict, List, NamedTuple, Optional, Protocol, SupportsFloat, Tuple, Union
 
 import gymnasium as gym
 import numpy as np
@@ -17,7 +17,7 @@ GymObs = Union[Tuple, Dict[str, Any], np.ndarray, int]
 GymResetReturn = Tuple[GymObs, Dict]
 AtariResetReturn = Tuple[np.ndarray, Dict[str, Any]]
 GymStepReturn = Tuple[GymObs, float, bool, bool, Dict]
-AtariStepReturn = Tuple[np.ndarray, SuPPO_NeurosymbolicrtsFloat, bool, bool, Dict[str, Any]]
+AtariStepReturn = Tuple[np.ndarray, SupportsFloat, bool, bool, Dict[str, Any]]
 TensorDict = Dict[str, th.Tensor]
 OptimizerStateDict = Dict[str, Any]
 MaybeCallback = Union[None, Callable, List["BaseCallback"], "BaseCallback"]

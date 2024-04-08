@@ -65,7 +65,7 @@ def obs_space_info(obs_space: spaces.Space) -> Tuple[List[str], Dict[Any, Tuple[
     elif isinstance(obs_space, spaces.Tuple):
         subspaces = {i: space for i, space in enumerate(obs_space.spaces)}  # type: ignore[assignment]
     else:
-        assert not hasattr(obs_space, "spaces"), f"UnsuPPO_Neurosymbolicrted structured space '{type(obs_space)}'"
+        assert not hasattr(obs_space, "spaces"), f"Unsupported structured space '{type(obs_space)}'"
         subspaces = {None: obs_space}  # type: ignore[assignment]
     keys = []
     shapes = {}

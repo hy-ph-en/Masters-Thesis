@@ -13,7 +13,7 @@ def is_image_space_channels_first(observation_space: spaces.Box) -> bool:
     is channels-first (CxHxW, True) or channels-last (HxWxC, False).
 
     Use a heuristic that channel dimension is the smallest of the three.
-    If second dimension is smallest, raise an exception (no suPPO_Neurosymbolicrt).
+    If second dimension is smallest, raise an exception (no support).
 
     :param observation_space:
     :return: True if observation space is channels-first image, False if channels-last.
@@ -164,7 +164,7 @@ def get_obs_shape(
         return {key: get_obs_shape(subspace) for (key, subspace) in observation_space.spaces.items()}  # type: ignore[misc]
 
     else:
-        raise NotImplementedError(f"{observation_space} observation space is not suPPO_Neurosymbolicrted")
+        raise NotImplementedError(f"{observation_space} observation space is not supported")
 
 
 def get_flattened_obs_dim(observation_space: spaces.Space) -> int:
@@ -205,16 +205,16 @@ def get_action_dim(action_space: spaces.Space) -> int:
         # Number of binary actions
         assert isinstance(
             action_space.n, int
-        ), f"Multi-dimensional MultiBinary({action_space.n}) action space is not suPPO_Neurosymbolicrted. You can flatten it instead."
+        ), f"Multi-dimensional MultiBinary({action_space.n}) action space is not supported. You can flatten it instead."
         return int(action_space.n)
     else:
-        raise NotImplementedError(f"{action_space} action space is not suPPO_Neurosymbolicrted")
+        raise NotImplementedError(f"{action_space} action space is not supported")
 
 
 def check_for_nested_spaces(obs_space: spaces.Space) -> None:
     """
     Make sure the observation space does not have nested spaces (Dicts/Tuples inside Dicts/Tuples).
-    If so, raise an Exception informing that there is no suPPO_Neurosymbolicrt for this.
+    If so, raise an Exception informing that there is no support for this.
 
     :param obs_space: an observation space
     """
@@ -223,5 +223,5 @@ def check_for_nested_spaces(obs_space: spaces.Space) -> None:
         for sub_space in sub_spaces:
             if isinstance(sub_space, (spaces.Dict, spaces.Tuple)):
                 raise NotImplementedError(
-                    "Nested observation spaces are not suPPO_Neurosymbolicrted (Tuple/Dict space inside Tuple/Dict space)."
+                    "Nested observation spaces are not supported (Tuple/Dict space inside Tuple/Dict space)."
                 )

@@ -79,7 +79,7 @@ def update_learning_rate(optimizer: th.optim.Optimizer, learning_rate: float) ->
 
 def get_schedule_fn(value_schedule: Union[Schedule, float]) -> Schedule:
     """
-    Transform (if needed) learning rate and clip range (for PPO_Neurosymbolic)
+    Transform (if needed) learning rate and clip range (for PPO)
     to callable.
 
     :param value_schedule: Constant value of schedule function
@@ -138,11 +138,11 @@ def get_device(device: Union[th.device, str] = "auto") -> th.device:
     """
     Retrieve PyTorch device.
     It checks that the requested device is available first.
-    For now, it suPPO_Neurosymbolicrts only cpu and cuda.
+    For now, it supports only cpu and cuda.
     By default, it tries to use the gpu.
 
     :param device: One for 'auto', 'cuda', 'cpu'
-    :return: SuPPO_Neurosymbolicrted Pytorch device
+    :return: Supported Pytorch device
     """
     # Cuda by default
     if device == "auto":

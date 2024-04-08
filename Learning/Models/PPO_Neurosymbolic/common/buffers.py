@@ -204,7 +204,7 @@ class ReplayBuffer(BaseBuffer):
         # see https://github.com/DLR-RM/stable-baselines3/issues/934
         if optimize_memory_usage and handle_timeout_termination:
             raise ValueError(
-                "ReplayBuffer does not suPPO_Neurosymbolicrt optimize_memory_usage = True "
+                "ReplayBuffer does not support optimize_memory_usage = True "
                 "and handle_timeout_termination = True simultaneously."
             )
         self.optimize_memory_usage = optimize_memory_usage
@@ -341,11 +341,11 @@ class ReplayBuffer(BaseBuffer):
 
 class RolloutBuffer(BaseBuffer):
     """
-    Rollout buffer used in on-policy algorithms like A2C/PPO_Neurosymbolic.
+    Rollout buffer used in on-policy algorithms like A2C/PPO.
     It corresponds to ``buffer_size`` transitions collected
     using the current policy.
     This experience will be discarded after the policy update.
-    In order to use PPO_Neurosymbolic objective, we also store the current value of each state
+    In order to use PPO objective, we also store the current value of each state
     and the log probability of each taken action.
 
     The term rollout here refers to the model-free notion and should not
@@ -561,7 +561,7 @@ class DictReplayBuffer(ReplayBuffer):
         if psutil is not None:
             mem_available = psutil.virtual_memory().available
 
-        assert not optimize_memory_usage, "DictReplayBuffer does not suPPO_Neurosymbolicrt optimize_memory_usage"
+        assert not optimize_memory_usage, "DictReplayBuffer does not support optimize_memory_usage"
         # disabling as this adds quite a bit of complexity
         # https://github.com/DLR-RM/stable-baselines3/pull/243#discussion_r531535702
         self.optimize_memory_usage = optimize_memory_usage
@@ -694,13 +694,13 @@ class DictReplayBuffer(ReplayBuffer):
 
 class DictRolloutBuffer(RolloutBuffer):
     """
-    Dict Rollout buffer used in on-policy algorithms like A2C/PPO_Neurosymbolic.
+    Dict Rollout buffer used in on-policy algorithms like A2C/PPO.
     Extends the RolloutBuffer to use dictionary observations
 
     It corresponds to ``buffer_size`` transitions collected
     using the current policy.
     This experience will be discarded after the policy update.
-    In order to use PPO_Neurosymbolic objective, we also store the current value of each state
+    In order to use PPO objective, we also store the current value of each state
     and the log probability of each taken action.
 
     The term rollout here refers to the model-free notion and should not

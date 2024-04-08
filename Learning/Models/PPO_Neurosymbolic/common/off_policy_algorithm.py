@@ -28,7 +28,7 @@ class OffPolicyAlgorithm(BaseAlgorithm):
     """
     The base for Off-Policy algorithms (ex: SAC/TD3)
 
-    :param policy: The policy model to use (MlPPO_Neurosymboliclicy, CnnPolicy, ...)
+    :param policy: The policy model to use (MlpPolicy, CnnPolicy, ...)
     :param env: The environment to learn from
                 (if registered in Gym, can be str. Can be None for loading trained models)
     :param learning_rate: learning rate for the optimizer,
@@ -60,7 +60,7 @@ class OffPolicyAlgorithm(BaseAlgorithm):
     :param device: Device on which the code should run.
         By default, it will try to use a Cuda compatible device and fallback to cpu
         if it is not possible.
-    :param suPPO_Neurosymbolicrt_multi_env: Whether the algorithm suPPO_Neurosymbolicrts training
+    :param support_multi_env: Whether the algorithm supports training
         with multiple environments (as in A2C)
     :param monitor_wrapper: When creating an environment, whether to wrap it
         or not in a Monitor wrapper.
@@ -71,8 +71,8 @@ class OffPolicyAlgorithm(BaseAlgorithm):
         Default: -1 (only sample at the beginning of the rollout)
     :param use_sde_at_warmup: Whether to use gSDE instead of uniform sampling
         during the warm up phase (before learning starts)
-    :param sde_suPPO_Neurosymbolicrt: Whether the model suPPO_Neurosymbolicrt gSDE or not
-    :param suPPO_Neurosymbolicrted_action_spaces: The action spaces suPPO_Neurosymbolicrted by the algorithm.
+    :param sde_support: Whether the model support gSDE or not
+    :param supported_action_spaces: The action spaces supported by the algorithm.
     """
 
     actor: th.nn.Module
@@ -98,14 +98,14 @@ class OffPolicyAlgorithm(BaseAlgorithm):
         tensorboard_log: Optional[str] = None,
         verbose: int = 0,
         device: Union[th.device, str] = "auto",
-        suPPO_Neurosymbolicrt_multi_env: bool = False,
+        support_multi_env: bool = False,
         monitor_wrapper: bool = True,
         seed: Optional[int] = None,
         use_sde: bool = False,
         sde_sample_freq: int = -1,
         use_sde_at_warmup: bool = False,
-        sde_suPPO_Neurosymbolicrt: bool = True,
-        suPPO_Neurosymbolicrted_action_spaces: Optional[Tuple[Type[spaces.Space], ...]] = None,
+        sde_support: bool = True,
+        supported_action_spaces: Optional[Tuple[Type[spaces.Space], ...]] = None,
     ):
         super().__init__(
             policy=policy,
@@ -116,12 +116,12 @@ class OffPolicyAlgorithm(BaseAlgorithm):
             tensorboard_log=tensorboard_log,
             verbose=verbose,
             device=device,
-            suPPO_Neurosymbolicrt_multi_env=suPPO_Neurosymbolicrt_multi_env,
+            support_multi_env=support_multi_env,
             monitor_wrapper=monitor_wrapper,
             seed=seed,
             use_sde=use_sde,
             sde_sample_freq=sde_sample_freq,
-            suPPO_Neurosymbolicrted_action_spaces=suPPO_Neurosymbolicrted_action_spaces,
+            supported_action_spaces=supported_action_spaces,
         )
         self.buffer_size = buffer_size
         self.batch_size = batch_size
@@ -140,7 +140,7 @@ class OffPolicyAlgorithm(BaseAlgorithm):
         self.train_freq = train_freq
 
         # Update policy keyword arguments
-        if sde_suPPO_Neurosymbolicrt:
+        if sde_support:
             self.policy_kwargs["use_sde"] = self.use_sde
         # For gSDE only
         self.use_sde_at_warmup = use_sde_at_warmup

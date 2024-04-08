@@ -67,7 +67,7 @@ class BaseAlgorithm(ABC):
     """
     The base of RL algorithms
 
-    :param policy: The policy model to use (MlPPO_Neurosymboliclicy, CnnPolicy, ...)
+    :param policy: The policy model to use (MlpPolicy, CnnPolicy, ...)
     :param env: The environment to learn from
                 (if registered in Gym, can be str. Can be None for loading trained models)
     :param learning_rate: learning rate for the optimizer,
@@ -81,7 +81,7 @@ class BaseAlgorithm(ABC):
     :param device: Device on which the code should run.
         By default, it will try to use a Cuda compatible device and fallback to cpu
         if it is not possible.
-    :param suPPO_Neurosymbolicrt_multi_env: Whether the algorithm suPPO_Neurosymbolicrts training
+    :param support_multi_env: Whether the algorithm supports training
         with multiple environments (as in A2C)
     :param monitor_wrapper: When creating an environment, whether to wrap it
         or not in a Monitor wrapper.
@@ -90,7 +90,7 @@ class BaseAlgorithm(ABC):
         instead of action noise exploration (default: False)
     :param sde_sample_freq: Sample a new noise matrix every n steps when using gSDE
         Default: -1 (only sample at the beginning of the rollout)
-    :param suPPO_Neurosymbolicrted_action_spaces: The action spaces suPPO_Neurosymbolicrted by the algorithm.
+    :param supported_action_spaces: The action spaces supported by the algorithm.
     """
 
     # Policy aliases (see _get_policy_from_name())
@@ -112,12 +112,12 @@ class BaseAlgorithm(ABC):
         tensorboard_log: Optional[str] = None,
         verbose: int = 0,
         device: Union[th.device, str] = "auto",
-        suPPO_Neurosymbolicrt_multi_env: bool = False,
+        support_multi_env: bool = False,
         monitor_wrapper: bool = True,
         seed: Optional[int] = None,
         use_sde: bool = False,
         sde_sample_freq: int = -1,
-        suPPO_Neurosymbolicrted_action_spaces: Optional[Tuple[Type[spaces.Space], ...]] = None,
+        supported_action_spaces: Optional[Tuple[Type[spaces.Space], ...]] = None,
     ) -> None:
         if isinstance(policy, str):
             self.policy_class = self._get_policy_from_name(policy)
@@ -176,19 +176,19 @@ class BaseAlgorithm(ABC):
             # get VecNormalize object if needed
             self._vec_normalize_env = unwrap_vec_normalize(env)
 
-            if suPPO_Neurosymbolicrted_action_spaces is not None:
-                assert isinstance(self.action_space, suPPO_Neurosymbolicrted_action_spaces), (
-                    f"The algorithm only suPPO_Neurosymbolicrts {suPPO_Neurosymbolicrted_action_spaces} as action spaces "
+            if supported_action_spaces is not None:
+                assert isinstance(self.action_space, supported_action_spaces), (
+                    f"The algorithm only supports {supported_action_spaces} as action spaces "
                     f"but {self.action_space} was provided"
                 )
 
-            if not suPPO_Neurosymbolicrt_multi_env and self.n_envs > 1:
+            if not support_multi_env and self.n_envs > 1:
                 raise ValueError(
-                    "Error: the model does not suPPO_Neurosymbolicrt multiple envs; it requires " "a single vectorized environment."
+                    "Error: the model does not support multiple envs; it requires " "a single vectorized environment."
                 )
 
-            # Catch PPO_Neurosymbolic.common mistake: using MlPPO_Neurosymboliclicy/CnnPolicy instead of MultiInputPolicy
-            if policy in ["MlPPO_Neurosymboliclicy", "CnnPolicy"] and isinstance(self.observation_space, spaces.Dict):
+            # Catch PPO.common mistake: using MlpPolicy/CnnPolicy instead of MultiInputPolicy
+            if policy in ["MlpPolicy", "CnnPolicy"] and isinstance(self.observation_space, spaces.Dict):
                 raise ValueError(f"You must use `MultiInputPolicy` when working with dict observation space, not {policy}")
 
             if self.use_sde and not isinstance(self.action_space, spaces.Box):
@@ -212,7 +212,7 @@ class BaseAlgorithm(ABC):
         :return: The wrapped environment.
         """
         if not isinstance(env, VecEnv):
-            # Patch to suPPO_Neurosymbolicrt gym 0.21/0.26 and gymnasium
+            # Patch to support gym 0.21/0.26 and gymnasium
             env = _patch_env(env)
             if not is_wrapped(env, Monitor) and monitor_wrapper:
                 if verbose >= 1:
@@ -222,7 +222,7 @@ class BaseAlgorithm(ABC):
                 print("Wrapping the env in a DummyVecEnv.")
             env = DummyVecEnv([lambda: env])  # type: ignore[list-item, return-value]
 
-        # Make sure that dict-spaces are not nested (not suPPO_Neurosymbolicrted)
+        # Make sure that dict-spaces are not nested (not supported)
         check_for_nested_spaces(env.observation_space)
 
         if not is_vecenv_wrapped(env, VecTransposeImage):
@@ -325,7 +325,7 @@ class BaseAlgorithm(ABC):
         Get a policy class from its name representation.
 
         The goal here is to standardize policy naming, e.g.
-        all algorithms can call upon "MlPPO_Neurosymboliclicy" or "CnnPolicy",
+        all algorithms can call upon "MlpPolicy" or "CnnPolicy",
         and they receive respective policies that work for them.
 
         :param policy_name: Alias of the policy
@@ -523,7 +523,7 @@ class BaseAlgorithm(ABC):
 
         :param total_timesteps: The total number of samples (env steps) to train on
         :param callback: callback(s) called at every step with state of the algorithm.
-        :param log_interval: for on-policy algos (e.g., PPO_Neurosymbolic, A2C, ...) this is the number of
+        :param log_interval: for on-policy algos (e.g., PPO, A2C, ...) this is the number of
             training iterations (i.e., log_interval * n_steps * n_envs timesteps) before logging;
             for off-policy algos (e.g., TD3, SAC, ...) this is the number of episodes before
             logging.
@@ -611,7 +611,7 @@ class BaseAlgorithm(ABC):
                 raise ValueError(f"Key {name} is an invalid object name.") from e
 
             if isinstance(attr, th.optim.Optimizer):
-                # Optimizers do not suPPO_Neurosymbolicrt "strict" keyword...
+                # Optimizers do not support "strict" keyword...
                 # Seems like they will just replace the whole
                 # optimizer state with the given one.
                 # On top of this, optimizer state-dict

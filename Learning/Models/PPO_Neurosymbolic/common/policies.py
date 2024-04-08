@@ -308,7 +308,7 @@ class BasePolicy(BaseModel, ABC):
     @staticmethod
     def init_weights(module: nn.Module, gain: float = 1) -> None:
         """
-        Orthogonal initialization (used in PPO_Neurosymbolic and A2C)
+        Orthogonal initialization (used in PPO and A2C)
         """
         if isinstance(module, (nn.Linear, nn.Conv2d)):
             nn.init.orthogonal_(module.weight, gain=gain)
@@ -351,8 +351,8 @@ class BasePolicy(BaseModel, ABC):
         # Switch to eval mode (this affects batch norm / dropout)
         self.set_training_mode(False)
 
-        # Check for PPO_Neurosymbolic.common mistake that the user does not mix Gym/VecEnv API
-        # Tuple obs are not suPPO_Neurosymbolicrted by SB3, so we can safely do that check
+        # Check for PPO.common mistake that the user does not mix Gym/VecEnv API
+        # Tuple obs are not supported by SB3, so we can safely do that check
         if isinstance(observation, tuple) and len(observation) == 2 and isinstance(observation[1], dict):
             raise ValueError(
                 "You have passed a tuple to the predict() function instead of a Numpy array or a Dict. "
@@ -416,7 +416,7 @@ class BasePolicy(BaseModel, ABC):
 class ActorCriticPolicy(BasePolicy):
     """
     Policy class for actor-critic algorithms (has both policy and value prediction).
-    Used by A2C, PPO_Neurosymbolic and the likes.
+    Used by A2C, PPO and the likes.
 
     :param observation_space: Observation space
     :param action_space: Action space
@@ -604,7 +604,7 @@ class ActorCriticPolicy(BasePolicy):
         elif isinstance(self.action_dist, (CategoricalDistribution, MultiCategoricalDistribution, BernoulliDistribution)):
             self.action_net = self.action_dist.proba_distribution_net(latent_dim=latent_dim_pi)
         else:
-            raise NotImplementedError(f"UnsuPPO_Neurosymbolicrted distribution '{self.action_dist}'.")
+            raise NotImplementedError(f"Unsupported distribution '{self.action_dist}'.")
 
         self.value_net = nn.Linear(self.mlp_extractor.latent_dim_vf, 1)
         # Init weights: use orthogonal initialization
@@ -736,7 +736,8 @@ class ActorCriticPolicy(BasePolicy):
             latent_vf = self.mlp_extractor.forward_critic(vf_features)
         distribution = self._get_action_dist_from_latent(latent_pi)
         log_prob = distribution.log_prob(actions)
-        values = self.value_net(latent_vf)
+        
+        values = self.value_net(latent_vf)          #Estimated Value of Said action - Predicted Best Outcome
         entropy = distribution.entropy()
         return values, log_prob, entropy
 
@@ -766,7 +767,7 @@ class ActorCriticPolicy(BasePolicy):
 class ActorCriticCnnPolicy(ActorCriticPolicy):
     """
     CNN policy class for actor-critic algorithms (has both policy and value prediction).
-    Used by A2C, PPO_Neurosymbolic and the likes.
+    Used by A2C, PPO and the likes.
 
     :param observation_space: Observation space
     :param action_space: Action space
@@ -839,7 +840,7 @@ class ActorCriticCnnPolicy(ActorCriticPolicy):
 class MultiInputActorCriticPolicy(ActorCriticPolicy):
     """
     MultiInputActorClass policy class for actor-critic algorithms (has both policy and value prediction).
-    Used by A2C, PPO_Neurosymbolic and the likes.
+    Used by A2C, PPO and the likes.
 
     :param observation_space: Observation space (Tuple)
     :param action_space: Action space
@@ -913,7 +914,7 @@ class ContinuousCritic(BaseModel):
     """
     Critic network(s) for DDPG/SAC/TD3.
     It represents the action-state value function (Q-value function).
-    Compared to A2C/PPO_Neurosymbolic critics, this one represents the Q-value
+    Compared to A2C/PPO critics, this one represents the Q-value
     and takes the continuous action as input. It is concatenated with the state
     and then fed to the network which outputs a single value: Q(s, a).
     For more recent algorithms like SAC/TD3, multiple networks

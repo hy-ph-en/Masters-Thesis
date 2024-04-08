@@ -15,7 +15,7 @@ from Learning.Models.PPO_Neurosymbolic.common.vec_env.base_vec_env import VecEnv
 class VecNormalize(VecEnvWrapper):
     """
     A moving average, normalizing wrapper for vectorized environment.
-    has suPPO_Neurosymbolicrt for saving/loading moving average,
+    has support for saving/loading moving average,
 
     :param venv: the vectorized environment to wrap
     :param training: Whether to update or not the moving average
@@ -109,7 +109,7 @@ class VecNormalize(VecEnvWrapper):
             for obs_key in self.norm_obs_keys:
                 if not isinstance(self.observation_space.spaces[obs_key], spaces.Box):
                     raise ValueError(
-                        f"VecNormalize only suPPO_Neurosymbolicrts `gym.spaces.Box` observation spaces but {obs_key} "
+                        f"VecNormalize only supports `gym.spaces.Box` observation spaces but {obs_key} "
                         f"is of type {self.observation_space.spaces[obs_key]}. "
                         "You should probably explicitely pass the observation keys "
                         " that should be normalized via the `norm_obs_keys` parameter."
@@ -121,7 +121,7 @@ class VecNormalize(VecEnvWrapper):
 
         else:
             raise ValueError(
-                "VecNormalize only suPPO_Neurosymbolicrts `gym.spaces.Box` and `gym.spaces.Dict` observation spaces, "
+                "VecNormalize only supports `gym.spaces.Box` and `gym.spaces.Dict` observation spaces, "
                 f"not {self.observation_space}"
             )
 
