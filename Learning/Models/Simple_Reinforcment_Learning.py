@@ -100,8 +100,7 @@ def evaluate_policy(Q):
     episodes = test_metric.epochs
     bins = test_metric.bins
     
-    env = Environments().environmental_choice() #Getting Mountain Car Object
-    env = env.environment()                     #Initialising environment
+    env = Environments().environmental_choice() #Getting Env Object
 
     total_rewards = 0
     

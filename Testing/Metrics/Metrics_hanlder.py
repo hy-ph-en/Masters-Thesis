@@ -5,12 +5,12 @@ from Testing.Metrics.Q_Learning_Specific import Q_learning_specific
 
 Reinforcement_Learning_models = {
     1 : "Simple Reinforcement Learning Model",
-    2 : "Neurosymbolic PPO"
+    3 : "PPO"
 }
 
 Neurosybolic_models = {
     2 : "Simple Neurosymbolic Learning Model",
-    4 : "PPO"
+    4 : "Neurosymbolic PPO"
 }
 
 
