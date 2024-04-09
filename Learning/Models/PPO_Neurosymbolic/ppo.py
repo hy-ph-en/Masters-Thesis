@@ -6,11 +6,11 @@ import torch as th
 from gymnasium import spaces
 from torch.nn import functional as F
 
-from Learning.Models.PPO_Neurosymbolic.common.buffers import RolloutBuffer
-from Learning.Models.PPO_Neurosymbolic.common.on_policy_algorithm import OnPolicyAlgorithm
-from Learning.Models.PPO_Neurosymbolic.common.policies import ActorCriticCnnPolicy, ActorCriticPolicy, BasePolicy, MultiInputActorCriticPolicy
-from Learning.Models.PPO_Neurosymbolic.common.type_aliases import GymEnv, MaybeCallback, Schedule
-from Learning.Models.PPO_Neurosymbolic.common.utils import explained_variance, get_schedule_fn
+from Learning.Models.common.buffers import RolloutBuffer
+from Learning.Models.common.on_policy_algorithm import OnPolicyAlgorithm
+from Learning.Models.common.policies import ActorCriticCnnPolicy, ActorCriticPolicy, BasePolicy, MultiInputActorCriticPolicy
+from Learning.Models.common.type_aliases import GymEnv, MaybeCallback, Schedule
+from Learning.Models.common.utils import explained_variance, get_schedule_fn
 
 SelfPPO = TypeVar("SelfPPO", bound="PPO")
 

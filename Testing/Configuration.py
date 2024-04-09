@@ -46,7 +46,7 @@ class test_metrics():
         'Simple Neurosymbolic Learning Model - 2   '
         'PPO Model - 3                             '
         'PPO Neurosymbolic Model - 4               '
-        self.model = 4
+        self.model = 3
 
 
         #Policy Choice

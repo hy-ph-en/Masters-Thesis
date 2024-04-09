@@ -1,4 +1,4 @@
-from Learning.Models.PPO.common.env_util import make_vec_env
+from Learning.Models.common.env_util import make_vec_env
 from Learning.Models.PPO.ppo import PPO
 from Testing.Configuration import env_metrics, test_metrics
 

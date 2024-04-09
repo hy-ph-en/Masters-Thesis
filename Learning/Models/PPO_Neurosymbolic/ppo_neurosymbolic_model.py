@@ -1,4 +1,4 @@
-from Learning.Models.PPO_Neurosymbolic.common.env_util import make_vec_env
+from Learning.Models.common.env_util import make_vec_env
 from Learning.Models.PPO_Neurosymbolic.ppo import PPO
 from Testing.Configuration import env_metrics, test_metrics
 
