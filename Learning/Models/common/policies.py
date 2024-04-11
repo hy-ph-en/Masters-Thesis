@@ -806,7 +806,45 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
             optimizer_class,
             optimizer_kwargs,
         )    
+    
+    def evaluate_actions(self, obs: PyTorchObs, actions: th.Tensor) -> Tuple[th.Tensor, th.Tensor, Optional[th.Tensor]]:
+        """
+        Evaluate actions according to the current policy,
+        given the observations.
 
+        :param obs: Observation
+        :param actions: Actions
+        :return: estimated value, log likelihood of taking those actions
+            and entropy of the action distribution.
+        """
+        # Preprocess the observation if needed
+        
+        #Policy Call
+        from Learning.Learning_handler import learning_handler
+        policy = learning_handler().policy_hanlder()
+        
+        features = self.extract_features(obs)
+        
+        if self.share_features_extractor:
+            latent_pi, latent_vf = self.mlp_extractor(features)
+            #print(policy(features, latent_pi))
+        else:
+            pi_features, vf_features = features
+            latent_pi = self.mlp_extractor.forward_actor(pi_features)
+            latent_vf = self.mlp_extractor.forward_critic(vf_features)
+            
+            print(policy(latent_pi, latent_pi))
+        distribution = self._get_action_dist_from_latent(latent_pi)
+        log_prob = distribution.log_prob(actions)
+        print(features)
+        print(latent_pi)
+        
+        
+        values = self.value_net(latent_vf)          #Estimated Value of Said action - Predicted Best Outcome
+        entropy = distribution.entropy()
+        return values, log_prob, entropy
+        
+    
 ###################################
 
 

@@ -29,16 +29,30 @@ class test_metrics():
         'MlpPolicy - Multi-Layer Perceptron (MLP) Policy                 '
         'CnnPolicy - Convolutional Neural Network                        '
         'MultiInputPolicy - Multi-actor Policy                           '
+        'NeuroPolicy - Neurosymbolic Policy                              '
         
-        self.learning_policy = "MlpPolicy"                                          #PPO passed Learning Policy 
+        self.learning_policy = "NeuroPolicy"                                          #PPO passed Learning Policy 
 
-        'verbose 0-3  : increasing amounts of explaination for the output'          #Likely become legacy as the project processes
+        'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
         
         
         #Neurosymbolic Specific 
         'Complexity 1-10'
-        self.complexity = 5
+        self.complexity = 5                        #Max Complexity of Result
+        self.iterations = 40                       #Number of iterations before giving a result
+        self.precision = 64                        #How percise the solution should be - 64 Highest
+        
+        #-Operators-
+        'Binary Operators - "+", "*", "/"       '
+        self.binary_operators = ["+", "*", "/"]
+        'Unary Operators  - "cos", "exp", "sin" '
+        self.unary_operators =  [
+            "cos",
+            "exp",
+            "sin",
+            "inv(x) = 1/x",
+        ]
         
         
         #Model Choice
@@ -46,11 +60,11 @@ class test_metrics():
         'Simple Neurosymbolic Learning Model - 2   '
         'PPO Model - 3                             '
         'PPO Neurosymbolic Model - 4               '
-        self.model = 3
+        self.model = 4
 
 
         #Policy Choice
-        'Symbolic Regression - 1                   '
+        'Symbolic Regression PSYR - 1                   '
         self.policy = 1
         
         #The Complexity in the Created Outcome

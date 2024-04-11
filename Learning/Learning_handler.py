@@ -1,6 +1,6 @@
 from Learning.Models.Simple_Reinforcment_Learning import simple_reinforcemeant_learning
 from Learning.Models.Simple_Neurosymbolic import simple_neurosymbolic
-from Learning.Policy_Grabbers.Symbolic_Regression import symbolic_regression
+from Learning.Policy_Grabbers.Symbolic_Regression import symbolic_reg
 from Environment.Environment_handler import Environments
 from Learning.Models.PPO.ppo_model import ppo_model
 from Learning.Models.PPO_Neurosymbolic.ppo_neurosymbolic_model import ppo_neurosymbolic_model
@@ -25,7 +25,7 @@ class learning_handler:
         '4 - ppo_neurosymbolic              '
         
         #Policy Grabbers
-        self.symbolicregression = symbolic_regression()
+        '1 - Symbolic Regression PSYR'
         
     def model_choice(self):
         #Model
@@ -41,14 +41,13 @@ class learning_handler:
         
         #Default is the simple reinforcement learning model
         return (model_dict.get(model, simple_reinforcemeant_learning))(self.env)
-    
-    
+
     def policy_hanlder(self):
         #List of Policies
         policy_dict = {
-            1 : self.symbolicregression
+            1 : symbolic_reg().symbolic_regression
         }
         
         
         #Default is to return symbolic regression
-        return policy_dict.get(self.policy , self.symbolicregression)
+        return policy_dict.get(self.policy , symbolic_reg().symbolic_regression)
