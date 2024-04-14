@@ -4,6 +4,8 @@
 import pysr
 from pysr import PySRRegressor
 from Testing.Configuration import test_metrics
+from matplotlib import pyplot as plt 
+
 
 class symbolic_reg:
     
@@ -24,11 +26,16 @@ class symbolic_reg:
         binary_operators=self.binary_operators,
         unary_operators=self.unary_operators,
         extra_sympy_mappings={"inv": lambda x: 1 / x},
-        # ^ Define operator for SymPy as well
+        progress=False,
+        verbosity=0,
         elementwise_loss="loss(prediction, target) = (prediction - target)^2",
         # ^ Custom loss function (julia syntax)
         )
         
         model.fit(features, predictions)
         
-        return model.sympy()
+        found_prediction = model.predict(features)
+        
+        #print(model.sympy())
+        
+        return found_prediction

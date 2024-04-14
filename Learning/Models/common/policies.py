@@ -11,6 +11,7 @@ import numpy as np
 import torch as th
 from gymnasium import spaces
 from torch import nn
+import torch
 
 from Learning.Models.common.distributions import (
     BernoulliDistribution,
@@ -32,6 +33,7 @@ from Learning.Models.common.torch_layers import (
 )
 from Learning.Models.common.type_aliases import PyTorchObs, Schedule
 from Learning.Models.common.utils import get_device, is_vectorized_observation, obs_as_tensor
+from Testing.Configuration import test_metrics
 
 SelfBaseModel = TypeVar("SelfBaseModel", bound="BaseModel")
 
@@ -806,6 +808,7 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
             optimizer_class,
             optimizer_kwargs,
         )    
+        self.timestep = 0
     
     def evaluate_actions(self, obs: PyTorchObs, actions: th.Tensor) -> Tuple[th.Tensor, th.Tensor, Optional[th.Tensor]]:
         """
@@ -822,23 +825,41 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
         #Policy Call
         from Learning.Learning_handler import learning_handler
         policy = learning_handler().policy_hanlder()
+        neurosymbolic_timestep = test_metrics().neurostep
+        self.timestep += 1
+        print(self.timestep)
+        
         
         features = self.extract_features(obs)
         
         if self.share_features_extractor:
             latent_pi, latent_vf = self.mlp_extractor(features)
-            #print(policy(features, latent_pi))
+            
+            if neurosymbolic_timestep % self.timestep == 0:
+                policy_outcome = policy(features.detach(), latent_pi.detach())
+                
         else:
             pi_features, vf_features = features
             latent_pi = self.mlp_extractor.forward_actor(pi_features)
             latent_vf = self.mlp_extractor.forward_critic(vf_features)
             
-            print(policy(latent_pi, latent_pi))
-        distribution = self._get_action_dist_from_latent(latent_pi)
-        log_prob = distribution.log_prob(actions)
-        print(features)
-        print(latent_pi)
+            if neurosymbolic_timestep % self.timestep == 0:
+                policy_outcome = policy(pi_features.detach(), latent_pi.detach()) 
         
+        print(type(policy_outcome))
+        print(type(latent_pi))
+        print(type(torch.from_numpy(policy_outcome)))
+        print(policy_outcome)
+        print(latent_pi)
+        print(torch.from_numpy(policy_outcome))
+        print(torch.tanh(torch.from_numpy(policy_outcome)))
+        print(len(latent_pi))
+        policy_outcome = torch.from_numpy(len(latent_pi[0]), policy_outcome, requires_grad=True)
+        print(torch.tanh(policy_outcome))
+        distribution = self._get_action_dist_from_latent(torch.tanh(policy_outcome))
+        log_prob = distribution.log_prob(actions)
+        
+
         
         values = self.value_net(latent_vf)          #Estimated Value of Said action - Predicted Best Outcome
         entropy = distribution.entropy()

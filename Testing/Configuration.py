@@ -40,7 +40,8 @@ class test_metrics():
         #Neurosymbolic Specific 
         'Complexity 1-10'
         self.complexity = 5                        #Max Complexity of Result
-        self.iterations = 40                       #Number of iterations before giving a result
+        self.iterations = 2                        #Number of iterations before giving a result
+        self.neurostep = 1000                      #How many stpes the program should run through before preforming symbolic regression
         self.precision = 64                        #How percise the solution should be - 64 Highest
         
         #-Operators-
