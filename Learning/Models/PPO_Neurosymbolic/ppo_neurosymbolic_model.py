@@ -1,7 +1,7 @@
 from Learning.Models.common.env_util import make_vec_env
 from Learning.Models.PPO_Neurosymbolic.ppo import PPO
 from Testing.Configuration import env_metrics, test_metrics
-
+import torch
 
 def ppo_neurosymbolic_model(env):
     
@@ -15,9 +15,12 @@ def ppo_neurosymbolic_model(env):
     batch_size = test_metric.batch_size
     
     steps= env_metrics().number_of_steps
+
+    #GPU Acceleration
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     #Model Creation
-    model = PPO(learning_policy, env, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size)
+    model = PPO(learning_policy, env, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size, device=device)
     
     #Model Training
     model.learn(total_timesteps=steps)

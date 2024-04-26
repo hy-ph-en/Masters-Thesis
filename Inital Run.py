@@ -11,7 +11,6 @@ def Run():
     
     #Model
     model_outcome = learning_handle.model_choice()
-
     #Outputs
     Outputs(model_outcome,policy)
 

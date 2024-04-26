@@ -809,6 +809,7 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
             optimizer_kwargs,
         )    
         self.timestep = 0
+        # pass over the calculated mse loss using self. and then call it in ppo
     
     def evaluate_actions(self, obs: PyTorchObs, actions: th.Tensor) -> Tuple[th.Tensor, th.Tensor, Optional[th.Tensor]]:
         """
@@ -824,10 +825,11 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
         
         #Policy Call
         from Learning.Learning_handler import learning_handler
+
+
         policy = learning_handler().policy_hanlder()
         neurosymbolic_timestep = test_metrics().neurostep
         self.timestep += 1
-        print(self.timestep)
         
         
         features = self.extract_features(obs)
@@ -835,36 +837,71 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
         if self.share_features_extractor:
             latent_pi, latent_vf = self.mlp_extractor(features)
             
-            if neurosymbolic_timestep % self.timestep == 0:
+            if self.timestep % neurosymbolic_timestep == 0:
                 policy_outcome = policy(features.detach(), latent_pi.detach())
+                policy_outcome = self.handle_symbolic(policy_outcome)
+
+                self.check_tensor_value(latent_pi, policy_outcome)
+            else:
+                policy_outcome = latent_pi
                 
         else:
             pi_features, vf_features = features
             latent_pi = self.mlp_extractor.forward_actor(pi_features)
             latent_vf = self.mlp_extractor.forward_critic(vf_features)
             
-            if neurosymbolic_timestep % self.timestep == 0:
+            if self.timestep % neurosymbolic_timestep == 0:
                 policy_outcome = policy(pi_features.detach(), latent_pi.detach()) 
-        
-        print(type(policy_outcome))
-        print(type(latent_pi))
-        print(type(torch.from_numpy(policy_outcome)))
-        print(policy_outcome)
-        print(latent_pi)
-        print(torch.from_numpy(policy_outcome))
-        print(torch.tanh(torch.from_numpy(policy_outcome)))
-        print(len(latent_pi))
-        policy_outcome = torch.from_numpy(len(latent_pi[0]), policy_outcome, requires_grad=True)
-        print(torch.tanh(policy_outcome))
-        distribution = self._get_action_dist_from_latent(torch.tanh(policy_outcome))
+                policy_outcome = self.handle_symbolic(policy_outcome)
+
+                self.check_tensor_value(latent_pi, policy_outcome)
+            else:
+                policy_outcome = latent_pi
+
+
+        distribution = self._get_action_dist_from_latent(policy_outcome)
         log_prob = distribution.log_prob(actions)
         
-
         
         values = self.value_net(latent_vf)          #Estimated Value of Said action - Predicted Best Outcome
         entropy = distribution.entropy()
         return values, log_prob, entropy
-        
+    
+
+    def handle_symbolic(self, policy_outcome):
+
+        #Give Gradient for the Data
+        policy_outcome = torch.from_numpy(policy_outcome).requires_grad_(True)
+
+        #Turn on the Gradient for the Data
+        policy_outcome = torch.tanh(policy_outcome).float()
+
+        return policy_outcome
+    
+
+    #temp function
+    def check_tensor_value(self, tensor1, tensor2):
+        import matplotlib.pyplot as plt    
+
+        tensor1 = (tensor1.flatten())[:100]
+        tensor2 = (tensor2.flatten())[:100]
+
+        #print(tensor1[:100])
+        #print(tensor2[:100])
+
+        plt.figure(figsize=(8, 6))
+        plt.scatter(tensor1[:, 0], tensor1[:, 1], color='blue', label='Tensor 1', marker='o')
+        plt.scatter(tensor2[:, 0], tensor2[:, 1], color='red', label='Tensor 2', marker='^')
+
+
+        plt.xlabel('Dimension 1')
+        plt.ylabel('Dimension 2')
+        plt.title('Scatterplot of Two Tensors')
+        plt.legend()
+
+        wait
+
+
     
 ###################################
 

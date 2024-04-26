@@ -1,6 +1,7 @@
 from Learning.Models.common.env_util import make_vec_env
 from Learning.Models.PPO.ppo import PPO
 from Testing.Configuration import env_metrics, test_metrics
+import torch
 
 
 def ppo_model(env):
@@ -14,10 +15,14 @@ def ppo_model(env):
     gamma = test_metric.gamma
     batch_size = test_metric.batch_size
     
-    steps= env_metrics().number_of_steps
+    steps = env_metrics().number_of_steps
+
+    #GPU Acceleration
+    print("Is CUDA available: ", torch.cuda.is_available())
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     #Model Creation
-    model = PPO(learning_policy, env, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size)
+    model = PPO(learning_policy, env, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size, n_steps=8, device=device)
     
     #Model Training
     model.learn(total_timesteps=steps)

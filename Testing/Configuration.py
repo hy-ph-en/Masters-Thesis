@@ -4,7 +4,7 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 10                        #Number of training periods 
+        self.epochs = 50                        #Number of training periods 
         self.render = False                     #Whether the rendering of the training is shown      
         self.gamma = 0.99                       #Higher values priorities furture benefit in the training cycle
         
@@ -21,7 +21,7 @@ class test_metrics():
         
         #PPO Specific
         self.ppo_learning_rate = 3e-4           #The rate at which learning takes place
-        self.batch_size = 64                    #Mini size batch
+        self.batch_size = 256                   #Mini size batch    Nominal-64
         
         
         
@@ -31,18 +31,19 @@ class test_metrics():
         'MultiInputPolicy - Multi-actor Policy                           '
         'NeuroPolicy - Neurosymbolic Policy                              '
         
-        self.learning_policy = "NeuroPolicy"                                          #PPO passed Learning Policy 
+        self.learning_policy = "MlpPolicy"                                            #PPO passed Learning Policy 
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
         
         
         #Neurosymbolic Specific 
-        'Complexity 1-10'
+        'Complexity 1-20'
         self.complexity = 5                        #Max Complexity of Result
         self.iterations = 2                        #Number of iterations before giving a result
         self.neurostep = 1000                      #How many stpes the program should run through before preforming symbolic regression
-        self.precision = 64                        #How percise the solution should be - 64 Highest
+        'Percision 1-64'
+        self.precision = 64                        #How percise the solution should be
         
         #-Operators-
         'Binary Operators - "+", "*", "/"       '
@@ -61,7 +62,7 @@ class test_metrics():
         'Simple Neurosymbolic Learning Model - 2   '
         'PPO Model - 3                             '
         'PPO Neurosymbolic Model - 4               '
-        self.model = 4
+        self.model = 3
 
 
         #Policy Choice
@@ -80,7 +81,7 @@ class env_metrics():
     
     def __init__(self):        
         #Environment to Run
-        'mountain_car - 1   '
+        'MountainCar - 1   '
         'noisy_road_2d - 2  '
         'noisy_road - 3     '
         'obstacle - 4       '
@@ -92,9 +93,10 @@ class env_metrics():
         
         #Default
         'Simpliest Environemnt - "CartPole-v1"'
-        self.environment = 9
+        self.environment = 1
         
-        self.number_of_steps = 250000              #The number of steps the agent can take per training period
+
+        self.number_of_steps = 500000              #The number of steps the agent can take per training period  - CartPole default is 250000
         
         
 
