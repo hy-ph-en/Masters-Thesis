@@ -8,6 +8,8 @@ class test_metrics():
         self.render = False                     #Whether the rendering of the training is shown      
         self.gamma = 0.99                       #Higher values priorities furture benefit in the training cycle
         
+        self.clear_data = True                  #Each run the relavent csv files will be cleared of their previous data
+        
         
         #Q Learning Specific                     
         self.epsilon = 0.1
@@ -18,11 +20,11 @@ class test_metrics():
         #Neural Specific 
         self.activation_function = "ReLU"       #The Activation function passed into the neural network
         
+
         
         #PPO Specific
         self.ppo_learning_rate = 3e-4           #The rate at which learning takes place
         self.batch_size = 256                   #Mini size batch    Nominal-64
-        
         
         
         #Learning Polies'

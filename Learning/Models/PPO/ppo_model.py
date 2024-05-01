@@ -18,20 +18,22 @@ def ppo_model(env):
     steps = env_metrics().number_of_steps
 
     #GPU Acceleration
+    print(torch.cuda.is_available()) 
+    print(torch.version.cuda)
     print("Is CUDA available: ", torch.cuda.is_available())
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     #Model Creation
-    model = PPO(learning_policy, env, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size, n_steps=8, device=device)
+    model = PPO(learning_policy, env, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size, device=device)
     
     #Model Training
     model.learn(total_timesteps=steps)
     
-    model.save("ppo_cartpole")
+    model.save("Environment_Solution")
     
     del model # remove to demonstrate saving and loading
     
-    model = PPO.load("ppo_cartpole")
+    model = PPO.load("Environment_Solution")
 
     obs = env.reset()
     while True:

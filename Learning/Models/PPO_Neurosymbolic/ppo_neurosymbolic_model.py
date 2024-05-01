@@ -25,11 +25,11 @@ def ppo_neurosymbolic_model(env):
     #Model Training
     model.learn(total_timesteps=steps)
     
-    model.save("ppo_cartpole")
+    model.save("Environment_Solution")
     
     del model # remove to demonstrate saving and loading
     
-    model = PPO.load("ppo_cartpole")
+    model = PPO.load("Environment_Solution")
 
     obs = env.reset()
     while True:

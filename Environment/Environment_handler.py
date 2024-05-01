@@ -10,7 +10,7 @@ class Environments:
     def environmental_choice(self):
         #List of environments
         env_dict = {
-            1: "MountainCar", 
+            1: "MountainCar-v0", 
             2: "noisy_road_2d",
             3: "noisy_road",
             4: "obstacle",

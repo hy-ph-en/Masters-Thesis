@@ -765,7 +765,9 @@ class ActorCriticPolicy(BasePolicy):
         latent_vf = self.mlp_extractor.forward_critic(features)
         return self.value_net(latent_vf)
     
-#Neurosymbolic Code
+
+    
+####Neurosymbolic Code ########################################
 
 class NeurosymbolicActorPolicy(ActorCriticPolicy):
 
@@ -833,6 +835,10 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
         
         
         features = self.extract_features(obs)
+
+        #Print the weight for the symbolic regression run, using the same if statement already existing
+        #Print the weight for the run after it, do this using an if statement to be true one step after neurosymbolic timestep, something like self.timestep % neurosymbolic_timestep - 1 == 0
+        #Could also be interesting to see the effect this has on the training values
         
         if self.share_features_extractor:
             latent_pi, latent_vf = self.mlp_extractor(features)
@@ -879,27 +885,97 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
         return policy_outcome
     
 
-    #temp function
-    def check_tensor_value(self, tensor1, tensor2):
-        import matplotlib.pyplot as plt    
+    def graphing_tensor(self, orginal, pysr_predicted):
+        import matplotlib.pyplot as plt  
 
-        tensor1 = (tensor1.flatten())[:100]
-        tensor2 = (tensor2.flatten())[:100]
+        group_size = 1000
 
-        #print(tensor1[:100])
-        #print(tensor2[:100])
+        orginal = ((orginal.flatten())[:group_size]).detach()
+        pysr_predicted = ((pysr_predicted.flatten())[:group_size]).detach()
 
+        'Graphing'
+        # Setup for plotting
         plt.figure(figsize=(8, 6))
-        plt.scatter(tensor1[:, 0], tensor1[:, 1], color='blue', label='Tensor 1', marker='o')
-        plt.scatter(tensor2[:, 0], tensor2[:, 1], color='red', label='Tensor 2', marker='^')
 
+        # Plot each tensor. The y-values are offset slightly for visibility
+        # Using np.zeros_like(tensor1) to generate a zero array of the same shape as tensor1
+        plt.scatter(range(len(orginal)), orginal.numpy(), c='blue', label='PPO Original', marker='o')
+        plt.scatter(range(len(pysr_predicted)), pysr_predicted.numpy(), c='red', label='PYSR Predicted', marker='^')  # Offset y by 0.1
 
-        plt.xlabel('Dimension 1')
-        plt.ylabel('Dimension 2')
+        # Adding labels and title
+        plt.xlabel('Index')
         plt.title('Scatterplot of Two Tensors')
         plt.legend()
 
-        wait
+        # Show the plot
+        plt.show()
+
+    #temp function
+    def check_tensor_value(self, orginal, pysr_predicted):
+        from csv import writer  
+        import pandas as pd
+        import os
+
+        orginal = ((orginal.flatten())[:1000]).detach()
+        pysr_predicted = ((pysr_predicted.flatten())[:1000]).detach()
+        
+        #Dirft Values
+        low_drift = 0
+        med_drift = 0
+        high_drift = 0
+        avg_drift = 0
+
+        #Counts 
+        low_number = 0
+        med_number = 0
+        high_number = 0
+
+        'Percentages'
+        for i in range(len(orginal)):
+            #Low    0.15 to -0.15
+            if orginal[i] < 0.15 and orginal[i] > -0.15:
+                low_number += 1
+                low_drift += abs(abs(orginal[i])-abs(pysr_predicted[i]))
+
+            #Medium 0.30 <-> 0.15 to -0.15 <-> -0.30
+            elif orginal[i] < 0.3 and orginal[i] > -0.3:
+                med_number += 1
+                med_drift += abs(abs(orginal[i])-abs(pysr_predicted[i]))
+
+            #High   0.30 > and < -0.30
+            else:
+                high_number += 1
+                high_drift += abs(abs(orginal[i])-abs(pysr_predicted[i]))
+
+            avg_drift += abs(abs(orginal[i])-abs(pysr_predicted[i]))
+
+        if low_number > 0:
+            low_drift = (low_drift/low_number).item()
+        if med_number > 0:
+            med_drift = (med_drift/med_number).item()
+        if high_number > 0:
+            high_drift = (high_drift/high_number).item()
+        if avg_drift > 0:
+            avg_drift = (avg_drift/len(orginal)).item()
+
+        print("Low Drift Value :", (low_drift))
+        print("Med Drift Value :", (med_drift))
+        print("High Drift Value :", (high_drift))
+        print("Average Drift :", (avg_drift))
+        
+        #Adding Data to File
+        Drift_values = [low_drift, med_drift, high_drift, avg_drift]
+        
+        folder_name = 'Logfile'
+        file_name = 'Drift_data.csv'
+        file_path = os.path.join(folder_name, file_name)
+
+        with open(file_path, mode='a', newline='') as dataframe:
+            writer_object = writer(dataframe)
+ 
+            writer_object.writerow(Drift_values)
+
+            dataframe.close()
 
 
     
