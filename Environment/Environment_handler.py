@@ -1,5 +1,8 @@
+import gym
 from Testing.Configuration import env_metrics
 from Learning.Models.common.env_util import make_vec_env
+from Learning.Models.common.monitor import Monitor
+from Learning.Models.common.vec_env import SubprocVecEnv
 
 class Environments:
     #List of all possible environments to call upon 
@@ -15,12 +18,13 @@ class Environments:
             3: "noisy_road",
             4: "obstacle",
             5: "obstacle2",
-            6: "pendulum",
+            6: "Pendulum-v1",
             7: "road_2d",
             8: "road",
             9: "CartPole-v1"
         }
 
         #Making an returning the Environment
-        return make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=4)
-    
+
+        return make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=4, monitor_dir='Logfile')
+

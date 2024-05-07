@@ -811,6 +811,7 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
             optimizer_kwargs,
         )    
         self.timestep = 0
+        self.neuro_step = False
         # pass over the calculated mse loss using self. and then call it in ppo
     
     def evaluate_actions(self, obs: PyTorchObs, actions: th.Tensor) -> Tuple[th.Tensor, th.Tensor, Optional[th.Tensor]]:
@@ -846,10 +847,12 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
             if self.timestep % neurosymbolic_timestep == 0:
                 policy_outcome = policy(features.detach(), latent_pi.detach())
                 policy_outcome = self.handle_symbolic(policy_outcome)
+                self.neuro_step = True
 
                 self.check_tensor_value(latent_pi, policy_outcome)
             else:
                 policy_outcome = latent_pi
+                self.neuro_step = False
                 
         else:
             pi_features, vf_features = features
@@ -859,11 +862,16 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
             if self.timestep % neurosymbolic_timestep == 0:
                 policy_outcome = policy(pi_features.detach(), latent_pi.detach()) 
                 policy_outcome = self.handle_symbolic(policy_outcome)
+                self.neuro_step = True
 
                 self.check_tensor_value(latent_pi, policy_outcome)
             else:
                 policy_outcome = latent_pi
+                self.neuro_step = False
 
+        #Capture the post weight update
+        if self.timestep % (neurosymbolic_timestep + 1) == 0:
+            self.neuro_step = True
 
         distribution = self._get_action_dist_from_latent(policy_outcome)
         log_prob = distribution.log_prob(actions)
@@ -916,8 +924,8 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
         import pandas as pd
         import os
 
-        orginal = ((orginal.flatten())[:1000]).detach()
-        pysr_predicted = ((pysr_predicted.flatten())[:1000]).detach()
+        orginal = ((orginal.flatten())[:100000]).detach()
+        pysr_predicted = ((pysr_predicted.flatten())[:100000]).detach()
         
         #Dirft Values
         low_drift = 0

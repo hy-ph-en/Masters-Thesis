@@ -23,7 +23,7 @@ class test_metrics():
 
         
         #PPO Specific
-        self.ppo_learning_rate = 3e-4           #The rate at which learning takes place
+        self.ppo_learning_rate = 3e-2           #The rate at which learning takes place     -3e-4
         self.batch_size = 256                   #Mini size batch    Nominal-64
         
         
@@ -33,7 +33,7 @@ class test_metrics():
         'MultiInputPolicy - Multi-actor Policy                           '
         'NeuroPolicy - Neurosymbolic Policy                              '
         
-        self.learning_policy = "MlpPolicy"                                            #PPO passed Learning Policy 
+        self.learning_policy = "NeuroPolicy"                                          #PPO passed Learning Policy 
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
@@ -41,7 +41,7 @@ class test_metrics():
         
         #Neurosymbolic Specific 
         'Complexity 1-20'
-        self.complexity = 5                        #Max Complexity of Result
+        self.complexity = 20                       #Max Complexity of Result
         self.iterations = 2                        #Number of iterations before giving a result
         self.neurostep = 1000                      #How many stpes the program should run through before preforming symbolic regression
         'Percision 1-64'
@@ -64,7 +64,7 @@ class test_metrics():
         'Simple Neurosymbolic Learning Model - 2   '
         'PPO Model - 3                             '
         'PPO Neurosymbolic Model - 4               '
-        self.model = 3
+        self.model = 4
 
 
         #Policy Choice
@@ -88,14 +88,14 @@ class env_metrics():
         'noisy_road - 3     '
         'obstacle - 4       '
         'obstacle2 - 5      '
-        'pendulum - 6       '
+        'Pendulum - 6       '
         'road_2d - 7        '
         'road - 8           '
         'CartPole-v1 - 9    '
         
         #Default
         'Simpliest Environemnt - "CartPole-v1"'
-        self.environment = 1
+        self.environment = 6
         
 
         self.number_of_steps = 500000              #The number of steps the agent can take per training period  - CartPole default is 250000

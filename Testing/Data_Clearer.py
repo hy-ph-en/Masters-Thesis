@@ -9,3 +9,5 @@ def clean_csv():
             pass
         with open('Logfile\Baselines_Output.csv', 'w') as file:
             pass
+        with open('Logfile\Weight_Updates.csv', 'w') as file:
+            pass

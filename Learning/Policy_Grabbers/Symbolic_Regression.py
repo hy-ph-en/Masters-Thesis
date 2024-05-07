@@ -29,7 +29,7 @@ class symbolic_reg:
         progress=False,
         verbosity=0,
         elementwise_loss="loss(prediction, target) = (prediction - target)^2",
-        equation_file="Logfile\Logoutput.csv"
+        equation_file="Logfile\Logoutput\Logoutput.csv"
         # ^ Custom loss function (julia syntax)
         )
         

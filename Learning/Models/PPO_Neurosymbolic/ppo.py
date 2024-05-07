@@ -135,6 +135,8 @@ class PPO(OnPolicyAlgorithm):
                 spaces.MultiBinary,
             ),
         )
+        #variable that tells PPO its neurosymbolic, need to tell the program one iteration before the run, not one after
+
 
         # Sanity check, otherwise it will lead to noisy gradient and NaN
         # because of the advantage normalization
@@ -167,6 +169,7 @@ class PPO(OnPolicyAlgorithm):
         self.clip_range_vf = clip_range_vf
         self.normalize_advantage = normalize_advantage
         self.target_kl = target_kl
+        self.past_policy_update = 0
 
         if _init_setup_model:
             self._setup_model()
@@ -183,6 +186,8 @@ class PPO(OnPolicyAlgorithm):
             self.clip_range_vf = get_schedule_fn(self.clip_range_vf)
 
     def train(self) -> None:
+        from csv import writer 
+        import os
         """
         Update policy using the currently gathered rollout buffer.
         """
@@ -216,6 +221,7 @@ class PPO(OnPolicyAlgorithm):
                 # Re-sample the noise matrix because the log_std has changed
                 if self.use_sde:
                     self.policy.reset_noise(self.batch_size)
+                
 
                 values, log_prob, entropy = self.policy.evaluate_actions(rollout_data.observations, actions)
                 values = values.flatten()
@@ -285,6 +291,50 @@ class PPO(OnPolicyAlgorithm):
                 # Clip grad norm
                 th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)
                 self.policy.optimizer.step()
+                
+                #Modifcation for Weight Retrival - Weight Updates for NeuroSymbolic
+                try:
+                    self.policy.neuro_step
+                except AttributeError:          #Doesnt always exist - non symbolic run
+                    pass
+                else:
+                    if self.policy.neuro_step:
+                        state_dict = self.policy.state_dict()
+                        print(state_dict)
+                        for elements in list(state_dict.items()):
+                            if elements[0] == 'mlp_extractor.policy_net.0.weight':
+                                policy_update = elements[1].flatten()
+
+                                #policy_update = (list(state_dict.items())[1][1]).flatten()
+                        if type(self.past_policy_update) != int:
+                            total_difference = 0
+                            change_count = 0
+
+                            print(policy_update)
+                            #print(self.past_policy_update)
+
+                            for x in range(len(policy_update)):
+                                #print(float(policy_update[x]), float(self.past_policy_update[x]))
+
+                                if(float(policy_update[x]) != float(self.past_policy_update[x])):
+                                    total_difference += abs(abs(float(policy_update[x]))-abs(float(self.past_policy_update[x])))
+                                    change_count += 1
+
+                            if change_count != 0:
+                                total_difference = float(float(total_difference)/float(change_count))
+
+                                folder_name = 'Logfile'
+                                file_name = 'Weight_Updates.csv'
+                                file_path = os.path.join(folder_name, file_name)
+
+                                with open(file_path, mode='a', newline='') as dataframe:
+                                    writer_object = writer(dataframe)
+                        
+                                    writer_object.writerow([total_difference])
+
+                                    dataframe.close()
+                            
+                        self.past_policy_update = policy_update
 
                 
             self._n_updates += 1
