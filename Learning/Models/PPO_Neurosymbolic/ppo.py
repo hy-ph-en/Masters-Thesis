@@ -288,9 +288,6 @@ class PPO(OnPolicyAlgorithm):
                 # Optimization step
                 self.policy.optimizer.zero_grad()
                 loss.backward()
-                # Clip grad norm
-                th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)
-                self.policy.optimizer.step()
                 
                 #Modifcation for Weight Retrival - Weight Updates for NeuroSymbolic
                 try:
@@ -298,26 +295,26 @@ class PPO(OnPolicyAlgorithm):
                 except AttributeError:          #Doesnt always exist - non symbolic run
                     pass
                 else:
-                    if self.policy.neuro_step:
+                    if self.policy.neuro_step:  #self.policy.neuro_step                   #Look for comparisoning the two points
                         state_dict = self.policy.state_dict()
-                        print(state_dict)
-                        for elements in list(state_dict.items()):
-                            if elements[0] == 'mlp_extractor.policy_net.0.weight':
-                                policy_update = elements[1].flatten()
+                        #print(state_dict)
 
-                                #policy_update = (list(state_dict.items())[1][1]).flatten()
+                        result_tensor = []
+
+                        for name, param in self.policy.named_parameters():
+                            if param.grad is not None:
+                                gradient_update = param.grad.cpu().detach()                     #CPU call might need modification if we use GPU in the Future
+                                result_tensor.append(gradient_update.flatten())
+
+                        gradient_update = th.cat(result_tensor, dim=0)
+
                         if type(self.past_policy_update) != int:
                             total_difference = 0
                             change_count = 0
 
-                            print(policy_update)
-                            #print(self.past_policy_update)
-
-                            for x in range(len(policy_update)):
-                                #print(float(policy_update[x]), float(self.past_policy_update[x]))
-
-                                if(float(policy_update[x]) != float(self.past_policy_update[x])):
-                                    total_difference += abs(abs(float(policy_update[x]))-abs(float(self.past_policy_update[x])))
+                            for x in range(min(len(self.past_policy_update), len(gradient_update))):
+                                if(float(gradient_update[x]) != float(self.past_policy_update[x])):
+                                    total_difference += abs(abs(float(gradient_update[x]))-abs(float(self.past_policy_update[x])))
                                     change_count += 1
 
                             if change_count != 0:
@@ -333,9 +330,13 @@ class PPO(OnPolicyAlgorithm):
                                     writer_object.writerow([total_difference])
 
                                     dataframe.close()
-                            
-                        self.past_policy_update = policy_update
+                        
+                        self.past_policy_update = gradient_update
 
+
+                # Clip grad norm
+                th.nn.utils.clip_grad_norm_(self.policy.parameters(), self.max_grad_norm)
+                self.policy.optimizer.step()
                 
             self._n_updates += 1
             if not continue_training:
