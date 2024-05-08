@@ -37,6 +37,5 @@ class symbolic_reg:
         
         found_prediction = model.predict(features)
         
-        #print(model.sympy())
         
         return found_prediction
