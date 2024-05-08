@@ -8,7 +8,7 @@ from torch.nn import functional as F
 
 from Learning.Models.common.buffers import RolloutBuffer
 from Learning.Models.common.on_policy_algorithm import OnPolicyAlgorithm
-from Learning.Models.common.policies import ActorCriticCnnPolicy, ActorCriticPolicy, BasePolicy, MultiInputActorCriticPolicy, NeurosymbolicActorPolicy
+from Learning.Models.common.policies import ActorCriticCnnPolicy, ActorCriticPolicy, BasePolicy, MultiInputActorCriticPolicy, NeurosymbolicActorPolicy, NeurosymbolicActorLoss
 from Learning.Models.common.type_aliases import GymEnv, MaybeCallback, Schedule
 from Learning.Models.common.utils import explained_variance, get_schedule_fn
 
@@ -76,6 +76,7 @@ class PPO(OnPolicyAlgorithm):
         "CnnPolicy": ActorCriticCnnPolicy,
         "MultiInputPolicy": MultiInputActorCriticPolicy,
         "NeuroPolicy" : NeurosymbolicActorPolicy,
+        "NeuroLossPolicy" : NeurosymbolicActorLoss,
     }
 
     def __init__(

@@ -32,8 +32,9 @@ class test_metrics():
         'CnnPolicy - Convolutional Neural Network                        '
         'MultiInputPolicy - Multi-actor Policy                           '
         'NeuroPolicy - Neurosymbolic Policy                              '
+        'NeuroLossPolicy - Neurosymbolic Policy Loss                     '
         
-        self.learning_policy = "NeuroPolicy"                                          #PPO passed Learning Policy 
+        self.learning_policy = "NeuroLossPolicy"                                          #PPO passed Learning Policy 
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
@@ -64,7 +65,7 @@ class test_metrics():
         'Simple Neurosymbolic Learning Model - 2   '
         'PPO Model - 3                             '
         'PPO Neurosymbolic Model - 4               '
-        self.model = 3
+        self.model = 4
 
 
         #Policy Choice

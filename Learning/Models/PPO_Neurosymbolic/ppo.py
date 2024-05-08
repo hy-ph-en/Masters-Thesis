@@ -8,7 +8,7 @@ from torch.nn import functional as F
 
 from Learning.Models.common.buffers import RolloutBuffer
 from Learning.Models.common.on_policy_algorithm import OnPolicyAlgorithm
-from Learning.Models.common.policies import ActorCriticCnnPolicy, ActorCriticPolicy, BasePolicy, MultiInputActorCriticPolicy, NeurosymbolicActorPolicy
+from Learning.Models.common.policies import ActorCriticCnnPolicy, ActorCriticPolicy, BasePolicy, MultiInputActorCriticPolicy, NeurosymbolicActorPolicy, NeurosymbolicActorLoss
 from Learning.Models.common.type_aliases import GymEnv, MaybeCallback, Schedule
 from Learning.Models.common.utils import explained_variance, get_schedule_fn
 
@@ -76,6 +76,7 @@ class PPO(OnPolicyAlgorithm):
         "CnnPolicy": ActorCriticCnnPolicy,
         "MultiInputPolicy": MultiInputActorCriticPolicy,
         "NeuroPolicy" : NeurosymbolicActorPolicy,
+        "NeuroLossPolicy" : NeurosymbolicActorLoss,
     }
 
     def __init__(
@@ -234,6 +235,7 @@ class PPO(OnPolicyAlgorithm):
                 # ratio between old and new policy, should be one at the first iteration
                 ratio = th.exp(log_prob - rollout_data.old_log_prob)
 
+        
                 # clipped surrogate loss
                 policy_loss_1 = advantages * ratio
                 policy_loss_2 = advantages * th.clamp(ratio, 1 - clip_range, 1 + clip_range)
@@ -269,6 +271,12 @@ class PPO(OnPolicyAlgorithm):
                 
                 'Passed loss for the Backpropagation'
                 loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss
+
+                'Modification to the Loss function'
+                if hasattr(self.policy, 'neuro_step') and self.policy.neuro_step:
+                    print(self.policy.mse_value)
+                    loss = self.policy.mse_value + policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss
+
 
                 # Calculate approximate form of reverse KL Divergence for early stopping
                 # see issue #417: https://github.com/DLR-RM/stable-baselines3/issues/417
