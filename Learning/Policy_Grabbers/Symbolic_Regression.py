@@ -20,8 +20,9 @@ class symbolic_reg:
     
     
     def symbolic_regression(self,features, predictions):
-        
+
         model = PySRRegressor(
+        maxsize=self.complexity,
         niterations=self.niterations,
         binary_operators=self.binary_operators,
         unary_operators=self.unary_operators,

@@ -1069,7 +1069,7 @@ class NeurosymbolicActorLoss(NeurosymbolicActorPolicy):
                 self.neuro_step = True
 
                 self.check_tensor_value(latent_pi, policy_outcome)
-                self.mse_value = th.nn.functional.mse_loss(latent_pi, policy_outcome)
+                self.mse_value = th.nn.functional.mse_loss(latent_pi, policy_outcome)   #The issue is defo with the mse creation, maybe its not latent_pi? Or need to add a graph building thing here?
             else:
                 policy_outcome = latent_pi
                 self.neuro_step = False

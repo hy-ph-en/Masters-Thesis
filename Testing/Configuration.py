@@ -42,8 +42,8 @@ class test_metrics():
         
         #Neurosymbolic Specific 
         'Complexity 1-20'
-        self.complexity = 20                       #Max Complexity of Result
-        self.iterations = 1                        #Number of iterations before giving a result
+        self.complexity = 19                       #Max Complexity of Result
+        self.iterations = 2                        #Number of iterations before giving a result
         self.neurostep = 1000                      #How many stpes the program should run through before preforming symbolic regression
         'Percision 1-64'
         self.precision = 64                        #How percise the solution should be
@@ -71,10 +71,6 @@ class test_metrics():
         #Policy Choice
         'Symbolic Regression PSYR - 1                   '
         self.policy = 1
-        
-        #The Complexity in the Created Outcome
-        'Complexity in Solution  1-10              '
-        self.complexity = 5
         
 
 

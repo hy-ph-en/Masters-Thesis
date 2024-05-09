@@ -268,14 +268,12 @@ class PPO(OnPolicyAlgorithm):
 
                 entropy_losses.append(entropy_loss.item())
 
-                
-                'Passed loss for the Backpropagation'
-                loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss
-
-                'Modification to the Loss function'
-                if hasattr(self.policy, 'neuro_step') and self.policy.neuro_step:
-                    print(self.policy.mse_value)
-                    loss = self.policy.mse_value + policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss
+                'Modifcation to the Loss function'
+                if hasattr(self.policy, 'neuro_step') and hasattr(self.policy, 'mse_value') and self.policy.neuro_step:
+                    loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss + self.policy.mse_value * (self.ent_coef/2)
+                else:
+                    'Passed loss for the Backpropagation'
+                    loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss
 
 
                 # Calculate approximate form of reverse KL Divergence for early stopping
@@ -298,12 +296,7 @@ class PPO(OnPolicyAlgorithm):
                 loss.backward()
                 
                 #Modifcation for Weight Retrival - Weight Updates for NeuroSymbolic
-                try:
-                    self.policy.neuro_step
-                except AttributeError:          #Doesnt always exist - non symbolic run
-                    pass
-                else:
-                    if self.policy.neuro_step:  #self.policy.neuro_step                   #Look for comparisoning the two points
+                if hasattr(self.policy, 'neuro_step') and self.policy.neuro_step:
                         result_tensor = []
 
                         for name, param in self.policy.named_parameters():
