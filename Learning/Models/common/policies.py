@@ -1069,9 +1069,18 @@ class NeurosymbolicActorLoss(NeurosymbolicActorPolicy):
                 self.neuro_step = True
 
                 self.check_tensor_value(latent_pi, policy_outcome)
-                self.mse_value = th.nn.functional.mse_loss(latent_pi, policy_outcome)   #The issue is defo with the mse creation, maybe its not latent_pi? Or need to add a graph building thing here?
-            else:
-                policy_outcome = latent_pi
+                #print(latent_pi.size(), "latent")
+                #print(policy_outcome.size(), "policy outcome")
+
+                #Normalizing the tensors    - So Far Unused
+                policy_norm = (policy_outcome - policy_outcome.mean()) / (policy_outcome.std() + 1e-8)
+                latent_norm = (latent_pi - latent_pi.mean()) / (latent_pi.std() + 1e-8)
+
+                self.mse_value = -th.nn.functional.mse_loss(policy_outcome[x].detach(), latent_pi[x].detach())
+
+                
+            else:                                                                                 #Look at how the policy loss is created and see if it can be emulated
+                policy_outcome = latent_pi                                                        #Could make the -1 a tensor and then multiply it
                 self.neuro_step = False
                 
         else:
@@ -1086,7 +1095,7 @@ class NeurosymbolicActorLoss(NeurosymbolicActorPolicy):
 
                 self.check_tensor_value(latent_pi, policy_outcome)
                 #Making the Loss Value
-                self.mse_value = th.nn.functional.mse_loss(latent_pi, policy_outcome)
+                self.mse_value = -th.nn.functional.mse_loss(policy_outcome, latent_pi)
             else:
                 policy_outcome = latent_pi
                 self.neuro_step = False

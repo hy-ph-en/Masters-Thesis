@@ -228,6 +228,7 @@ class PPO(OnPolicyAlgorithm):
                 values = values.flatten()
                 # Normalize advantage
                 advantages = rollout_data.advantages
+                #print(advantages)
                 # Normalization does not make sense if mini batchsize == 1, see GH issue #325
                 if self.normalize_advantage and len(advantages) > 1:
                     advantages = (advantages - advantages.mean()) / (advantages.std() + 1e-8)
@@ -270,7 +271,13 @@ class PPO(OnPolicyAlgorithm):
 
                 'Modifcation to the Loss function'
                 if hasattr(self.policy, 'neuro_step') and hasattr(self.policy, 'mse_value') and self.policy.neuro_step:
-                    loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss + self.policy.mse_value * (self.ent_coef/2)
+                    #print(policy_loss)
+                    #print(self.policy.mse_value)
+                    #print(advantages.size(), "advanatges")
+                    #th.autograd.set_detect_anomaly(True)
+
+                    loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss + self.policy.mse_value
+
                 else:
                     'Passed loss for the Backpropagation'
                     loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss
@@ -290,18 +297,18 @@ class PPO(OnPolicyAlgorithm):
                     if self.verbose >= 1:
                         print(f"Early stopping at step {epoch} due to reaching max kl: {approx_kl_div:.2f}")
                     break
-
-                # Optimization step
-                self.policy.optimizer.zero_grad()
-                loss.backward()
                 
+                self.policy.optimizer.zero_grad()
+                loss.backward(retain_graph=True)
+                loss.backward(retain_graph=True)
+
                 #Modifcation for Weight Retrival - Weight Updates for NeuroSymbolic
                 if hasattr(self.policy, 'neuro_step') and self.policy.neuro_step:
                         result_tensor = []
 
                         for name, param in self.policy.named_parameters():
                             if param.grad is not None:
-                                gradient_update = param.grad.cpu().detach()                     #CPU call might need modification if we use GPU in the Future
+                                gradient_update = param.grad.cpu().detach()                    #CPU call might need modification if we use GPU in the Future
                                 result_tensor.append(gradient_update.flatten())
 
                         gradient_update = th.cat(result_tensor, dim=0)
