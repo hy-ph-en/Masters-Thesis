@@ -4,7 +4,7 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 50                        #Number of training periods 
+        self.epochs = 10                        #Number of training periods 
         self.render = False                     #Whether the rendering of the training is shown      
         self.gamma = 0.99                       #Higher values priorities furture benefit in the training cycle
         
@@ -32,9 +32,10 @@ class test_metrics():
         'CnnPolicy - Convolutional Neural Network                        '
         'MultiInputPolicy - Multi-actor Policy                           '
         'NeuroPolicy - Neurosymbolic Policy                              '
-        'NeuroLossPolicy - Neurosymbolic Policy Loss                     '
+        'NeuroLossPolicy - Neurosymbolic Policy and Loss                 '
+        'NeuroJustLossPolicy - Neurosymbolic Loss                        '
         
-        self.learning_policy = "NeuroLossPolicy"                                          #Passed Learning Policy 
+        self.learning_policy = "NeuroJustLossPolicy"                                          #Passed Learning Policy 
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3

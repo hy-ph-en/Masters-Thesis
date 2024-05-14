@@ -986,8 +986,8 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
             dataframe.close()
 
 
-#A variation of the Neurosymbolic                #
-####### Modified Loss ############################
+#A variation of the Neurosymbolic                                           #
+####### Modified Loss and Modified Policy Return ############################
 class NeurosymbolicActorLoss(NeurosymbolicActorPolicy):
 
     def __init__(
@@ -1076,7 +1076,7 @@ class NeurosymbolicActorLoss(NeurosymbolicActorPolicy):
                 policy_norm = (policy_outcome - policy_outcome.mean()) / (policy_outcome.std() + 1e-8)
                 latent_norm = (latent_pi - latent_pi.mean()) / (latent_pi.std() + 1e-8)
 
-                self.mse_value = -th.nn.functional.mse_loss(policy_outcome[x].detach(), latent_pi[x].detach())
+                self.mse_value = -th.nn.functional.mse_loss(policy_outcome.detach(), latent_pi.detach())
 
                 
             else:                                                                                 #Look at how the policy loss is created and see if it can be emulated
@@ -1105,6 +1105,135 @@ class NeurosymbolicActorLoss(NeurosymbolicActorPolicy):
             self.neuro_step = True
 
         distribution = self._get_action_dist_from_latent(policy_outcome)
+        log_prob = distribution.log_prob(actions)
+        
+        
+        values = self.value_net(latent_vf)          #Estimated Value of Said action - Predicted Best Outcome
+        entropy = distribution.entropy()
+        return values, log_prob, entropy
+
+###################################
+
+
+#A variation of the Neurosymbolic                #
+####### Modified Loss ############################
+class NeurosymbolicActorJustLoss(NeurosymbolicActorPolicy):
+
+    def __init__(
+        self,
+        observation_space: spaces.Space,
+        action_space: spaces.Space,
+        lr_schedule: Schedule,
+        net_arch: Optional[Union[List[int], Dict[str, List[int]]]] = None,
+        activation_fn: Type[nn.Module] = nn.Tanh,
+        ortho_init: bool = True,
+        use_sde: bool = False,
+        log_std_init: float = 0.0,
+        full_std: bool = True,
+        use_expln: bool = False,
+        squash_output: bool = False,
+        features_extractor_class: Type[BaseFeaturesExtractor] = FlattenExtractor,
+        features_extractor_kwargs: Optional[Dict[str, Any]] = None,
+        share_features_extractor: bool = True,
+        normalize_images: bool = True,
+        optimizer_class: Type[th.optim.Optimizer] = th.optim.Adam,
+        optimizer_kwargs: Optional[Dict[str, Any]] = None,
+    ):
+        super().__init__(
+            observation_space,
+            action_space,
+            lr_schedule,
+            net_arch,
+            activation_fn,
+            ortho_init,
+            use_sde,
+            log_std_init,
+            full_std,
+            use_expln,
+            squash_output,
+            features_extractor_class,
+            features_extractor_kwargs,
+            share_features_extractor,
+            normalize_images,
+            optimizer_class,
+            optimizer_kwargs,
+        )    
+        self.timestep = 0
+        self.neuro_step = False
+        self.mse_value = 0
+
+    def evaluate_actions(self, obs: PyTorchObs, actions: th.Tensor) -> Tuple[th.Tensor, th.Tensor, Optional[th.Tensor]]:
+        """
+        Evaluate actions according to the current policy,
+        given the observations.
+
+        :param obs: Observation
+        :param actions: Actions
+        :return: estimated value, log likelihood of taking those actions
+            and entropy of the action distribution.
+        """
+        # Preprocess the observation if needed
+        
+        #Policy Call
+        from Learning.Learning_handler import learning_handler
+
+
+        policy = learning_handler().policy_hanlder()
+        neurosymbolic_timestep = test_metrics().neurostep
+        self.timestep += 1
+        
+        
+        features = self.extract_features(obs)
+
+        #Print the weight for the symbolic regression run, using the same if statement already existing
+        #Print the weight for the run after it, do this using an if statement to be true one step after neurosymbolic timestep, something like self.timestep % neurosymbolic_timestep - 1 == 0
+        #Could also be interesting to see the effect this has on the training values
+        
+        if self.share_features_extractor:
+            latent_pi, latent_vf = self.mlp_extractor(features)
+            
+            if self.timestep % neurosymbolic_timestep == 0:
+                policy_outcome = policy(features.detach(), latent_pi.detach())
+                policy_outcome = self.handle_symbolic(policy_outcome)
+                self.neuro_step = True
+
+                self.check_tensor_value(latent_pi, policy_outcome)
+                #print(latent_pi.size(), "latent")
+                #print(policy_outcome.size(), "policy outcome")
+
+                #Normalizing the tensors    - So Far Unused
+                policy_norm = (policy_outcome - policy_outcome.mean()) / (policy_outcome.std() + 1e-8)
+                latent_norm = (latent_pi - latent_pi.mean()) / (latent_pi.std() + 1e-8)
+
+                self.mse_value = -th.nn.functional.mse_loss(policy_outcome.detach(), latent_pi.detach())
+
+                
+            else:                                                                                 #Look at how the policy loss is created and see if it can be emulated
+                policy_outcome = latent_pi                                                        #Could make the -1 a tensor and then multiply it
+                self.neuro_step = False
+                
+        else:
+            pi_features, vf_features = features
+            latent_pi = self.mlp_extractor.forward_actor(pi_features)
+            latent_vf = self.mlp_extractor.forward_critic(vf_features)
+            
+            if self.timestep % neurosymbolic_timestep == 0:
+                policy_outcome = policy(pi_features.detach(), latent_pi.detach()) 
+                policy_outcome = self.handle_symbolic(policy_outcome)
+                self.neuro_step = True
+
+                self.check_tensor_value(latent_pi, policy_outcome)
+                #Making the Loss Value
+                self.mse_value = -th.nn.functional.mse_loss(policy_outcome, latent_pi)
+            else:
+                self.neuro_step = False
+
+        #Capture the post weight update
+        if self.timestep % (neurosymbolic_timestep + 1) == 0:
+            self.neuro_step = True
+
+        'Just passing back the normal latent rather then the Neurosymbolic Latent'
+        distribution = self._get_action_dist_from_latent(latent_pi)
         log_prob = distribution.log_prob(actions)
         
         

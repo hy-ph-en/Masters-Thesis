@@ -8,7 +8,7 @@ from torch.nn import functional as F
 
 from Learning.Models.common.buffers import RolloutBuffer
 from Learning.Models.common.on_policy_algorithm import OnPolicyAlgorithm
-from Learning.Models.common.policies import ActorCriticCnnPolicy, ActorCriticPolicy, BasePolicy, MultiInputActorCriticPolicy, NeurosymbolicActorPolicy, NeurosymbolicActorLoss
+from Learning.Models.common.policies import ActorCriticCnnPolicy, ActorCriticPolicy, BasePolicy, MultiInputActorCriticPolicy, NeurosymbolicActorPolicy, NeurosymbolicActorLoss, NeurosymbolicActorJustLoss
 from Learning.Models.common.type_aliases import GymEnv, MaybeCallback, Schedule
 from Learning.Models.common.utils import explained_variance, get_schedule_fn
 
@@ -77,6 +77,7 @@ class PPO(OnPolicyAlgorithm):
         "MultiInputPolicy": MultiInputActorCriticPolicy,
         "NeuroPolicy" : NeurosymbolicActorPolicy,
         "NeuroLossPolicy" : NeurosymbolicActorLoss,
+        "NeuroJustLossPolicy" : NeurosymbolicActorJustLoss
     }
 
     def __init__(
@@ -299,8 +300,7 @@ class PPO(OnPolicyAlgorithm):
                     break
                 
                 self.policy.optimizer.zero_grad()
-                loss.backward(retain_graph=True)
-                loss.backward(retain_graph=True)
+                loss.backward()
 
                 #Modifcation for Weight Retrival - Weight Updates for NeuroSymbolic
                 if hasattr(self.policy, 'neuro_step') and self.policy.neuro_step:
