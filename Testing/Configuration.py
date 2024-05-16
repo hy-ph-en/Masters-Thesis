@@ -4,7 +4,7 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 10                        #Number of training periods 
+        self.epochs = 25                         #Number of training periods 
         self.render = False                     #Whether the rendering of the training is shown      
         self.gamma = 0.99                       #Higher values priorities furture benefit in the training cycle
         
@@ -35,7 +35,7 @@ class test_metrics():
         'NeuroLossPolicy - Neurosymbolic Policy and Loss                 '
         'NeuroJustLossPolicy - Neurosymbolic Loss                        '
         
-        self.learning_policy = "NeuroJustLossPolicy"                                          #Passed Learning Policy 
+        self.learning_policy = "MlpPolicy"                                          #Passed Learning Policy 
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
@@ -48,6 +48,7 @@ class test_metrics():
         self.neurostep = 1000                      #How many stpes the program should run through before preforming symbolic regression
         'Percision 1-64'
         self.precision = 64                        #How percise the solution should be
+        self.ratio_to_policy = 0.5                 #The Ratio of the policy value to the MSE for the loss function
         
         #-Operators-
         'Binary Operators - "+", "*", "/"       '

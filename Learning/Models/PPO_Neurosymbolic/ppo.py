@@ -11,6 +11,7 @@ from Learning.Models.common.on_policy_algorithm import OnPolicyAlgorithm
 from Learning.Models.common.policies import ActorCriticCnnPolicy, ActorCriticPolicy, BasePolicy, MultiInputActorCriticPolicy, NeurosymbolicActorPolicy, NeurosymbolicActorLoss, NeurosymbolicActorJustLoss
 from Learning.Models.common.type_aliases import GymEnv, MaybeCallback, Schedule
 from Learning.Models.common.utils import explained_variance, get_schedule_fn
+from Testing.Configuration import test_metrics
 
 SelfPPO = TypeVar("SelfPPO", bound="PPO")
 
@@ -270,6 +271,9 @@ class PPO(OnPolicyAlgorithm):
 
                 entropy_losses.append(entropy_loss.item())
 
+                'Ratio of the importance of the policy loss value to the mse loss value'
+                ratio_to_policy = test_metrics().ratio_to_policy
+
                 'Modifcation to the Loss function'
                 if hasattr(self.policy, 'neuro_step') and hasattr(self.policy, 'mse_value') and self.policy.neuro_step:
                     #print(policy_loss)
@@ -277,7 +281,7 @@ class PPO(OnPolicyAlgorithm):
                     #print(advantages.size(), "advanatges")
                     #th.autograd.set_detect_anomaly(True)
 
-                    loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss + self.policy.mse_value
+                    loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss + self.policy.mse_value * (self.ent_coef*ratio_to_policy)
 
                 else:
                     'Passed loss for the Backpropagation'

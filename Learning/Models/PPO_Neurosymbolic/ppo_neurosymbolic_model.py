@@ -1,7 +1,7 @@
 from Learning.Models.common.env_util import make_vec_env
 from Learning.Models.PPO_Neurosymbolic.ppo import PPO
 from Testing.Configuration import env_metrics, test_metrics
-from Testing.Data_Gatherer import TrainingRewardCallback
+from Learning.Models.common.logger import configure
 import torch
 
 def ppo_neurosymbolic_model(env):
@@ -23,10 +23,14 @@ def ppo_neurosymbolic_model(env):
     #Model Creation
     model = PPO(learning_policy, env, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size, device=device)
 
-    callback = TrainingRewardCallback(check_freq=1000, log_dir="Logfile")
+    tmp_path = "Logfile/Baseline_Output"
+
+    new_logger = configure(tmp_path, ["stdout","csv"])
+
+    model.set_logger(new_logger)
     
     #Model Training
-    model.learn(total_timesteps=steps, callback=callback)
+    model.learn(total_timesteps=steps)
     
     model.save("Environment_Solution")
     
