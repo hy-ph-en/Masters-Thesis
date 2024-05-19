@@ -4,7 +4,7 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 25                         #Number of training periods 
+        self.epochs = 50                        #Number of training periods 
         self.render = False                     #Whether the rendering of the training is shown      
         self.gamma = 0.99                       #Higher values priorities furture benefit in the training cycle
         
@@ -35,7 +35,7 @@ class test_metrics():
         'NeuroLossPolicy - Neurosymbolic Policy and Loss                 '
         'NeuroJustLossPolicy - Neurosymbolic Loss                        '
         
-        self.learning_policy = "MlpPolicy"                                          #Passed Learning Policy 
+        self.learning_policy = "MlpPolicy"                                            #Passed Learning Policy 
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
@@ -43,7 +43,7 @@ class test_metrics():
         
         #Neurosymbolic Specific 
         'Complexity 1-20'
-        self.complexity = 19                       #Max Complexity of Result
+        self.complexity = 20                       #Max Complexity of Result
         self.iterations = 2                        #Number of iterations before giving a result
         self.neurostep = 1000                      #How many stpes the program should run through before preforming symbolic regression
         'Percision 1-64'
@@ -94,7 +94,7 @@ class env_metrics():
         
         #Default
         'Simpliest Environemnt - "CartPole-v1"'
-        self.environment = 6
+        self.environment = 1
         
 
         self.number_of_steps = 500000              #The number of steps the agent can take per training period  - CartPole default is 250000

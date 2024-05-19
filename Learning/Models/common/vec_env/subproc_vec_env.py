@@ -40,6 +40,7 @@ def _worker(
                     # save final observation where user can get it, then reset
                     info["terminal_observation"] = observation
                     observation, reset_info = env.reset()
+                    
                 remote.send((observation, reward, done, info, reset_info))
             elif cmd == "reset":
                 maybe_options = {"options": data[1]} if data[1] else {}

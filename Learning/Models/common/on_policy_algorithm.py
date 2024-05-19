@@ -106,6 +106,8 @@ class OnPolicyAlgorithm(BaseAlgorithm):
         self.max_grad_norm = max_grad_norm
         self.rollout_buffer_class = rollout_buffer_class
         self.rollout_buffer_kwargs = rollout_buffer_kwargs or {}
+        self.success_count = []
+        self.counting_runs = 0
 
         if _init_setup_model:
             self._setup_model()
@@ -134,6 +136,7 @@ class OnPolicyAlgorithm(BaseAlgorithm):
             self.observation_space, self.action_space, self.lr_schedule, use_sde=self.use_sde, **self.policy_kwargs
         )
         self.policy = self.policy.to(self.device)
+        self.success_count = [0 for _ in range(self.n_envs)]
 
     def collect_rollouts(
         self,
@@ -155,6 +158,9 @@ class OnPolicyAlgorithm(BaseAlgorithm):
         :return: True if function returned with at least `n_rollout_steps`
             collected, False if callback terminated rollout prematurely.
         """
+        from csv import writer 
+        import os
+
         assert self._last_obs is not None, "No previous observation was provided"
         # Switch to eval mode (this affects batch norm / dropout)
         self.policy.set_training_mode(False)
@@ -166,6 +172,12 @@ class OnPolicyAlgorithm(BaseAlgorithm):
             self.policy.reset_noise(env.num_envs)
 
         callback.on_rollout_start()
+        
+        #Current issue, need a way to keep count, maybe add another increment with a self variable that counts up everytime one of the environments finishes
+        #but not necessarily success? Then use that to take a median over a 100 runs and then output that to a csv file to get a percentage of success and then graph that
+        #value
+
+        #Still need a way to get the number of environments nicely, could hard code it but that isnt great
 
         while n_steps < n_rollout_steps:
             if self.use_sde and self.sde_sample_freq > 0 and n_steps % self.sde_sample_freq == 0:
@@ -192,6 +204,35 @@ class OnPolicyAlgorithm(BaseAlgorithm):
                     clipped_actions = np.clip(actions, self.action_space.low, self.action_space.high)
 
             new_obs, rewards, dones, infos = env.step(clipped_actions)
+            
+            'Probably Edit Here'
+            #if 'is_success' in infos and infos['is_success']:
+            for count in range(len(dones)):
+                if dones[count]:
+                    self.counting_runs += 1
+
+                    #print(rewards[count])
+                    if 'is_success' in infos[count] and infos[count]['is_success']:
+                        self.success_count[count] += 1
+
+            
+            if self.counting_runs == 100:
+
+                percentage_of_success = (sum(self.success_count)/len(self.success_count))/100
+
+                folder_name = 'Logfile'
+                file_name = 'Percentage_Success.csv'
+                file_path = os.path.join(folder_name, file_name)
+
+                with open(file_path, mode='a', newline='') as dataframe:
+                    writer_object = writer(dataframe)
+                        
+                    writer_object.writerow([percentage_of_success])
+
+                    dataframe.close()
+                
+                self.counting_runs = 0
+                self.success_count = [0 for _ in range(self.n_envs)]
 
             self.num_timesteps += env.num_envs
 

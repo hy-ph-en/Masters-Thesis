@@ -42,6 +42,7 @@ def ppo_neurosymbolic_model(env):
     while True:
         action, _states = model.predict(obs)
         obs, rewards, dones, info = env.step(action)
+        
         env.render("human")
     
     
