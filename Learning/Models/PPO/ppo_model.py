@@ -1,7 +1,10 @@
 from Learning.Models.common.env_util import make_vec_env
 from Learning.Models.PPO.ppo import PPO
 from Testing.Configuration import env_metrics, test_metrics
+from Learning.Models.common.logger import configure
 import torch
+
+from Environment.Environments.mountain_car_success import MountainCarSuccess
 
 
 def ppo_model(env):
@@ -25,6 +28,13 @@ def ppo_model(env):
     
     #Model Creation
     model = PPO(learning_policy, env, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size, device=device)
+
+    #Logging Progress
+    tmp_path = "Logfile/Baseline_Output"
+
+    new_logger = configure(tmp_path, ["stdout","csv"])
+
+    model.set_logger(new_logger)
     
     #Model Training
     model.learn(total_timesteps=steps)

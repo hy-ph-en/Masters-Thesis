@@ -4,9 +4,9 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 50                        #Number of training periods 
+        self.epochs = 1                         #Number of training periods 
         self.render = False                     #Whether the rendering of the training is shown      
-        self.gamma = 0.99                       #Higher values priorities furture benefit in the training cycle
+        self.gamma = 0.98                       #Higher values priorities furture benefit in the training cycle -0.99
         
         self.clear_data = True                  #Each run the relavent csv files will be cleared of their previous data
         

@@ -1,8 +1,7 @@
 import gym
 from Testing.Configuration import env_metrics
 from Learning.Models.common.env_util import make_vec_env
-from Learning.Models.common.monitor import Monitor
-from Learning.Models.common.vec_env import SubprocVecEnv
+from Environment.Environments.mountain_car_success import MountainCarSuccess
 
 class Environments:
     #List of all possible environments to call upon 
@@ -26,5 +25,7 @@ class Environments:
 
         #Making an returning the Environment
 
-        return make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=4, monitor_dir='Logfile')
+        #make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=4, monitor_dir='Logfile')
+
+        return make_vec_env(MountainCarSuccess, n_envs=4, monitor_dir='Logfile')
 

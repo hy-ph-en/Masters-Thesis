@@ -19,6 +19,8 @@ def ppo_neurosymbolic_model(env):
 
     #GPU Acceleration
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    print("eyo")
     
     #Model Creation
     model = PPO(learning_policy, env, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size, device=device)
@@ -37,12 +39,13 @@ def ppo_neurosymbolic_model(env):
     del model # remove to demonstrate saving and loading
     
     model = PPO.load("Environment_Solution")
-
+    print("AHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHHH")
     obs = env.reset()
     while True:
         action, _states = model.predict(obs)
         obs, rewards, dones, info = env.step(action)
-        
+
+        #print(env)
         env.render("human")
     
     
