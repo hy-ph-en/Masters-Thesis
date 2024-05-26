@@ -14,6 +14,10 @@ class MountainCarSuccess(MountainCarEnv):
         super().__init__()
         self.goal_velocity = goal_velocity
         self.render_mode = render_mode
+    
+    def render(self, mode="human"):
+        self.render_mode = mode
+        return super().render()
 
     def step(self, action: int):
         assert self.action_space.contains(
@@ -38,11 +42,4 @@ class MountainCarSuccess(MountainCarEnv):
             self.render()
         # truncation=False as the time limit is handled by the `TimeLimit` wrapper added during `make`
         return np.array(self.state, dtype=np.float32), reward, terminated, False, {}
-    
-    def render(self):
-        if self.render_mode not in ['human', 'rgb_array']:
-            raise ValueError("Invalid render mode. Must be 'human' or 'rgb_array'.")
-        print("dooooo")
-        return super().render(mode=self.render_mode)  # Call the superclass render method
-
 
