@@ -10,12 +10,12 @@ from gymnasium.envs.classic_control import MountainCarEnv
 #Just get it to run and then modify it
 class MountainCarSuccess(MountainCarEnv):
 
-    def __init__(self, goal_velocity=0, render_mode="human"):
+    def __init__(self, goal_velocity=0, render_mode=None):
         super().__init__()
         self.goal_velocity = goal_velocity
         self.render_mode = render_mode
     
-    def render(self, mode="human"):
+    def render(self, mode=None):
         self.render_mode = mode
         return super().render()
 

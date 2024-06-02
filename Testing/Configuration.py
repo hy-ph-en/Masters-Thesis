@@ -4,11 +4,13 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 1                         #Number of training periods 
+        self.epochs = 50                        #Number of training periods 
         self.render = False                     #Whether the rendering of the training is shown      
         self.gamma = 0.98                       #Higher values priorities furture benefit in the training cycle -0.99
         
         self.clear_data = True                  #Each run the relavent csv files will be cleared of their previous data
+        self.multiple_runs = True               #If the program should do multiple runs as to build a better average value
+        self.number_of_runs = 10
         
         
         #Q Learning Specific                     
@@ -94,7 +96,7 @@ class env_metrics():
         
         #Default
         'Simpliest Environemnt - "CartPole-v1"'
-        self.environment = 1
+        self.environment = 9
         
 
         self.number_of_steps = 500000              #The number of steps the agent can take per training period  - CartPole default is 250000

@@ -7,7 +7,7 @@ import torch
 from Environment.Environments.mountain_car_success import MountainCarSuccess
 
 
-def ppo_model(env):
+def ppo_model(env, seed):
     
     #Metric Imports
     test_metric = test_metrics()
@@ -27,7 +27,7 @@ def ppo_model(env):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     #Model Creation
-    model = PPO(learning_policy, env, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size, device=device)
+    model = PPO(learning_policy, env, seed=seed, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size, device=device)
 
     #Logging Progress
     tmp_path = "Logfile/Baseline_Output"

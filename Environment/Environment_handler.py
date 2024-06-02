@@ -26,6 +26,6 @@ class Environments:
         #Making an returning the Environment
 
         #make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=4, monitor_dir='Logfile')
-
-        return make_vec_env(MountainCarSuccess, n_envs=4, monitor_dir='Logfile')
+        #make_vec_env(MountainCarSuccess, n_envs=4, monitor_dir='Logfile')
+        return make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=4, monitor_dir='Logfile')
 

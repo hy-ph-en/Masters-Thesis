@@ -210,7 +210,7 @@ class OnPolicyAlgorithm(BaseAlgorithm):
             for count in range(len(dones)):
                 if dones[count]:
                     self.counting_runs += 1
-                    print(rewards[count], dones[count], infos[count])
+                    #print(rewards[count], dones[count], infos[count])
                     #print(rewards[count])
                     if 'is_success' in infos[count] and infos[count]['is_success']:
                         self.success_count[count] += 1

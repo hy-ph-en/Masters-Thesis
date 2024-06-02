@@ -27,7 +27,7 @@ class learning_handler:
         #Policy Grabbers
         '1 - Symbolic Regression PSYR'
         
-    def model_choice(self):
+    def model_choice(self,seed):
         #Model
         model = test_metrics().model
 
@@ -40,7 +40,7 @@ class learning_handler:
         }
         
         #Default is the simple reinforcement learning model
-        return (model_dict.get(model, simple_reinforcemeant_learning))(self.env)
+        return (model_dict.get(model, simple_reinforcemeant_learning))(self.env, seed)
 
     def policy_hanlder(self):
         #List of Policies
