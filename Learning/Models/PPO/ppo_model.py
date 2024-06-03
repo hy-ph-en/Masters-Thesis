@@ -30,7 +30,7 @@ def ppo_model(env, seed):
     model = PPO(learning_policy, env, seed=seed, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size, device=device)
 
     #Logging Progress
-    tmp_path = "Logfile/Baseline_Output"
+    tmp_path = "Logfile\Baseline_Output"
 
     new_logger = configure(tmp_path, ["stdout","csv"])
 

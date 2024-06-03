@@ -11,16 +11,18 @@ import os
 #something is wrong 
 
 def average_value_loss(number_of_runs=0):
-    path_created = 'Logfile\\Baseline_Output\\progress.csv'
+    path_created = 'Logfile\Baseline_Output\progress.csv'
 
-    if os.path.exists(path_created) and not csv_is_empty(path_created) and number_of_runs != 0:
+    #maybe try doing the build path thing? using os
+
+    if not csv_is_empty(path_created) and number_of_runs != 0:
         df_created_data = pd.read_csv(path_created).astype(float)
         df_created_data = df_created_data.dropna()
 
         df_created_data = df_created_data.loc[:, ['train/learning_rate','train/loss', 'train/value_loss', 'rollout/ep_rew_mean']]
         print(df_created_data)
 
-        path_remembered = 'Logfile\\AverageValue.csv'
+        path_remembered = 'Logfile\AverageValue.csv'
 
         if not csv_is_empty(path_remembered):
             remebered_data = pd.read_csv(path_remembered).astype(float)
@@ -46,7 +48,7 @@ def average_value_loss(number_of_runs=0):
 
                 remebered_data.iloc[line, column] = remebered_data.iloc[line, column] + (df_created_data.iloc[line, column] /number_of_runs)
 
-        with open('Logfile\\AverageValue.csv', 'w') as file:
+        with open('Logfile\AverageValue.csv', 'w') as file:
             pass
         
 
