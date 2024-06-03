@@ -13,7 +13,7 @@ import os
 def average_value_loss(number_of_runs=0):
     path_created = 'Logfile\\Baseline_Output\\progress.csv'
 
-    if not csv_is_empty(path_created) and number_of_runs != 0:
+    if os.path.exists(path_created) and not csv_is_empty(path_created) and number_of_runs != 0:
         df_created_data = pd.read_csv(path_created).astype(float)
         df_created_data = df_created_data.dropna()
 
