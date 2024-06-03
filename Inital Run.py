@@ -32,7 +32,7 @@ if Multiple:
 
     #Clean Average Value
     if(test_metrics().clear_data):
-        with open('Logfile\AverageValue.csv', 'w') as file:
+        with open('Logfile\\AverageValue.csv', 'w') as file:
             pass
 
     #Also the passed seed value
