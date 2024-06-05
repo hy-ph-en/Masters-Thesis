@@ -10,7 +10,7 @@ class test_metrics():
         
         self.clear_data = True                  #Each run the relavent csv files will be cleared of their previous data
         self.multiple_runs = True               #If the program should do multiple runs as to build a better average value
-        self.number_of_runs = 10
+        self.number_of_runs = 1                 #How many loops through a number of seed values the program will complete before finishing
         
         
         #Q Learning Specific                     
@@ -23,7 +23,6 @@ class test_metrics():
         self.activation_function = "ReLU"       #The Activation function passed into the neural network
         
 
-        
         #PPO Specific
         self.ppo_learning_rate = 3e-4           #The rate at which learning takes place     -3e-4
         self.batch_size = 256                   #Mini size batch    Nominal-64
@@ -52,9 +51,9 @@ class test_metrics():
         self.precision = 64                        #How percise the solution should be
         self.ratio_to_policy = 0.5                 #The Ratio of the policy value to the MSE for the loss function
         
-        #-Operators-
+        #-Operators-                               #Balance between more operators allowing for a more emblematic solution and more opertors meaning a higher computational time
         'Binary Operators - "+", "*", "/"       '
-        self.binary_operators = ["+", "*", "/"]
+        self.binary_operators = ["+", "*", "/", "^"]
         'Unary Operators  - "cos", "exp", "sin" '
         self.unary_operators =  [
             "cos",

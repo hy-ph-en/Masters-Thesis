@@ -1,4 +1,5 @@
 import gym
+import gymnasium
 from Testing.Configuration import env_metrics
 from Learning.Models.common.env_util import make_vec_env
 from Environment.Environments.mountain_car_success import MountainCarSuccess
@@ -27,5 +28,15 @@ class Environments:
 
         #make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=4, monitor_dir='Logfile')
         #make_vec_env(MountainCarSuccess, n_envs=4, monitor_dir='Logfile')
-        return make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=4, monitor_dir='Logfile')
+
+        from gymnasium.envs.registration import register
+
+        register(
+            id='MountainCarSuccess-v0',
+            entry_point='Environment.Environments.mountain_car_success:MountainCarSuccess',  # Update this to the path where the CustomCartPoleEnv class is located
+            max_episode_steps=200,
+        )
+
+
+        return make_vec_env('MountainCarSuccess-v0', n_envs=4, monitor_dir='Logfile')
 

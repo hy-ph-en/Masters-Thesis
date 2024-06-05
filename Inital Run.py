@@ -32,11 +32,13 @@ if Multiple:
 
     #Clean Average Value
     if(test_metrics().clear_data):
-        with open('Logfile\\AverageValue.csv', 'w') as file:
+        with open('Logfile/AverageValue.csv', 'w') as file:
             pass
 
     #Also the passed seed value
     for count in range(number_of_runs):
+        print("Run Number: ", count)
+
         #Running Program
         Run(count)
 

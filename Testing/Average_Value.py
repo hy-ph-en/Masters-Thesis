@@ -75,6 +75,7 @@ def first_pass(df_created_data):
         writer_object = writer(dataframe)
 
         for _ in range(len(df_created_data)+1):
+
             writer_object.writerow([0,0,0,0])
 
         dataframe.close()
