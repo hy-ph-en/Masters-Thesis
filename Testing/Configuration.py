@@ -4,7 +4,7 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 10                        #Number of training periods 
+        self.epochs = 1                        #Number of training periods 
         self.render = False                     #Whether the rendering of the training is shown      
         self.gamma = 0.98                       #Higher values priorities furture benefit in the training cycle -0.99
         
@@ -98,8 +98,9 @@ class env_metrics():
         
         #Default
         'Simpliest Environemnt - "CartPole-v1"'
-        self.environment = 11
+        self.environment = 6
         
+        self.custom_environment_test = 11          #The model first learns with the self.environment env, then the model is rerun with the custom env and its preformance is measured
 
         self.number_of_steps = 500000              #The number of steps the agent can take per training period  - CartPole default is 250000
         

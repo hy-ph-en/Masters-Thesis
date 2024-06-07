@@ -10,7 +10,7 @@ class Environments:
         'Environment Choice'
         self.env = env_metrics().environment
     
-    def environmental_choice(self):
+    def environmental_choice(self, custom_run=False):
         #Load Registered Environments
         self.registration()
 
@@ -29,8 +29,11 @@ class Environments:
             11:"PendulumLength-v0",
         }
 
-        #Making an returning the Environment
+        #If it is required the rerun the model over a novel environment
+        if custom_run == True:
+            self.env = env_metrics().custom_environment_test
 
+        #Making an returning the Environment
         return make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=4, monitor_dir='Logfile')
 
     def registration(self):

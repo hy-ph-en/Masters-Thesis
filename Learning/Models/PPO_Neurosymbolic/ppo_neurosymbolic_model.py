@@ -2,6 +2,8 @@ from Learning.Models.common.env_util import make_vec_env
 from Learning.Models.PPO_Neurosymbolic.ppo import PPO
 from Testing.Configuration import env_metrics, test_metrics
 from Learning.Models.common.logger import configure
+from Environment.Environment_handler import Environments
+
 import torch
 
 def ppo_neurosymbolic_model(env, seed):
@@ -33,16 +35,44 @@ def ppo_neurosymbolic_model(env, seed):
     model.learn(total_timesteps=steps)
     
     #Model Output
-    if not test_metric.multiple_runs:
+    if not test_metric.multiple_runs and not test_metric.custom_test:
         model.save("Environment_Solution")
     
         del model # remove to demonstrate saving and loading
 
         run_model_loop(env)
-    
-    
 
+    if test_metric.custom_test:
+        model.save("Environment_Solution")
+    
+        del model
 
+        run_custom_loop()
+
+#Run the Trained Model over a change in the Environment to Oberserve the Outcome 
+def run_custom_loop():
+    model = PPO.load("Environment_Solution")
+
+    env = Environments().environmental_choice(custom_run=True)
+    obs = env.reset()
+    continue_running = True
+
+    while continue_running:
+        action, _states = model.predict(obs)
+        obs, rewards, dones, info = env.step(action)
+
+        #Continue Running until all simulations are finished
+        continue_running = False
+        for count in range(len(dones)):
+            if dones[count] == False:
+                continue_running = True
+            else:
+                #Information of the Model after Finishing       -might need something else to actually extract the wanted infomation, such as a monitor
+                print(info[count])
+
+        
+
+#Continue Running the Simulation Until Manually Broken
 def run_model_loop(env):
     model = PPO.load("Environment_Solution")
     obs = env.reset()

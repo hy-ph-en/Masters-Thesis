@@ -6,7 +6,7 @@ from Testing.Data_Clearer import clean_csv
 from Testing.Average_Value import average_value_loss
 import random
 
-def Run(seed=random.randint(0, 999)):
+def Run(seed=random.randint(0, 999), environment_run=False):
 
     #Clear Previous Data
     clean_csv()
@@ -50,9 +50,5 @@ if Multiple and not Custom_test:
         #Cataloging the Loss Values
         average_value_loss(number_of_runs)
 
-elif Custom_test:
-
-
-    
 else :
     Run()
