@@ -14,10 +14,10 @@ def Run(seed=random.randint(0, 999)):
     learning_handle = learning_handler()
   
     #Policy
-    policy = learning_handle.policy_hanlder()
+    learning_handle.policy_hanlder()
     
     #Model
-    model_outcome = learning_handle.model_choice(seed)
+    learning_handle.model_choice(seed)
     
     #Outputs
     #Outputs(model_outcome,policy)
@@ -26,8 +26,13 @@ def Run(seed=random.randint(0, 999)):
 
 #Run Type
 Multiple = test_metrics().multiple_runs
+Custom_test = test_metrics().custom_test
 
-if Multiple:
+if Multiple and Custom_test:
+    print("Both Multiple and Custom_test are positive : Either or must be Selected [defaulting: Custom_test selected]")
+
+
+if Multiple and not Custom_test:
     number_of_runs = test_metrics().number_of_runs
 
     #Clean Average Value
@@ -45,5 +50,9 @@ if Multiple:
         #Cataloging the Loss Values
         average_value_loss(number_of_runs)
 
+elif Custom_test:
+
+
+    
 else :
     Run()

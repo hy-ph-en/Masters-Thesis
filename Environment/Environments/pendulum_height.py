@@ -4,14 +4,14 @@ import numpy as np
 from gymnasium.wrappers import TimeLimit
 from gymnasium import spaces
 from typing import Optional
-from gymnasium.envs.classic_control import MountainCarEnv
+from gymnasium.envs.classic_control import PendulumEnv
 
 
 #Just get it to run and then modify it
-class MountainCarSuccess(MountainCarEnv):
+class PendulumHeight(PendulumEnv):
     metadata = {'render.modes': ['human']}
 
     def __init__(self):
-        super(MountainCarSuccess, self).__init__()
+        super(PendulumHeight, self).__init__()
 
-        
+        self.l = 2

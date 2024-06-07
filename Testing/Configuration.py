@@ -10,6 +10,7 @@ class test_metrics():
         
         self.clear_data = True                  #Each run the relavent csv files will be cleared of their previous data
         self.multiple_runs = True               #If the program should do multiple runs as to build a better average value
+        self.custom_test = True                 
         self.number_of_runs = 1                 #How many loops through a number of seed values the program will complete before finishing
         
         
@@ -92,10 +93,12 @@ class env_metrics():
         'road_2d - 7        '
         'road - 8           '
         'CartPole-v1 - 9    '
+        'MountainCar Success- 10  '
+        'Pendulum Length - 11'
         
         #Default
         'Simpliest Environemnt - "CartPole-v1"'
-        self.environment = 9
+        self.environment = 11
         
 
         self.number_of_steps = 500000              #The number of steps the agent can take per training period  - CartPole default is 250000

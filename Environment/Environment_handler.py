@@ -11,6 +11,9 @@ class Environments:
         self.env = env_metrics().environment
     
     def environmental_choice(self):
+        #Load Registered Environments
+        self.registration()
+
         #List of environments
         env_dict = {
             1: "MountainCar-v0", 
@@ -21,22 +24,28 @@ class Environments:
             6: "Pendulum-v1",
             7: "road_2d",
             8: "road",
-            9: "CartPole-v1"
+            9: "CartPole-v1",
+            10:"MountainCarSuccess-v0",
+            11:"PendulumLength-v0",
         }
 
         #Making an returning the Environment
 
-        #make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=4, monitor_dir='Logfile')
-        #make_vec_env(MountainCarSuccess, n_envs=4, monitor_dir='Logfile')
+        return make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=4, monitor_dir='Logfile')
 
+    def registration(self):
         from gymnasium.envs.registration import register
 
+        #Custom Mountain Car-v0
         register(
             id='MountainCarSuccess-v0',
             entry_point='Environment.Environments.mountain_car_success:MountainCarSuccess',  # Update this to the path where the CustomCartPoleEnv class is located
             max_episode_steps=200,
         )
 
-
-        return make_vec_env('MountainCarSuccess-v0', n_envs=4, monitor_dir='Logfile')
-
+        #Custom Pendulum - Length Change
+        register(
+            id='PendulumLength-v0',
+            entry_point='Environment.Environments.pendulum_height:PendulumHeight',
+            max_episode_steps=200,
+        )
