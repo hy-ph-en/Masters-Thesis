@@ -14,4 +14,6 @@ class MountainCarSuccess(MountainCarEnv):
     def __init__(self):
         super(MountainCarSuccess, self).__init__()
 
-        
+        #speed change?
+
+        #the training is on normal mountain car and the testing is on continous mountain car, then you can compare the outputs

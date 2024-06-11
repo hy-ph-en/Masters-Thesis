@@ -21,6 +21,12 @@ class symbolic_reg:
     
     def symbolic_regression(self,features, predictions):
 
+        if features.is_cuda:
+            features = features.cpu()
+
+        if predictions.is_cuda:
+            predictions = predictions.cpu()
+
         model = PySRRegressor(
         maxsize=self.complexity,
         niterations=self.niterations,
@@ -30,8 +36,9 @@ class symbolic_reg:
         progress=False,
         verbosity=0,
         elementwise_loss="loss(prediction, target) = (prediction - target)^2",
-        equation_file="Logfile/Logoutput/Logoutput.csv"
         # ^ Custom loss function (julia syntax)
+        equation_file="Logfile/Logoutput/Logoutput.csv",
+        populations= 15
         )
         
         model.fit(features, predictions)

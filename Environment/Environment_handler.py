@@ -34,7 +34,7 @@ class Environments:
             self.env = env_metrics().custom_environment_test
 
         #Making an returning the Environment
-        return make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=4, monitor_dir='Logfile')
+        return make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=env_metrics().number_of_envs, monitor_dir='Logfile')
 
     def registration(self):
         from gymnasium.envs.registration import register

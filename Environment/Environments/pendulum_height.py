@@ -15,3 +15,6 @@ class PendulumHeight(PendulumEnv):
         super(PendulumHeight, self).__init__()
 
         self.l = 2
+
+        #height change
+        #gravity change

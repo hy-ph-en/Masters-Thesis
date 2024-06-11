@@ -37,7 +37,7 @@ class test_metrics():
         'NeuroLossPolicy - Neurosymbolic Policy and Loss                 '
         'NeuroJustLossPolicy - Neurosymbolic Loss                        '
         
-        self.learning_policy = "MlpPolicy"                                            #Passed Learning Policy 
+        self.learning_policy = "NeuroPolicy"                                            #Passed Learning Policy 
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
@@ -101,6 +101,8 @@ class env_metrics():
         self.environment = 6
         
         self.custom_environment_test = 11          #The model first learns with the self.environment env, then the model is rerun with the custom env and its preformance is measured
+
+        self.number_of_envs = 10
 
         self.number_of_steps = 500000              #The number of steps the agent can take per training period  - CartPole default is 250000
         
