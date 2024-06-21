@@ -1,10 +1,14 @@
+from csv import writer
+import os
 from Learning.Models.common.env_util import make_vec_env
 from Learning.Models.PPO_Neurosymbolic.ppo import PPO
 from Testing.Configuration import env_metrics, test_metrics
 from Learning.Models.common.logger import configure
 from Environment.Environment_handler import Environments
+from Learning.Models.common.evaluation import evaluate_policy
 
 import torch
+
 
 def ppo_neurosymbolic_model(env, seed):
     
@@ -44,9 +48,9 @@ def ppo_neurosymbolic_model(env, seed):
 
     if test_metric.custom_test:
         model.save("Environment_Solution")
-    
+        
         del model
-
+    
         run_custom_loop()
 
 #Run the Trained Model over a change in the Environment to Oberserve the Outcome 
@@ -54,22 +58,24 @@ def run_custom_loop():
     model = PPO.load("Environment_Solution")
 
     env = Environments().environmental_choice(custom_run=True)
-    obs = env.reset()
-    continue_running = True
+    
+    #Need to modify learning handler 
 
-    while continue_running:
-        action, _states = model.predict(obs)
-        obs, rewards, dones, info = env.step(action)
+    #env = learning_handler
 
-        #Continue Running until all simulations are finished
-        continue_running = False
-        for count in range(len(dones)):
-            if dones[count] == False:
-                continue_running = True
-            else:
-                #Information of the Model after Finishing       -might need something else to actually extract the wanted infomation, such as a monitor
-                print(info[count])
+    mean_reward, std_reward = evaluate_policy(model, env, n_eval_episodes=10)
 
+    folder_name = 'Logfile'
+    file_name = 'Custom_Run_Averages.csv'
+    file_path = os.path.join(folder_name, file_name)
+
+    with open(file_path, mode='a', newline='') as dataframe:
+        writer_object = writer(dataframe)
+                        
+        writer_object.writerow([mean_reward,std_reward])
+
+        dataframe.close()
+    
         
 
 #Continue Running the Simulation Until Manually Broken

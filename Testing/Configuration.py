@@ -11,7 +11,7 @@ class test_metrics():
         self.clear_data = True                  #Each run the relavent csv files will be cleared of their previous data
         self.multiple_runs = True               #If the program should do multiple runs as to build a better average value
         self.custom_test = True                 
-        self.number_of_runs = 1                 #How many loops through a number of seed values the program will complete before finishing
+        self.number_of_runs = 3                 #How many loops through a number of seed values the program will complete before finishing
         
         
         #Q Learning Specific                     
@@ -29,7 +29,7 @@ class test_metrics():
         self.batch_size = 256                   #Mini size batch    Nominal-64
         
         
-        #Learning Polies'
+        #Learning Polices'
         'MlpPolicy - Multi-Layer Perceptron (MLP) Policy                 '
         'CnnPolicy - Convolutional Neural Network                        '
         'MultiInputPolicy - Multi-actor Policy                           '

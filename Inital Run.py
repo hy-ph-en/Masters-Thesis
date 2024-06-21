@@ -29,15 +29,17 @@ Multiple = test_metrics().multiple_runs
 Custom_test = test_metrics().custom_test
 
 if Multiple and Custom_test:
-    print("Both Multiple and Custom_test are positive : Either or must be Selected [defaulting: Custom_test selected]")
+    print("Both Multiple and Custom_test are positive : Both Will be Run [Make Sure this is Desired]")
 
 
-if Multiple and not Custom_test:
+if Multiple:
     number_of_runs = test_metrics().number_of_runs
 
     #Clean Average Value
     if(test_metrics().clear_data):
         with open('Logfile/AverageValue.csv', 'w') as file:
+            pass
+        with open('Logfile/Custom_Run_Averages.csv', 'w') as file:
             pass
 
     #Also the passed seed value

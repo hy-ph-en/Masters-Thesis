@@ -22,10 +22,10 @@ class symbolic_reg:
     def symbolic_regression(self,features, predictions):
 
         if features.is_cuda:
-            features = features.cpu()
+            features = features.to('cuda:0')
 
         if predictions.is_cuda:
-            predictions = predictions.cpu()
+            predictions = predictions.to('cuda:0')
 
         model = PySRRegressor(
         maxsize=self.complexity,
@@ -38,12 +38,14 @@ class symbolic_reg:
         elementwise_loss="loss(prediction, target) = (prediction - target)^2",
         # ^ Custom loss function (julia syntax)
         equation_file="Logfile/Logoutput/Logoutput.csv",
-        populations= 15
+        populations= 1,
+        constraints={'pow': (-1, 1)}    #says that power laws can have any complexity left argument, but only 1 complexity in the right argument. Use this to force more interpretable solutions.
         )
         
         model.fit(features, predictions)
         
         found_prediction = model.predict(features)
         
+        #print("Predictions", type(found_prediction))
         
         return found_prediction

@@ -24,7 +24,6 @@ def average_value_loss(number_of_runs=0):
         df_created_data = df_created_data.dropna()
 
         df_created_data = df_created_data.loc[:, ['train/learning_rate','train/loss', 'train/value_loss', 'rollout/ep_rew_mean']]
-        print(df_created_data)
 
         path_remembered = 'Logfile/AverageValue.csv'
 
