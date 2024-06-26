@@ -27,7 +27,7 @@ def ppo_neurosymbolic_model(env, seed):
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
     #Model Creation
-    model = PPO(learning_policy, env, seed=seed, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size, device=device)
+    model = PPO(learning_policy, env, seed=seed, verbose=verbose, learning_rate=learning_rate, n_epochs=epoches, gamma=gamma, batch_size= batch_size, device="cpu")
 
     tmp_path = "Logfile/Baseline_Output"
 
@@ -48,7 +48,7 @@ def ppo_neurosymbolic_model(env, seed):
 
     if test_metric.custom_test:
         model.save("Environment_Solution")
-        
+
         del model
     
         run_custom_loop()
@@ -65,9 +65,7 @@ def run_custom_loop():
 
     mean_reward, std_reward = evaluate_policy(model, env, n_eval_episodes=10)
 
-    folder_name = 'Logfile'
-    file_name = 'Custom_Run_Averages.csv'
-    file_path = os.path.join(folder_name, file_name)
+    file_path = test_metrics().custom_test_file
 
     with open(file_path, mode='a', newline='') as dataframe:
         writer_object = writer(dataframe)

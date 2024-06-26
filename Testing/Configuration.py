@@ -4,29 +4,29 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 1                        #Number of training periods 
+        self.epochs = 10
         self.render = False                     #Whether the rendering of the training is shown      
-        self.gamma = 0.98                       #Higher values priorities furture benefit in the training cycle -0.99
+        self.gamma = 0.98
         
-        self.clear_data = True                  #Each run the relavent csv files will be cleared of their previous data
-        self.multiple_runs = True               #If the program should do multiple runs as to build a better average value
-        self.custom_test = True                 
-        self.number_of_runs = 3                 #How many loops through a number of seed values the program will complete before finishing
-        
+        self.clear_data = True
+        self.multiple_runs = True
+        self.custom_test = True
+        self.hyperparameter_testing = True
+        self.number_of_runs = 3
         
         #Q Learning Specific                     
         self.epsilon = 0.1
-        self.bins = (10,10)                     #Number of states - From continous to discrete 
-        self.q_learning_rate = 0.9              #The rate at which learning takes place
+        self.bins = (10, 10)
+        self.q_learning_rate = 0.9
         
         
         #Neural Specific 
-        self.activation_function = "ReLU"       #The Activation function passed into the neural network
+        self.activation_function = 'ReLU'
         
 
         #PPO Specific
-        self.ppo_learning_rate = 3e-4           #The rate at which learning takes place     -3e-4
-        self.batch_size = 256                   #Mini size batch    Nominal-64
+        self.ppo_learning_rate = 0.0003
+        self.batch_size = 256
         
         
         #Learning Polices'
@@ -37,7 +37,7 @@ class test_metrics():
         'NeuroLossPolicy - Neurosymbolic Policy and Loss                 '
         'NeuroJustLossPolicy - Neurosymbolic Loss                        '
         
-        self.learning_policy = "NeuroPolicy"                                            #Passed Learning Policy 
+        self.learning_policy = 'NeuroPolicy'
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
@@ -45,23 +45,18 @@ class test_metrics():
         
         #Neurosymbolic Specific 
         'Complexity 1-20'
-        self.complexity = 20                       #Max Complexity of Result
-        self.iterations = 2                        #Number of iterations before giving a result
-        self.neurostep = 1000                      #How many stpes the program should run through before preforming symbolic regression
+        self.complexity = 20
+        self.iterations = 2
+        self.neurostep = 1000
         'Percision 1-64'
-        self.precision = 64                        #How percise the solution should be
-        self.ratio_to_policy = 0.5                 #The Ratio of the policy value to the MSE for the loss function
+        self.precision = 64
+        self.ratio_to_policy = 0.5
         
         #-Operators-                               #Balance between more operators allowing for a more emblematic solution and more opertors meaning a higher computational time
         'Binary Operators - "+", "*", "/"       '
-        self.binary_operators = ["+", "*", "/", "^"]
+        self.binary_operators = ['+', '*', '/', '^']
         'Unary Operators  - "cos", "exp", "sin" '
-        self.unary_operators =  [
-            "cos",
-            "exp",
-            "sin",
-            "inv(x) = 1/x",
-        ]
+        self.unary_operators = ['cos', 'exp', 'sin', 'inv(x) = 1/x']
         
         
         #Model Choice
@@ -75,6 +70,10 @@ class test_metrics():
         #Policy Choice
         'Symbolic Regression PSYR - 1                   '
         self.policy = 1
+
+        #Filenames
+        self.average_file = 'Logfile/AverageValue.csv'
+        self.custom_test_file = 'Logfile/Custom_Run_Averages.csv'
         
 
 
@@ -100,11 +99,11 @@ class env_metrics():
         'Simpliest Environemnt - "CartPole-v1"'
         self.environment = 6
         
-        self.custom_environment_test = 11          #The model first learns with the self.environment env, then the model is rerun with the custom env and its preformance is measured
+        self.custom_environment_test = 11
 
         self.number_of_envs = 10
 
-        self.number_of_steps = 500000              #The number of steps the agent can take per training period  - CartPole default is 250000
+        self.number_of_steps = 500000
         
         
 
