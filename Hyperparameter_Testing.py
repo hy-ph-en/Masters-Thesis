@@ -28,10 +28,17 @@ def file_overwrite(testing_number, average_file, custom_test_file):
         if average_file =="'Logfile/AverageValue.csv'":
             average_file = "'"+'Logfile/AverageValue'+str(testing_number)+'.csv'+"'"
             print(average_file)
+            
         if custom_test_file == "'Logfile/Custom_Run_Averages.csv'":
             custom_test_file = "'"+'Logfile/Custom_Run_Averages'+str(testing_number)+'.csv'+"'"
-            print(custom_test_file)
+            print(average_file)
         metrics_change = return_current_test(testing_number, average_file, custom_test_file)
+
+    #Cleaning Files
+    with open(average_file, 'w') as file:
+        pass
+    with open(custom_test_file, 'w') as file:
+        pass
 
     with open('Testing/Configuration.py', 'r') as file:
         lines = file.readlines()
@@ -50,9 +57,9 @@ def file_overwrite(testing_number, average_file, custom_test_file):
 def return_current_test(testing_number, average_file, custom_test_file):
 
     hyperparameters = {
-        1 : {'average_file':average_file,'custom_test_file': custom_test_file, 'epochs': 100},
-        2 : {},
-        3 : {},
+        1 : {'average_file':average_file,'custom_test_file': custom_test_file, 'gamma': 0.95},
+        2 : {'average_file':average_file,'custom_test_file': custom_test_file, 'gamma': 0.9},
+        3 : {'average_file':average_file,'custom_test_file': custom_test_file, 'gamma': 0.85},
         4 : {},
         5 : {},
         6 : {},

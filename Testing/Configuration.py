@@ -4,15 +4,15 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 10
+        self.epochs = 1
         self.render = False                     #Whether the rendering of the training is shown      
-        self.gamma = 0.98
+        self.gamma = 0.95
         
         self.clear_data = True
         self.multiple_runs = True
         self.custom_test = True
         self.hyperparameter_testing = True
-        self.number_of_runs = 3
+        self.number_of_runs = 2
         
         #Q Learning Specific                     
         self.epsilon = 0.1
@@ -72,8 +72,8 @@ class test_metrics():
         self.policy = 1
 
         #Filenames
-        self.average_file = 'Logfile/AverageValue.csv'
-        self.custom_test_file = 'Logfile/Custom_Run_Averages.csv'
+        self.average_file = 'Logfile/AverageValue1.csv'
+        self.custom_test_file = 'Logfile/Custom_Run_Averages1.csv'
         
 
 
