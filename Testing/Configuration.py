@@ -4,15 +4,15 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 1
+        self.epochs = 20
         self.render = False                     #Whether the rendering of the training is shown      
-        self.gamma = 0.9
+        self.gamma = 0.98
         
         self.clear_data = True
         self.multiple_runs = True
         self.custom_test = True
         self.hyperparameter_testing = True
-        self.number_of_runs = 3
+        self.number_of_runs = 10
         
         #Q Learning Specific                     
         self.epsilon = 0.1
@@ -50,7 +50,7 @@ class test_metrics():
         self.neurostep = 1000
         'Percision 1-64'
         self.precision = 64
-        self.ratio_to_policy = 0.5
+        self.ratio_to_policy = 0.25
         
         #-Operators-                               #Balance between more operators allowing for a more emblematic solution and more opertors meaning a higher computational time
         'Binary Operators - "+", "*", "/"       '

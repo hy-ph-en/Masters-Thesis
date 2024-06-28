@@ -55,18 +55,62 @@ def file_overwrite(testing_number, average_file, custom_test_file):
 
 #Storage for hyperparameters
 def return_current_test(testing_number, average_file, custom_test_file):
+    #For the back to Default 
 
     hyperparameters = {
-        1 : {'average_file':average_file,'custom_test_file': custom_test_file, 'gamma': 0.95},
-        2 : {'average_file':average_file,'custom_test_file': custom_test_file, 'gamma': 0.9},
-        3 : {'average_file':average_file,'custom_test_file': custom_test_file, 'gamma': 0.85},
-        4 : {},
-        5 : {},
-        6 : {},
-        7 : {},
-        8 : {},
-        9 : {},
-        10 : {}
+        1 : {'average_file':average_file,'custom_test_file': custom_test_file,'learning_policy': 'NeuroLossPolicy', 'ratio_to_policy': 0.1},
+        2 : {'average_file':average_file,'custom_test_file': custom_test_file, 'ratio_to_policy': 0.25},
+        3 : {'average_file':average_file,'custom_test_file': custom_test_file, 'ratio_to_policy': 0.5},
+        4 : {'average_file':average_file,'custom_test_file': custom_test_file, 'ratio_to_policy': 1.25},        
+        
+        6 : {'average_file':average_file,'custom_test_file': custom_test_file, 'ratio_to_policy': 1.0, 'neurostep': 250},#Back to Default
+        7 : {'average_file':average_file,'custom_test_file': custom_test_file, 'neurostep': 500},
+        8 : {'average_file':average_file,'custom_test_file': custom_test_file, 'neurostep': 2500},
+        9 : {'average_file':average_file,'custom_test_file': custom_test_file, 'neurostep': 5000},
+        10 : {'average_file':average_file,'custom_test_file': custom_test_file, 'neurostep': 10000},
+
+
+        11 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': 'NeuroPolicy', 'neurostep': 250},#Back to Default
+        12 : {'average_file':average_file,'custom_test_file': custom_test_file, 'neurostep': 500},
+        13 : {'average_file':average_file,'custom_test_file': custom_test_file, 'neurostep': 2500},
+        14 : {'average_file':average_file,'custom_test_file': custom_test_file, 'neurostep': 5000},
+        15 : {'average_file':average_file,'custom_test_file': custom_test_file, 'neurostep': 10000},
+
+        16 : {'average_file':average_file,'custom_test_file': custom_test_file, 'gamma': 0.95},
+        17 : {'average_file':average_file,'custom_test_file': custom_test_file, 'gamma': 0.96},
+        18 : {'average_file':average_file,'custom_test_file': custom_test_file, 'gamma': 0.97},
+        19 : {'average_file':average_file,'custom_test_file': custom_test_file, 'gamma': 0.99},
+
+        20 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': 'NeuroLossPolicy','gamma': 0.95},
+        21 : {'average_file':average_file,'custom_test_file': custom_test_file, 'gamma': 0.96},
+        22 : {'average_file':average_file,'custom_test_file': custom_test_file, 'gamma': 0.97},
+        23 : {'average_file':average_file,'custom_test_file': custom_test_file, 'gamma': 0.99},
+
+
+        24 : {'average_file':average_file,'custom_test_file': custom_test_file, 'complexity': 5},
+        25 : {'average_file':average_file,'custom_test_file': custom_test_file, 'complexity': 10},
+        26 : {'average_file':average_file,'custom_test_file': custom_test_file, 'complexity': 15},
+        27 : {'average_file':average_file,'custom_test_file': custom_test_file, 'complexity': 19},       #Back to Default
+
+        28 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': 'NeuroPolicy','complexity': 5},
+        29 : {'average_file':average_file,'custom_test_file': custom_test_file, 'complexity': 10},
+        30 : {'average_file':average_file,'custom_test_file': custom_test_file, 'complexity': 15},
+        31 : {'average_file':average_file,'custom_test_file': custom_test_file, 'complexity': 19},       #Back to Default
+
+        32 : {'average_file':average_file,'custom_test_file': custom_test_file, 'iterations': 5},
+        33 : {'average_file':average_file,'custom_test_file': custom_test_file, 'iterations': 10},
+
+        34 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': 'NeuroLossPolicy', 'iterations': 5},
+        35 : {'average_file':average_file,'custom_test_file': custom_test_file, 'iterations': 10},
+
+
+        36 : {'average_file':average_file,'custom_test_file': custom_test_file, 'ppo_learning_rate': 0.0002, 'iterations': 2},       #Back to Default
+        37 : {'average_file':average_file,'custom_test_file': custom_test_file, 'ppo_learning_rate': 0.0003},
+        38 : {'average_file':average_file,'custom_test_file': custom_test_file, 'ppo_learning_rate': 0.0005},
+
+        39 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': 'NeuroPolicy','ppo_learning_rate': 0.0002},
+        40 : {'average_file':average_file,'custom_test_file': custom_test_file, 'ppo_learning_rate': 0.0003},
+        41 : {'average_file':average_file,'custom_test_file': custom_test_file, 'ppo_learning_rate': 0.0005},
     }
 
     return hyperparameters.get(testing_number)
