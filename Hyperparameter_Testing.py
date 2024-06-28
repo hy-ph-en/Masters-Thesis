@@ -35,9 +35,9 @@ def file_overwrite(testing_number, average_file, custom_test_file):
         metrics_change = return_current_test(testing_number, average_file, custom_test_file)
 
     #Cleaning Files
-    with open(average_file, 'w') as file:
+    with open(('Logfile/Custom_Run_Averages'+str(testing_number)+'.csv'), 'w') as file:
         pass
-    with open(custom_test_file, 'w') as file:
+    with open(('Logfile/Custom_Run_Averages'+str(testing_number)+'.csv'), 'w') as file:
         pass
 
     with open('Testing/Configuration.py', 'r') as file:
