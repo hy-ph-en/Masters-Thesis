@@ -128,7 +128,7 @@ def return_current_test(testing_number, average_file, custom_test_file):
 def file_defaults():
 
     default_metrics = {
-        'epochs': 1,
+        'epochs': 20,
         'gamma': 0.98,
         'clear_data': True,
         'multiple_runs': True,
@@ -176,11 +176,5 @@ def file_defaults():
 
     with open('Testing/Configuration.py', 'w') as file:
         file.writelines(lines)
-
-
-
-file_defaults()
-
-
 
 

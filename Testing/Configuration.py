@@ -12,7 +12,7 @@ class test_metrics():
         self.multiple_runs = True
         self.custom_test = True
         self.hyperparameter_testing = True
-        self.number_of_runs = 10
+        self.number_of_runs = 3
         
         #Q Learning Specific                     
         self.epsilon = 0.1
@@ -25,7 +25,7 @@ class test_metrics():
         
 
         #PPO Specific
-        self.ppo_learning_rate = 0.0003
+        self.ppo_learning_rate = 0.0005
         self.batch_size = 256
         
         
@@ -37,7 +37,7 @@ class test_metrics():
         'NeuroLossPolicy - Neurosymbolic Policy and Loss                 '
         'NeuroJustLossPolicy - Neurosymbolic Loss                        '
         
-        self.learning_policy = 'NeuroPolicy'
+        self.learning_policy = NeuroLossPolicy
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
@@ -50,7 +50,7 @@ class test_metrics():
         self.neurostep = 1000
         'Percision 1-64'
         self.precision = 64
-        self.ratio_to_policy = 0.25
+        self.ratio_to_policy = 0.1
         
         #-Operators-                               #Balance between more operators allowing for a more emblematic solution and more opertors meaning a higher computational time
         'Binary Operators - "+", "*", "/"       '
@@ -72,8 +72,8 @@ class test_metrics():
         self.policy = 1
 
         #Filenames
-        self.average_file = 'Logfile/AverageValue2.csv'
-        self.custom_test_file = 'Logfile/Custom_Run_Averages2.csv'
+        self.average_file = 'Logfile/AverageValue1.csv'
+        self.custom_test_file = 'Logfile/Custom_Run_Averages1.csv'
         
 
 
