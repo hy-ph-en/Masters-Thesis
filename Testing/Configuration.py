@@ -4,7 +4,7 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 20
+        self.epochs = 1
         self.render = False                     #Whether the rendering of the training is shown      
         self.gamma = 0.98
         
@@ -37,7 +37,7 @@ class test_metrics():
         'NeuroLossPolicy - Neurosymbolic Policy and Loss                 '
         'NeuroJustLossPolicy - Neurosymbolic Loss                        '
         
-        self.learning_policy = NeuroLossPolicy
+        self.learning_policy = 'NeuroLossPolicy'
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
@@ -94,12 +94,21 @@ class env_metrics():
         'CartPole-v1 - 9    '
         'MountainCar Success- 10  '
         'Pendulum Length - 11'
+        'Pendulum Length Extended - 12'
+        'Pendulum Gravity - 13'
+        'Pendulum Gravity Increased - 14'
         
         #Default
         'Simpliest Environemnt - "CartPole-v1"'
         self.environment = 6
         
         self.custom_environment_test = 11
+
+        self.custom_environment_test_one = 12
+
+        self.custom_environment_test_two = 13
+
+        self.custom_environment_test_three = 14
 
         self.number_of_envs = 10
 

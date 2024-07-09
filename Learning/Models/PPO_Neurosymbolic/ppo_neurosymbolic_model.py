@@ -57,22 +57,33 @@ def ppo_neurosymbolic_model(env, seed):
 def run_custom_loop():
     model = PPO.load("Environment_Solution")
 
-    env = Environments().environmental_choice(custom_run=True)
-    
-    #Need to modify learning handler 
 
-    #env = learning_handler
+    for custom_number in range(4):
+        print(custom_number)
+        env = Environments().environmental_choice(custom_run=True, custom_number=custom_number)
 
-    mean_reward, std_reward = evaluate_policy(model, env, n_eval_episodes=10)
+        print(env)
 
-    file_path = test_metrics().custom_test_file
+        mean_reward, std_reward = evaluate_policy(model, env, n_eval_episodes=10)
+
+        file_path = test_metrics().custom_test_file
+
+        with open(file_path, mode='a', newline='') as dataframe:
+            writer_object = writer(dataframe)
+                            
+            writer_object.writerow([mean_reward,std_reward])
+
+            dataframe.close()
+
+
 
     with open(file_path, mode='a', newline='') as dataframe:
         writer_object = writer(dataframe)
-                        
-        writer_object.writerow([mean_reward,std_reward])
+
+        writer_object.writerow([])
 
         dataframe.close()
+
     
         
 

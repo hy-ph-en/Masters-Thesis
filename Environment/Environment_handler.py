@@ -10,7 +10,7 @@ class Environments:
         'Environment Choice'
         self.env = env_metrics().environment
     
-    def environmental_choice(self, custom_run=False):
+    def environmental_choice(self, custom_run=False, custom_number=None):
         #Load Registered Environments
         self.registration()
 
@@ -27,11 +27,21 @@ class Environments:
             9: "CartPole-v1",
             10:"MountainCarSuccess-v0",
             11:"PendulumLength-v0",
+            12:"PendulumLength-v1",
+            13:"PendulumGravity-v0",
+            14:"PendulumGravity-v1",
         }
 
         #If it is required the rerun the model over a novel environment
         if custom_run == True:
-            self.env = env_metrics().custom_environment_test
+            if custom_number == 0:
+                self.env = env_metrics().custom_environment_test
+            if custom_number == 1:
+                self.env = env_metrics().custom_environment_test_one
+            if custom_number == 2:
+                self.env = env_metrics().custom_environment_test_two
+            if custom_number == 3:
+                self.env = env_metrics().custom_environment_test_three
 
         #Making an returning the Environment
         return make_vec_env(env_dict.get(self.env, "CartPole-v1"), n_envs=env_metrics().number_of_envs, monitor_dir='Logfile')
@@ -50,5 +60,24 @@ class Environments:
         register(
             id='PendulumLength-v0',
             entry_point='Environment.Environments.pendulum_height:PendulumHeight',
+            max_episode_steps=200,
+        )
+
+        #Varried Pendulum Length
+        register(
+            id='PendulumLength-v1',
+            entry_point='Environment.Environments.pendulum_height2:PendulumHeight2',
+            max_episode_steps=200,
+        )
+
+        register(
+            id='PendulumGravity-v0',
+            entry_point='Environment.Environments.pendulum_gravity:PendulumGravity',
+            max_episode_steps=200,
+        )
+
+        register(
+            id='PendulumGravity-v1',
+            entry_point='Environment.Environments.pendulum_gravity2:PendulumGravity2',
             max_episode_steps=200,
         )
