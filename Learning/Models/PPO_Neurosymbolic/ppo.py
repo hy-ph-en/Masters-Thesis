@@ -284,6 +284,7 @@ class PPO(OnPolicyAlgorithm):
                     loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss + self.policy.mse_value * (self.ent_coef*ratio_to_policy)
 
                 else:
+                    #Might be also interesting to see if you lower the ratio and keep passing the mse value throughout as a stablising factor
                     'Passed loss for the Backpropagation'
                     loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss
 

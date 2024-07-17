@@ -65,6 +65,9 @@ Multiple = test_metrics().multiple_runs
 Custom_test = test_metrics().custom_test
 Hyperparameter_Testing = test_metrics().hyperparameter_testing
 
+#Registeration of Custom Environments
+Environments().registration()
+
 if Multiple and Custom_test:
     print("Both Multiple and Custom_test are positive : Both Will be Run [Make Sure this is Desired]")
 

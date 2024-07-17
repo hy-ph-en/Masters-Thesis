@@ -12,7 +12,7 @@ class Environments:
     
     def environmental_choice(self, custom_run=False, custom_number=None):
         #Load Registered Environments
-        self.registration()
+        #self.registration()
 
         #List of environments
         env_dict = {
