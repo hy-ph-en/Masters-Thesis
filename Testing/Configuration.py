@@ -4,7 +4,7 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 0
+        self.epochs = 1
         self.render = False                     #Whether the rendering of the training is shown      
         self.gamma = 0.98
         
@@ -37,7 +37,7 @@ class test_metrics():
         'NeuroLossPolicy - Neurosymbolic Policy and Loss                 '
         'NeuroJustLossPolicy - Neurosymbolic Loss                        '
         
-        self.learning_policy = 'MlpPolicy'
+        self.learning_policy = 'NeuroPolicy'
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
@@ -72,8 +72,8 @@ class test_metrics():
         self.policy = 1
 
         #Filenames
-        self.average_file = 'Logfile/AverageValue2.csv'
-        self.custom_test_file = 'Logfile/Custom_Run_Averages2.csv'
+        self.average_file = 'Logfile/AverageValue5.csv'
+        self.custom_test_file = 'Logfile/Custom_Run_Averages5.csv'
         
 
 

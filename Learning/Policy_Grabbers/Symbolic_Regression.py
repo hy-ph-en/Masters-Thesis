@@ -45,6 +45,7 @@ class symbolic_reg:
         model.fit(features, predictions)
         
         found_prediction = model.predict(features)
+
         
         #print("Predictions", type(found_prediction))
         

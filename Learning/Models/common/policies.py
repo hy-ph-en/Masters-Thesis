@@ -845,9 +845,17 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
             latent_pi, latent_vf = self.mlp_extractor(features)
             
             if self.timestep % neurosymbolic_timestep == 0:
-                policy_outcome = policy(features.detach(), latent_pi.detach())
-                policy_outcome = self.handle_symbolic(policy_outcome)
-                self.neuro_step = True
+                not_valid_gradient = True
+                while not_valid_gradient:
+                    not_valid_gradient = False
+                    policy_outcome = policy(features.detach(), latent_pi.detach())
+                    policy_outcome = self.handle_symbolic(policy_outcome)
+                
+                    if torch.isnan(policy_outcome).any() or torch.isinf(policy_outcome).any():
+                        not_valid_gradient == True
+                        print("Gradient Update Failed : Reprocessing")
+                        
+                    self.neuro_step = True
 
                 self.check_tensor_value(latent_pi, policy_outcome)
             else:
@@ -860,9 +868,17 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
             latent_vf = self.mlp_extractor.forward_critic(vf_features)
             
             if self.timestep % neurosymbolic_timestep == 0:
-                policy_outcome = policy(pi_features.detach(), latent_pi.detach()) 
-                policy_outcome = self.handle_symbolic(policy_outcome)
-                self.neuro_step = True
+                not_valid_gradient = True
+                while not_valid_gradient:
+                    not_valid_gradient = False
+                    policy_outcome = policy(pi_features.detach(), latent_pi.detach()) 
+                    policy_outcome = self.handle_symbolic(policy_outcome)
+
+                    if torch.isnan(policy_outcome).any() or torch.isinf(policy_outcome).any():
+                        not_valid_gradient == True
+                        print("Gradient Update Failed : Reprocessing")
+
+                    self.neuro_step = True
 
                 self.check_tensor_value(latent_pi, policy_outcome)
             else:
