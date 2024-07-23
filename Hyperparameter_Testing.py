@@ -12,7 +12,7 @@
 #You will need to make it so you can pass in parameters when the program is called, these parameters then change the values here
     #you need to increment the custom value file and the average value file - can do this simply with date and time
 #since the files are loaded into memory at compliation time you would need to do multiple executions of the run, this means running a script that recalls the program multiple times
-
+import sys
 
 
 '#!!#Dont forget that updates will happen one generation ahead, so acocunt for this and conifgure the configuration before the first run with the'
@@ -34,6 +34,9 @@ def file_overwrite(testing_number, average_file, custom_test_file):
 
             print(average_file)
         metrics_change = return_current_test(testing_number, average_file, custom_test_file)
+
+        if metrics_change == True:
+            sys.exit(0)
 
     #Cleaning Files
     with open(('Logfile/Custom_Run_Averages'+str(testing_number)+'.csv'), 'w') as file:
@@ -60,28 +63,28 @@ def return_current_test(testing_number, average_file, custom_test_file):
     file_defaults()
 
     hyperparameters = {
-        3 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'ratio_to_policy': 0.5},
-        4 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'ratio_to_policy': 1.25},        
+        3 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 20,'ratio_to_policy': 0.5},
+        4 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 20,'ratio_to_policy': 1.25},        
         
-        6 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'ratio_to_policy': 1.0, 'neurostep': 250},
-        7 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'",'neurostep': 500},
+        6 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 20,'ratio_to_policy': 1.0, 'neurostep': 250},
+        7 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'",'epochs': 20,'neurostep': 500},
 
-        17 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'gamma': 0.96},
-        18 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'gamma': 0.97},
-        22 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'gamma': 0.97},
+        17 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 20,'gamma': 0.96},
+        18 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 20,'gamma': 0.97},
+        22 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 20,'gamma': 0.97},
 
 
-        24 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'complexity': 5},
-        27 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'complexity': 19},
+        24 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 20,'complexity': 5},
+        27 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 20,'complexity': 19},
 
-        28 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'complexity': 5},
+        28 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 20,'complexity': 5},
 
-        40 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'ppo_learning_rate': 0.0003},
-        41 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'ppo_learning_rate': 0.0005},
+        40 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 20,'ppo_learning_rate': 0.0003},
+        41 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 20,'ppo_learning_rate': 0.0005},
     }
 
     #If the Value Doesnt Exist - Fast Run
-    Default = {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'MlpPolicy'", 'epochs': 1}
+    Default = True
 
     return hyperparameters.get(testing_number, Default)
 

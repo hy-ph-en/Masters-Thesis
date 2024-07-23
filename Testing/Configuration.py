@@ -4,7 +4,7 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 1
+        self.epochs = 20
         self.render = False                     #Whether the rendering of the training is shown      
         self.gamma = 0.98
         
@@ -25,7 +25,7 @@ class test_metrics():
         
 
         #PPO Specific
-        self.ppo_learning_rate = 0.0003
+        self.ppo_learning_rate = 0.0005
         self.batch_size = 256
         
         
@@ -57,8 +57,7 @@ class test_metrics():
         self.binary_operators = ['+', '*', '/', '^']
         'Unary Operators  - "cos", "exp", "sin" '
         self.unary_operators = ['cos', 'exp', 'sin', 'inv(x) = 1/x']
-        
-        
+
         #Model Choice
         'Simple Reinforcement Learning Model - 1   '
         'Simple Neurosymbolic Learning Model - 2   '
@@ -72,8 +71,8 @@ class test_metrics():
         self.policy = 1
 
         #Filenames
-        self.average_file = 'Logfile/AverageValue5.csv'
-        self.custom_test_file = 'Logfile/Custom_Run_Averages5.csv'
+        self.average_file = 'Logfile/AverageValue41.csv'
+        self.custom_test_file = 'Logfile/Custom_Run_Averages41.csv'
         
 
 
