@@ -875,7 +875,7 @@ class NeurosymbolicActorPolicy(ActorCriticPolicy):
                     policy_outcome = self.handle_symbolic(policy_outcome)
 
                     if torch.isnan(policy_outcome).any() or torch.isinf(policy_outcome).any():
-                        not_valid_gradient == True
+                        not_valid_gradient = True
                         print("Gradient Update Failed : Reprocessing")
 
                     self.neuro_step = True
