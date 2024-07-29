@@ -112,6 +112,8 @@ class env_metrics():
         self.number_of_envs = 10
 
         self.number_of_steps = 500000
+
+        self.number_of_custom_envs = 4
         
         
 

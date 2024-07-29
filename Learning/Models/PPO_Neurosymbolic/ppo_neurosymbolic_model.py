@@ -56,13 +56,11 @@ def ppo_neurosymbolic_model(env, seed):
 #Run the Trained Model over a change in the Environment to Oberserve the Outcome 
 def run_custom_loop():
     model = PPO.load("Environment_Solution")
-
-
-    for custom_number in range(4):
+    number_of_envs = env_metrics().number_of_custom_envs
+    
+    for custom_number in range(number_of_envs):
         print(custom_number)
         env = Environments().environmental_choice(custom_run=True, custom_number=custom_number)
-
-        print(env)
 
         mean_reward, std_reward = evaluate_policy(model, env, n_eval_episodes=10)
 
