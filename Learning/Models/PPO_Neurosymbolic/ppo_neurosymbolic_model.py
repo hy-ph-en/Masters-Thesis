@@ -31,7 +31,7 @@ def ppo_neurosymbolic_model(env, seed):
 
     tmp_path = "Logfile/Baseline_Output"
 
-    new_logger = configure(tmp_path, ["stdout","csv"])
+    new_logger = configure(tmp_path, ["csv"])
 
     model.set_logger(new_logger)
     
