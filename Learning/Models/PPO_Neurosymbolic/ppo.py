@@ -281,7 +281,7 @@ class PPO(OnPolicyAlgorithm):
                     #print(advantages.size(), "advanatges")
                     #th.autograd.set_detect_anomaly(True)
 
-                    loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss + self.policy.mse_value * (self.ent_coef*ratio_to_policy)
+                    loss = policy_loss + self.ent_coef * entropy_loss + self.vf_coef * value_loss + (self.policy.mse_value * ratio_to_policy * self.vf_coef * 0.1)
 
                 else:
                     #Might be also interesting to see if you lower the ratio and keep passing the mse value throughout as a stablising factor

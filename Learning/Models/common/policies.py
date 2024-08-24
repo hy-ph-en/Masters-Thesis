@@ -1080,7 +1080,7 @@ class NeurosymbolicActorLoss(NeurosymbolicActorPolicy):
         
         if self.share_features_extractor:
             latent_pi, latent_vf = self.mlp_extractor(features)
-            
+           
             if self.timestep % neurosymbolic_timestep == 0:
                 policy_outcome = policy(features.detach(), latent_pi.detach())
                 policy_outcome = self.handle_symbolic(policy_outcome)
@@ -1195,7 +1195,6 @@ class NeurosymbolicActorJustLoss(NeurosymbolicActorPolicy):
         #Policy Call
         from Learning.Learning_handler import learning_handler
 
-
         policy = learning_handler().policy_hanlder()
         neurosymbolic_timestep = test_metrics().neurostep
         self.timestep += 1
@@ -1209,7 +1208,7 @@ class NeurosymbolicActorJustLoss(NeurosymbolicActorPolicy):
         
         if self.share_features_extractor:
             latent_pi, latent_vf = self.mlp_extractor(features)
-            
+
             if self.timestep % neurosymbolic_timestep == 0:
                 policy_outcome = policy(features.detach(), latent_pi.detach())
                 policy_outcome = self.handle_symbolic(policy_outcome)
@@ -1236,6 +1235,7 @@ class NeurosymbolicActorJustLoss(NeurosymbolicActorPolicy):
             latent_vf = self.mlp_extractor.forward_critic(vf_features)
             
             if self.timestep % neurosymbolic_timestep == 0:
+
                 policy_outcome = policy(pi_features.detach(), latent_pi.detach()) 
                 policy_outcome = self.handle_symbolic(policy_outcome)
                 self.neuro_step = True
@@ -1243,6 +1243,7 @@ class NeurosymbolicActorJustLoss(NeurosymbolicActorPolicy):
                 self.check_tensor_value(latent_pi, policy_outcome)
                 #Making the Loss Value
                 self.mse_value = -th.nn.functional.mse_loss(policy_outcome, latent_pi)
+
             else:
                 self.neuro_step = False
 

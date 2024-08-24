@@ -4,14 +4,14 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 20
+        self.epochs = 1
         self.render = False                     #Whether the rendering of the training is shown      
         self.gamma = 0.98
         
         self.clear_data = True
-        self.multiple_runs = True
-        self.custom_test = True
-        self.hyperparameter_testing = True
+        self.multiple_runs = False
+        self.custom_test = False
+        self.hyperparameter_testing = False
         self.number_of_runs = 5
         
         #Q Learning Specific                     
@@ -37,7 +37,7 @@ class test_metrics():
         'NeuroLossPolicy - Neurosymbolic Policy and Loss                 '
         'NeuroJustLossPolicy - Neurosymbolic Loss                        '
         
-        self.learning_policy = 'NeuroPolicy'
+        self.learning_policy = 'NeuroJustLossPolicy'
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
@@ -47,7 +47,7 @@ class test_metrics():
         'Complexity 1-20'
         self.complexity = 20
         self.iterations = 2
-        self.neurostep = 1000
+        self.neurostep = 100
         'Percision 1-64'
         self.precision = 64
         self.ratio_to_policy = 0.5
@@ -59,8 +59,8 @@ class test_metrics():
         self.unary_operators = ['cos', 'exp', 'sin', 'inv(x) = 1/x']
 
         #Model Choice
-        'Simple Reinforcement Learning Model - 1   '
-        'Simple Neurosymbolic Learning Model - 2   '
+        'Simple Reinforcement Learning Model - 1            Legacy'
+        'Simple Neurosymbolic Learning Model - 2            Legacy'
         'PPO Model - 3                             '
         'PPO Neurosymbolic Model - 4               '
         self.model = 4
@@ -101,6 +101,7 @@ class env_metrics():
         'Simpliest Environemnt - "CartPole-v1"'
         self.environment = 6
         
+        #Custom Environments - Testing
         self.custom_environment_test = 11
 
         self.custom_environment_test_one = 12
@@ -109,6 +110,7 @@ class env_metrics():
 
         self.custom_environment_test_three = 14
 
+        #Environment Configurations
         self.number_of_envs = 10
 
         self.number_of_steps = 500000
