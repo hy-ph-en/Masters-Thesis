@@ -67,27 +67,26 @@ def return_current_test(testing_number, average_file, custom_test_file):
         1 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 20, 'gamma': 0.96, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6},
         2 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 20,'ratio_to_policy': 0.5, 'gamma': 0.96, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6}, 
         3 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroJustLossPolicy'", 'epochs': 20,'ratio_to_policy': 0.5, 'gamma': 0.96, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6}, 
-        4 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'MlpPolicy'", 'epochs': 20, 'epochs': 20, 'gamma': 0.96, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6},
+        4 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'MlpPolicy'", 'epochs': 20, 'epochs': 20, 'gamma': 0.97, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6},
         
         #Cartpol
-        5 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 10},
-        6 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 10,'ratio_to_policy': 1}, 
-        7 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroJustLossPolicy'", 'epochs': 10,'ratio_to_policy': 1}, 
-        8 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'MlpPolicy'", 'epochs': 10}, 
-
+        5 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 10,'ratio_to_policy': 0.5, 'gamma': 0.96, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':9, "custom_environment_test":15,"custom_environment_test_one":16,"custom_environment_test_two":17, "custom_environment_test_three":18},
+        6 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 10,'ratio_to_policy': 0.5, 'gamma': 0.96, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':9, "custom_environment_test":15,"custom_environment_test_one":16,"custom_environment_test_two":17, "custom_environment_test_three":18}, 
+        7 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroJustLossPolicy'", 'epochs': 10,'ratio_to_policy': 0.5, 'gamma': 0.97, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':9, "custom_environment_test":15,"custom_environment_test_one":16,"custom_environment_test_two":17, "custom_environment_test_three":18}, 
+        8 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'MlpPolicy'", 'epochs': 10,'ratio_to_policy': 0.5, 'gamma': 0.97, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':9, "custom_environment_test":15,"custom_environment_test_one":16,"custom_environment_test_two":17, "custom_environment_test_three":18}, 
 
         #MountainCar
-        9 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 50},
-        10 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 50,'ratio_to_policy': 1}, 
-        11 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroJustLossPolicy'", 'epochs': 50,'ratio_to_policy': 1}, 
-        12 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'MlpPolicy'", 'epochs': 50}, 
+        9 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 50,'ratio_to_policy': 0.5, 'gamma': 0.96, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':1, "custom_environment_test":19,"custom_environment_test_one":20,"custom_environment_test_two":19, "custom_environment_test_three":20},
+        10 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 50,'ratio_to_policy': 0.5, 'gamma': 0.96, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':1, "custom_environment_test":19,"custom_environment_test_one":20,"custom_environment_test_two":19, "custom_environment_test_three":20},
+        11 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroJustLossPolicy'", 'epochs': 50,'ratio_to_policy': 0.5, 'gamma': 0.96, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':1, "custom_environment_test":19,"custom_environment_test_one":20,"custom_environment_test_two":19, "custom_environment_test_three":20}, 
+        12 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'MlpPolicy'", 'epochs': 50,'ratio_to_policy': 0.5, 'gamma': 0.97, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':1, "custom_environment_test":19,"custom_environment_test_one":20,"custom_environment_test_two":19, "custom_environment_test_three":20}, 
 
 
         #Bipedal Walker
-        13 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 50},
-        14 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 50,'ratio_to_policy': 1}, 
-        15 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroJustLossPolicy'", 'epochs': 50,'ratio_to_policy': 1}, 
-        16 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'MlpPolicy'", 'epochs': 50}, 
+        13 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 50, 'ratio_to_policy': 0.5, 'gamma': 0.96, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6},
+        14 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 50,'ratio_to_policy': 0.5, 'gamma': 0.96, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6}, 
+        15 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroJustLossPolicy'", 'epochs': 50,'ratio_to_policy': 0.5, 'gamma': 0.96, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6}, 
+        16 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'MlpPolicy'", 'epochs': 50,'ratio_to_policy': 0.5, 'gamma': 0.97, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6}, 
 
     }
 

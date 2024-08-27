@@ -8,13 +8,13 @@ from gymnasium.envs.classic_control import CartPoleEnv
 
 
 #Just get it to run and then modify it
-class CartPoleHeight(CartPoleEnv):
+class CartPoleHeight2(CartPoleEnv):
     metadata = {'render.modes': ['human']}
 
     def __init__(self):
-        super(CartPoleHeight, self).__init__()
+        super(CartPoleHeight2, self).__init__()
 
-        self.length = 0.75  #Original length value is 0.5
+        self.gravity = 15
 
         #height change
         #mass change?

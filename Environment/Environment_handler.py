@@ -30,6 +30,12 @@ class Environments:
             12:"PendulumLength-v1",
             13:"PendulumGravity-v0",
             14:"PendulumGravity-v1",
+            15:"CartPolHeight-v0",
+            16:"CartPolHeight-v1",
+            17:"CartPolGravity-v0",
+            18:"CartPolGravity-v1",
+            19:"MountainCarSpeed-v0",
+            20:"MountainCarGravity-v0"
         }
 
         #If it is required the rerun the model over a novel environment
@@ -79,5 +85,44 @@ class Environments:
         register(
             id='PendulumGravity-v1',
             entry_point='Environment.Environments.pendulum_gravity2:PendulumGravity2',
+            max_episode_steps=200,
+        )
+
+
+
+
+        register(
+            id='CartPolHeight-v0',
+            entry_point='Environment.Environments.cartpol_height:CartPoleHeight',
+            max_episode_steps=200,
+        )
+
+        register(
+            id='CartPolHeight-v1',
+            entry_point='Environment.Environments.cartpol_height2:CartPoleHeight2',
+            max_episode_steps=200,
+        )
+
+        register(
+            id='CartPolGravity-v0',
+            entry_point='Environment.Environments.cartpol_gravity:CartPoleGravity',
+            max_episode_steps=200,
+        )
+
+        register(
+            id='CartPolGravity-v1',
+            entry_point='Environment.Environments.cartpol_gravity2:CartPoleGravity2',
+            max_episode_steps=200,
+        )
+
+        register(
+            id='MountainCarSpeed-v0',
+            entry_point='Environment.Environments.mountain_car_speed:MountainCarSpeed', 
+            max_episode_steps=200,
+        )
+
+        register(
+            id='MountainCarGravity-v0',
+            entry_point='Environment.Environments.mountain_car_gravity:MountainCarGravity', 
             max_episode_steps=200,
         )

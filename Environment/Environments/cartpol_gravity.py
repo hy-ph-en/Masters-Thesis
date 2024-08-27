@@ -14,7 +14,7 @@ class CartPoleHeight(CartPoleEnv):
     def __init__(self):
         super(CartPoleHeight, self).__init__()
 
-        self.length = 0.75  #Original length value is 0.5
+        self.gravity = 12.5
 
         #height change
         #mass change?
