@@ -35,7 +35,8 @@ class Environments:
             17:"CartPolGravity-v0",
             18:"CartPolGravity-v1",
             19:"MountainCarSpeed-v0",
-            20:"MountainCarGravity-v0"
+            20:"MountainCarGravity-v0",
+            21:"BipedalWalker-v3"
         }
 
         #If it is required the rerun the model over a novel environment
