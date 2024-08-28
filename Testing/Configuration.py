@@ -9,10 +9,10 @@ class test_metrics():
         self.gamma = 0.98
         
         self.clear_data = True
-        self.multiple_runs = False
-        self.custom_test = False
-        self.hyperparameter_testing = False
-        self.number_of_runs = 5
+        self.multiple_runs = True
+        self.custom_test = True
+        self.hyperparameter_testing = True
+        self.number_of_runs = 2
         
         #Q Learning Specific                     
         self.epsilon = 0.1
