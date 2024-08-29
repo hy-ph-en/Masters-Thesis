@@ -4,7 +4,7 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 1
+        self.epochs = 10
         self.render = False                     #Whether the rendering of the training is shown      
         self.gamma = 0.98
         
@@ -12,7 +12,7 @@ class test_metrics():
         self.multiple_runs = True
         self.custom_test = True
         self.hyperparameter_testing = True
-        self.number_of_runs = 2
+        self.number_of_runs = 5
         
         #Q Learning Specific                     
         self.epsilon = 0.1
@@ -25,7 +25,7 @@ class test_metrics():
         
 
         #PPO Specific
-        self.ppo_learning_rate = 0.0005
+        self.ppo_learning_rate = 0.0003
         self.batch_size = 256
         
         
@@ -37,7 +37,7 @@ class test_metrics():
         'NeuroLossPolicy - Neurosymbolic Policy and Loss                 '
         'NeuroJustLossPolicy - Neurosymbolic Loss                        '
         
-        self.learning_policy = 'NeuroJustLossPolicy'
+        self.learning_policy = 'NeuroPolicy'
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
@@ -47,7 +47,7 @@ class test_metrics():
         'Complexity 1-20'
         self.complexity = 20
         self.iterations = 2
-        self.neurostep = 100
+        self.neurostep = 2500
         'Percision 1-64'
         self.precision = 64
         self.ratio_to_policy = 0.5
@@ -71,8 +71,8 @@ class test_metrics():
         self.policy = 1
 
         #Filenames
-        self.average_file = 'Logfile/AverageValue41.csv'
-        self.custom_test_file = 'Logfile/Custom_Run_Averages41.csv'
+        self.average_file = 'Logfile/AverageValue5.csv'
+        self.custom_test_file = 'Logfile/Custom_Run_Averages5.csv'
         
 
 
@@ -99,16 +99,16 @@ class env_metrics():
         
         #Default
         'Simpliest Environemnt - "CartPole-v1"'
-        self.environment = 6
+        self.environment = 9
         
         #Custom Environments - Testing
-        self.custom_environment_test = 11
+        self.custom_environment_test = 15
 
-        self.custom_environment_test_one = 12
+        self.custom_environment_test_one = 16
 
-        self.custom_environment_test_two = 13
+        self.custom_environment_test_two = 17
 
-        self.custom_environment_test_three = 14
+        self.custom_environment_test_three = 18
 
         #Environment Configurations
         self.number_of_envs = 10

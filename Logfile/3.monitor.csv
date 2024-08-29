@@ -1,2 +1,3 @@
-#{"t_start": 1724529530.85746, "env_id": "Pendulum-v1"}
+#{"t_start": 1724880757.7149334, "env_id": "PendulumGravity-v1"}
 r,l,t
+-0.406363,200,0.15081
