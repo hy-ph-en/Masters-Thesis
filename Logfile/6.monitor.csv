@@ -1,3 +1,3 @@
-#{"t_start": 1724880757.7338748, "env_id": "PendulumGravity-v1"}
+#{"t_start": 1724995437.4006357, "env_id": "MountainCarGravity-v0"}
 r,l,t
--1149.716246,200,0.131996
+-97.0,97,0.053006

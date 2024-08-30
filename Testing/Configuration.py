@@ -4,13 +4,13 @@ class test_metrics():
     
     def __init__(self):
         #Normal Model Configurations
-        self.epochs = 10
+        self.epochs = 50
         self.render = False                     #Whether the rendering of the training is shown      
         self.gamma = 0.98
         
         self.clear_data = True
         self.multiple_runs = True
-        self.custom_test = True
+        self.custom_test = False
         self.hyperparameter_testing = True
         self.number_of_runs = 5
         
@@ -37,7 +37,7 @@ class test_metrics():
         'NeuroLossPolicy - Neurosymbolic Policy and Loss                 '
         'NeuroJustLossPolicy - Neurosymbolic Loss                        '
         
-        self.learning_policy = 'NeuroPolicy'
+        self.learning_policy = 'MlpPolicy'
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
@@ -71,8 +71,8 @@ class test_metrics():
         self.policy = 1
 
         #Filenames
-        self.average_file = 'Logfile/AverageValue5.csv'
-        self.custom_test_file = 'Logfile/Custom_Run_Averages5.csv'
+        self.average_file = 'Logfile/AverageValue17.csv'
+        self.custom_test_file = 'Logfile/Custom_Run_Averages17.csv'
         
 
 
@@ -99,16 +99,16 @@ class env_metrics():
         
         #Default
         'Simpliest Environemnt - "CartPole-v1"'
-        self.environment = 9
+        self.environment = 21
         
         #Custom Environments - Testing
-        self.custom_environment_test = 15
+        self.custom_environment_test = 19
 
-        self.custom_environment_test_one = 16
+        self.custom_environment_test_one = 20
 
-        self.custom_environment_test_two = 17
+        self.custom_environment_test_two = 19
 
-        self.custom_environment_test_three = 18
+        self.custom_environment_test_three = 20
 
         #Environment Configurations
         self.number_of_envs = 10

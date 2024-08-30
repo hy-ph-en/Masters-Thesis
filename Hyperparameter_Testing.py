@@ -87,7 +87,7 @@ def return_current_test(testing_number, average_file, custom_test_file):
         14 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 50,'ratio_to_policy': 0.5, 'gamma': 0.98, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':21, 'custom_test':False}, 
         15 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroJustLossPolicy'", 'epochs': 50,'ratio_to_policy': 0.5, 'gamma': 0.98, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':21, 'custom_test':False},
         16 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'MlpPolicy'", 'epochs': 50,'ratio_to_policy': 0.5, 'gamma': 0.98, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':21, 'custom_test':False},
-
+	    17 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'MlpPolicy'", 'epochs': 50,'ratio_to_policy': 0.5, 'gamma': 0.98, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':21, 'custom_test':False},
     }
 
     #If the Value Doesnt Exist - Fast Run
