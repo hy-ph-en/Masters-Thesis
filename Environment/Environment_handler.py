@@ -91,7 +91,6 @@ class Environments:
 
 
 
-
         register(
             id='CartPolHeight-v0',
             entry_point='Environment.Environments.cartpol_height:CartPoleHeight',

@@ -8,11 +8,11 @@ from gymnasium.envs.classic_control import CartPoleEnv
 
 
 #Just get it to run and then modify it
-class CartPoleHeight(CartPoleEnv):
+class CartPoleGravity(CartPoleEnv):
     metadata = {'render.modes': ['human']}
 
     def __init__(self):
-        super(CartPoleHeight, self).__init__()
+        super(CartPoleGravity, self).__init__()
 
         self.gravity = 12.5
 

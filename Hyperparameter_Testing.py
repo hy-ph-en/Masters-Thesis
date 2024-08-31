@@ -64,10 +64,10 @@ def return_current_test(testing_number, average_file, custom_test_file):
 
     hyperparameters = {
         #Pendulum
-        1 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 20, 'gamma': 0.98, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6},
-        2 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 20,'ratio_to_policy': 0.5, 'gamma': 0.98, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6}, 
-        3 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroJustLossPolicy'", 'epochs': 20,'ratio_to_policy': 0.5, 'gamma': 0.98, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6}, 
-        4 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'MlpPolicy'", 'epochs': 20, 'epochs': 20, 'gamma': 0.98, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6},
+        1 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 20, 'gamma': 0.98, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6, 'custom_environment_test':11, 'custom_environment_test_one':12, 'custom_environment_test_two':13, 'custom_environment_test_three':14},
+        2 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroLossPolicy'", 'epochs': 20,'ratio_to_policy': 0.5, 'gamma': 0.98, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6, 'custom_environment_test':11, 'custom_environment_test_one':12, 'custom_environment_test_two':13, 'custom_environment_test_three':14}, 
+        3 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroJustLossPolicy'", 'epochs': 20,'ratio_to_policy': 0.5, 'gamma': 0.98, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6, 'custom_environment_test':11, 'custom_environment_test_one':12, 'custom_environment_test_two':13, 'custom_environment_test_three':14},
+        4 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'MlpPolicy'", 'epochs': 20, 'epochs': 1, 'gamma': 0.98, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':6, 'custom_environment_test':11, 'custom_environment_test_one':12, 'custom_environment_test_two':13, 'custom_environment_test_three':14},
         
         #Cartpol
         5 : {'average_file':average_file,'custom_test_file': custom_test_file, 'learning_policy': "'NeuroPolicy'", 'epochs': 10,'ratio_to_policy': 0.5, 'gamma': 0.98, 'neurostep':2500, 'complexity':20, 'iterations':2, 'environment':9, "custom_environment_test":15,"custom_environment_test_one":16,"custom_environment_test_two":17, "custom_environment_test_three":18},
