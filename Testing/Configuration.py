@@ -37,7 +37,7 @@ class test_metrics():
         'NeuroLossPolicy - Neurosymbolic Policy and Loss                 '
         'NeuroJustLossPolicy - Neurosymbolic Loss                        '
         
-        self.learning_policy = 'NeuroPolicy'
+        self.learning_policy = 'MlpPolicy'
 
         'verbose 0-3  : increasing amounts of explaination for the output'            #Likely become legacy as the project processes
         self.verbose = 3
@@ -71,8 +71,8 @@ class test_metrics():
         self.policy = 1
 
         #Filenames
-        self.average_file = 'Logfile/AverageValue13.csv'
-        self.custom_test_file = 'Logfile/Custom_Run_Averages13.csv'
+        self.average_file = 'Logfile/AverageValue17.csv'
+        self.custom_test_file = 'Logfile/Custom_Run_Averages17.csv'
         
 
 
