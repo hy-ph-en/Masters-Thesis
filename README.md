@@ -12,7 +12,9 @@ Support for measuring interpretability and generalization metrics
 Algorithms
 
 SLMA: Modifies loss function using symbolic regression output
+
 SPUA: Directly updates policies using symbolic regression
+
 SLPU: Combines both approaches for potential benefits of each
 
 Requirements
