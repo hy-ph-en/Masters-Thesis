@@ -1,0 +1,53 @@
+Thesis Coding Notes
+
+Current Possible Issues
+-The Data is not Transfering Correctly
+
+-The Scaling is Collasping the learning 
+	The scaling factor to the learning doesnt seem to produce a change? I remember this fact but it is 
+	something to double check
+
+	Could make it so the magnetude of the policy loss combined with the MSE remains consistent, with
+	MSE taking a larger part 
+
+
+*It is doing something, that can be pointed out from the early data gathering and ending output
+
+
+
+If you think of it as a pakincho machine, what the MSE loss does is guide it through an more productive path,
+after that lossing influence 
+
+
+
+Currently Investigation
+-Look into if the varying equation of MSE can cause issues
+-How to make the scaling of the MSE input when dealing with the neurosymbolic change the most effecient
+
+
+
+Current Task List:
+	-Add the other environments to the process 
+		-Add Lunar Lander
+		-Add Navigation Tasks
+	-Fix the MSE balancing concept 
+		-Focus on MSE it has more potenital and is a smarter system design
+			*Unless it comes up bumpkiss this means putting aside SPUA for now
+	
+	
+
+
+
+Thesis Meeting Notes
+
+#Things to Bring Up
+-Mention the need to explore a more effective scaling solution to the MSE (SPLU)
+	Current issue is that it may vanish premateruly, as it is purely based on the other aspects of learning
+
+
+#Things Mentioned
+Navigation tasks
+Lunar Lander
+
+Need to message IT services at Imperiel to tell them to reactivate and continue my subscriptions
+	-CC Francesco and mention that we are continuing to work together

@@ -1,0 +1,30 @@
+Thesis Coding Notes
+
+Current Possible Issues
+-The Data is not Transfering Correctly
+
+-The Scaling is Collasping the learning 
+	The scaling factor to the learning doesnt seem to produce a change? I remember this fact but it is 
+	something to double check
+*It is doing something, that can be pointed out from the early data gathering and ending output
+
+
+
+
+
+Currently Investigation
+-Look into if the varying equation of MSE can cause issues
+-How to make the scaling of the MSE input when dealing with the neurosymbolic change the most effecient
+
+
+
+
+
+Thesis Meeting Notes
+
+#Things to Bring Up
+-Mention the need to explore a more effective scaling solution to the MSE (SPLU)
+	Current issue is that it may vanish premateruly, as it is purely based on the other aspects of learning
+
+
+#Things Mentioned
