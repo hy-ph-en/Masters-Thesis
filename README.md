@@ -20,6 +20,9 @@ SLPU: Combines both approaches for potential benefits of each
 Requirements
 
 Stable Baselines3
+
 PySR (Python Symbolic Regression)
+
 Gymnasium
-Python 3.x
+
+Python 3.11
