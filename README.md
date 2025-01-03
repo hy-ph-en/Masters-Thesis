@@ -7,7 +7,8 @@ It introduces three novel algorithms - SLMA (Symbolic Loss Modification Algorith
 Key Features 
 * Integration of symbolic regression during reinforcement learning training 
 * Multiple algorithm implementations with different approaches to symbolic integration 
-* Framework for testing in Gymnasium environments * Customizable hyperparameters for balancing symbolic and neural components 
+* Framework for testing in Gymnasium environments
+* Customizable hyperparameters for balancing symbolic and neural components 
 * Support for measuring interpretability and generalization metrics 
 
 Algorithms 
